@@ -1,38 +1,14 @@
 ---
 title: Hello World
+date: 2023-02-19 21:02:21
+tags:
 ---
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
+今天，我的博客搭建完成了。
 
-## Quick Start
+这个博客主要用来记录一些学习和生活方面的内容。除非另有声明，文章默认采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 协议发布。
 
-### Create a new post
+本博客使用 Hexo 搭建，托管在 GitHub Pages 上。优点是功能强大且完全免费，缺点是有一定的学习成本，而且有时网络会不稳定。
 
-``` bash
-$ hexo new "My New Post"
-```
+本博客的文章分为帖子（`post`）和页面（`page`）两类：前者多为短篇，时效性较强，一般会开启评论；后者多为中长篇，时效性较弱。
 
-More info: [Writing](https://hexo.io/docs/writing.html)
-
-### Run server
-
-``` bash
-$ hexo server
-```
-
-More info: [Server](https://hexo.io/docs/server.html)
-
-### Generate static files
-
-``` bash
-$ hexo generate
-```
-
-More info: [Generating](https://hexo.io/docs/generating.html)
-
-### Deploy to remote sites
-
-``` bash
-$ hexo deploy
-```
-
-More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
+大概就是这样。
