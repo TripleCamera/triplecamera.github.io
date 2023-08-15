@@ -6,3 +6,15 @@ creative_commons:
   sidebar: false
   post: true # 文章底部
   language: deed.zh
+
+comments:
+  active: gitalk
+
+gitalk:
+  enable: true
+  github_id: TripleCamera
+  repo: triplecamera.github.io
+  client_id: 8e3318b060ee959cacec
+  client_secret: 3a6c863d9640cee4d16dc8e59c8053fa56d7591b
+  admin_user: TripleCamera
+  language: zh-CN
