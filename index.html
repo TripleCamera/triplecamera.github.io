@@ -145,6 +145,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://triplecamera.github.io/2023/08/18/%E7%BC%96%E7%A8%8B%E9%9A%8F%E7%AC%94%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TripleCamera">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TripleCamera 的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/18/%E7%BC%96%E7%A8%8B%E9%9A%8F%E7%AC%94%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">编程随笔（二）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-18 11:36:44" itemprop="dateCreated datePublished" datetime="2023-08-18T11:36:44+08:00">2023-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-22 20:05:30" itemprop="dateModified" datetime="2023-08-22T20:05:30+08:00">2023-08-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">编程随笔</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>眼下正是八月，当我们正在享受这美好而又漫长的暑假的时候，竟然收到了来自计算机组成原理课程团队的一份礼物——预习任务。<del>可喜可贺，可喜可贺。</del></p>
+<p>为了省去安装软件的麻烦，课程团队贴心地为我们准备了虚拟机：Debian 11 系统、LXDE 桌面环境。但是虚拟机在我的高分屏电脑上表现不佳。于是我花了好大功夫来调好它。</p>
+<p>助教告诉我：</p>
+<blockquote>
+<p>课程组提供的虚拟机以“轻量”为目标进行构建，选用的桌面环境为LXDE，其优点是占用资源少，缺点之一便是你遇到的——缺乏完善的图形界面支持，没有一键式的适配配置方案。</p>
+</blockquote>
+<p>但是为什么不换一个桌面环境呢？因为<del>我乐意</del>教程里说：</p>
+<blockquote>
+<p>在本地，我们可以换用 GNOME、KDE Plasma 等其他桌面环境，这类桌面环境的功能较默认的 LXDE 更齐全，兼容性更好。但往往占用的资源也较多，在虚拟化环境下性能表现较差，建议谨慎尝试。</p>
+</blockquote>
+<p>注：以下配置适合于我的电脑，自己操作时请自行调整。</p>
+<h2 id="修改-DPI"><a href="#修改-DPI" class="headerlink" title="修改 DPI"></a>修改 DPI</h2><p><strong>这一部分按照教程即可。</strong></p>
+<p>向 <code>~/.Xresources</code> 文件中写入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Xft.dpi: 283</span><br></pre></td></tr></table></figure>
+<p>，然后 <code>sudo reboot</code> 重启。</p>
+<h2 id="修改文件管理器图标大小"><a href="#修改文件管理器图标大小" class="headerlink" title="修改文件管理器图标大小"></a>修改文件管理器图标大小</h2><p>打开文件管理器 PCManFM，在“编辑 &gt; 偏好设置 &gt; 显示 &gt; 图标”里将图标大小调为原来的 2 倍。</p>
+<h2 id="修改文件管理器字体大小"><a href="#修改文件管理器字体大小" class="headerlink" title="修改文件管理器字体大小"></a>修改文件管理器字体大小</h2><p>调高 DPI 会使文件管理器字体过大。右键桌面，在“桌面偏好设置 &gt; 外观 &gt; 文本 &gt; 标签文本字体”中将“大小”调为 8。</p>
+<h2 id="修改下方面板大小"><a href="#修改下方面板大小" class="headerlink" title="修改下方面板大小"></a>修改下方面板大小</h2><p><strong>感谢助教的帮助！</strong></p>
+<p>右键下方面板，在“面板设置 &gt; 几何形状 &gt; 大小”中将“高度”和“图标大小”修改为原来的 2 倍。这导致了背景出错，于是又在此窗口下的“外观 &gt; 背景”中修改了背景。</p>
+<h2 id="修改应用文本大小"><a href="#修改应用文本大小" class="headerlink" title="修改应用文本大小"></a>修改应用文本大小</h2><p><strong>这一部分按照教程即可。</strong></p>
+<p>在终端键入 <code>gsettings set org.gnome.desktop.interface text-scaling-factor 2.5</code>（教程中推荐使用 0.5 的整数倍），之后重启。</p>
+<h2 id="修改鼠标光标大小"><a href="#修改鼠标光标大小" class="headerlink" title="修改鼠标光标大小"></a>修改鼠标光标大小</h2><p><strong>感谢助教的帮助！</strong></p>
+<p>打开 <code>~/.config/lxsession/LXDE/desktop.conf</code>，将</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iGtk/CursorThemeSize=18</span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iGtk/CursorThemeSize=72</span><br></pre></td></tr></table></figure>
+<p>，然后重启以确保更改完全生效。（<a target="_blank" rel="noopener" href="https://www.reddit.com/r/linux4noobs/comments/64nj3y/increasing_cursor_size_arch_lxde/">参考链接</a>）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://triplecamera.github.io/2023/07/07/%E6%B8%B8%E6%B3%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -176,7 +276,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-15 14:06:07" itemprop="dateModified" datetime="2023-08-15T14:06:07+08:00">2023-08-15</time>
+                <time title="修改时间：2023-08-22 20:05:30" itemprop="dateModified" datetime="2023-08-22T20:05:30+08:00">2023-08-22</time>
               </span>
 
           
@@ -270,7 +370,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-15 14:06:07" itemprop="dateModified" datetime="2023-08-15T14:06:07+08:00">2023-08-15</time>
+                <time title="修改时间：2023-08-22 20:05:30" itemprop="dateModified" datetime="2023-08-22T20:05:30+08:00">2023-08-22</time>
               </span>
 
           
@@ -358,7 +458,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-15 14:06:07" itemprop="dateModified" datetime="2023-08-15T14:06:07+08:00">2023-08-15</time>
+                <time title="修改时间：2023-08-22 20:05:30" itemprop="dateModified" datetime="2023-08-22T20:05:30+08:00">2023-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -449,7 +549,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-15 14:06:07" itemprop="dateModified" datetime="2023-08-15T14:06:07+08:00">2023-08-15</time>
+                <time title="修改时间：2023-08-22 20:05:30" itemprop="dateModified" datetime="2023-08-22T20:05:30+08:00">2023-08-22</time>
               </span>
 
           
@@ -549,7 +649,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
