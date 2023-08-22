@@ -1,6 +1,7 @@
 ---
 title: Hello World
-date: 2023-02-19 21:02:21
+date: 2023-02-19
+updated: 2023-06-10
 tags:
 ---
 今天，我的博客搭建完成了。
