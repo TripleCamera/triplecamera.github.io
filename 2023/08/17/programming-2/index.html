@@ -215,9 +215,9 @@
 </blockquote>
 <p>注：以下配置适合于我的电脑，自己操作时请自行调整。</p>
 <h2 id="修改-DPI"><a href="#修改-DPI" class="headerlink" title="修改 DPI"></a>修改 DPI</h2><p><strong>这一部分按照教程即可。</strong></p>
-<p>向 <code>~/.Xresources</code> 文件中写入</p>
+<p>向 <code>~/.Xresources</code> 文件中写入：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Xft.dpi: 283</span><br></pre></td></tr></table></figure>
-<p>，然后 <code>sudo reboot</code> 重启。</p>
+<p>然后 <code>sudo reboot</code> 重启。</p>
 <h2 id="修改文件管理器图标大小"><a href="#修改文件管理器图标大小" class="headerlink" title="修改文件管理器图标大小"></a>修改文件管理器图标大小</h2><p>打开文件管理器 PCManFM，在“编辑 &gt; 偏好设置 &gt; 显示 &gt; 图标”里将图标大小调为原来的 2 倍。</p>
 <h2 id="修改文件管理器字体大小"><a href="#修改文件管理器字体大小" class="headerlink" title="修改文件管理器字体大小"></a>修改文件管理器字体大小</h2><p>调高 DPI 会使文件管理器字体过大。右键桌面，在“桌面偏好设置 &gt; 外观 &gt; 文本 &gt; 标签文本字体”中将“大小”调为 8。</p>
 <h2 id="修改下方面板大小"><a href="#修改下方面板大小" class="headerlink" title="修改下方面板大小"></a>修改下方面板大小</h2><p><strong>感谢助教的帮助！</strong></p>
@@ -229,7 +229,17 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iGtk/CursorThemeSize=18</span><br></pre></td></tr></table></figure>
 <p>修改为</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iGtk/CursorThemeSize=72</span><br></pre></td></tr></table></figure>
-<p>，然后重启以确保更改完全生效。（<a target="_blank" rel="noopener" href="https://www.reddit.com/r/linux4noobs/comments/64nj3y/increasing_cursor_size_arch_lxde/">参考链接</a>）</p>
+<p>然后重启以确保更改完全生效。（<a target="_blank" rel="noopener" href="https://www.reddit.com/r/linux4noobs/comments/64nj3y/increasing_cursor_size_arch_lxde/">参考链接</a>）</p>
+<h2 id="修改窗口按钮大小"><a href="#修改窗口按钮大小" class="headerlink" title="修改窗口按钮大小"></a>修改窗口按钮大小</h2><p>虚拟机使用的默认主题为 Nightmare，存储路径为 <code>/usr/share/themes/Nightmare/openbox-3</code>。窗口按钮的位图为 XBM 文件，大小固定为 5x5。需要将其放大到 20x20，放大后的文件如下：（你可以直接使用它们覆盖你的虚拟机中的对应文件）</p>
+<ul>
+<li><a href="/images/openbox-3/bullet.xbm">bullet.xbm</a></li>
+<li><a href="/images/openbox-3/close.xbm">close.xbm</a></li>
+<li><a href="/images/openbox-3/iconify.xbm">iconify.xbm</a></li>
+<li><a href="/images/openbox-3/max.xbm">max.xbm</a></li>
+<li><a href="/images/openbox-3/shade_toggled.xbm">shade_toggled.xbm</a></li>
+<li><a href="/images/openbox-3/shade.xbm">shade.xbm</a></li>
+</ul>
+<p>之后重启即可。（<a target="_blank" rel="noopener" href="https://forum.xfce.org/viewtopic.php?id=9312">参考链接</a>）</p>
 
     </div>
 
@@ -325,7 +335,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-DPI"><span class="nav-number">1.</span> <span class="nav-text">修改 DPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%9B%BE%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.</span> <span class="nav-text">修改文件管理器图标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F"><span class="nav-number">3.</span> <span class="nav-text">修改文件管理器字体大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%8B%E6%96%B9%E9%9D%A2%E6%9D%BF%E5%A4%A7%E5%B0%8F"><span class="nav-number">4.</span> <span class="nav-text">修改下方面板大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%BA%94%E7%94%A8%E6%96%87%E6%9C%AC%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.</span> <span class="nav-text">修改应用文本大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%BC%A0%E6%A0%87%E5%85%89%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">6.</span> <span class="nav-text">修改鼠标光标大小</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-DPI"><span class="nav-number">1.</span> <span class="nav-text">修改 DPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%9B%BE%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.</span> <span class="nav-text">修改文件管理器图标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F"><span class="nav-number">3.</span> <span class="nav-text">修改文件管理器字体大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%8B%E6%96%B9%E9%9D%A2%E6%9D%BF%E5%A4%A7%E5%B0%8F"><span class="nav-number">4.</span> <span class="nav-text">修改下方面板大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%BA%94%E7%94%A8%E6%96%87%E6%9C%AC%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.</span> <span class="nav-text">修改应用文本大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%BC%A0%E6%A0%87%E5%85%89%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">6.</span> <span class="nav-text">修改鼠标光标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%AA%97%E5%8F%A3%E6%8C%89%E9%92%AE%E5%A4%A7%E5%B0%8F"><span class="nav-number">7.</span> <span class="nav-text">修改窗口按钮大小</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
