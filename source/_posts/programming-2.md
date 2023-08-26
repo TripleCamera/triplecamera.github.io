@@ -22,11 +22,11 @@ categories:
 ## 修改 DPI
 **这一部分按照教程即可。**
 
-向 `~/.Xresources` 文件中写入
+向 `~/.Xresources` 文件中写入：
 ```
 Xft.dpi: 283
 ```
-，然后 `sudo reboot` 重启。
+然后 `sudo reboot` 重启。
 
 ## 修改文件管理器图标大小
 打开文件管理器 PCManFM，在“编辑 > 偏好设置 > 显示 > 图标”里将图标大小调为原来的 2 倍。
@@ -56,4 +56,15 @@ iGtk/CursorThemeSize=18
 ```
 iGtk/CursorThemeSize=72
 ```
-，然后重启以确保更改完全生效。（[参考链接](https://www.reddit.com/r/linux4noobs/comments/64nj3y/increasing_cursor_size_arch_lxde/)）
+然后重启以确保更改完全生效。（[参考链接](https://www.reddit.com/r/linux4noobs/comments/64nj3y/increasing_cursor_size_arch_lxde/)）
+
+## 修改窗口按钮大小
+虚拟机使用的默认主题为 Nightmare，存储路径为 `/usr/share/themes/Nightmare/openbox-3`。窗口按钮的位图为 XBM 文件，大小固定为 5x5。需要将其放大到 20x20，放大后的文件如下：（你可以直接使用它们覆盖你的虚拟机中的对应文件）
+ -  [bullet.xbm](/images/openbox-3/bullet.xbm)
+ -  [close.xbm](/images/openbox-3/close.xbm)
+ -  [iconify.xbm](/images/openbox-3/iconify.xbm)
+ -  [max.xbm](/images/openbox-3/max.xbm)
+ -  [shade_toggled.xbm](/images/openbox-3/shade_toggled.xbm)
+ -  [shade.xbm](/images/openbox-3/shade.xbm)
+
+之后重启即可。（[参考链接](https://forum.xfce.org/viewtopic.php?id=9312)）
