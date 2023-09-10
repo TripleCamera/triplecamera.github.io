@@ -1,7 +1,7 @@
 ---
 title: 编程随笔（二）
 date: 2023-08-18
-updated: 2023-08-26
+updated: 2023-09-10
 categories:
 - 编程随笔
 ---
@@ -33,6 +33,8 @@ Xft.dpi: 283
 
 ## 修改文件管理器字体大小
 调高 DPI 会使文件管理器字体过大。右键桌面，在“桌面偏好设置 > 外观 > 文本 > 标签文本字体”中将“大小”调为 8。
+
+注：使用文件管理器时建议勾选“视图 > 显示隐藏内容”。
 
 ## 修改下方面板大小
 **感谢助教的帮助！**
@@ -68,3 +70,6 @@ iGtk/CursorThemeSize=72
  -  [shade.xbm](/images/openbox-3/shade.xbm)
 
 之后重启即可。（[参考链接](https://forum.xfce.org/viewtopic.php?id=9312)）
+
+## 更新 `co-submit`
+虚拟机自带的 `co-submit` 会在提交时询问工具链，让人不知所云。按照讨论区帖子“关于使用虚拟机提交题目时遇到的问题”操作即可更新 `co-submit`。
