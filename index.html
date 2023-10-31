@@ -269,7 +269,7 @@ cite {
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-10 00:00:00" itemprop="dateModified" datetime="2023-09-10T00:00:00+08:00">2023-09-10</time>
+                <time title="修改时间：2023-10-28 00:00:00" itemprop="dateModified" datetime="2023-10-28T00:00:00+08:00">2023-10-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -330,7 +330,13 @@ cite {
 <li><a href="/images/openbox-3/shade.xbm">shade.xbm</a></li>
 </ul>
 <p>之后重启即可。（<a target="_blank" rel="noopener" href="https://forum.xfce.org/viewtopic.php?id=9312">参考链接</a>）</p>
-<h2 id="更新-co-submit"><a href="#更新-co-submit" class="headerlink" title="更新 co-submit"></a>更新 <code>co-submit</code></h2><p>虚拟机自带的 <code>co-submit</code> 会在提交时询问工具链，让人不知所云。按照讨论区帖子“关于使用虚拟机提交题目时遇到的问题”操作即可更新 <code>co-submit</code>。</p>
+<h2 id="一些其他的问题"><a href="#一些其他的问题" class="headerlink" title="一些其他的问题"></a>一些其他的问题</h2><h3 id="更新-co-submit"><a href="#更新-co-submit" class="headerlink" title="更新 co-submit"></a>更新 <code>co-submit</code></h3><p>虚拟机自带的 <code>co-submit</code> 会在提交时询问工具链，让人不知所云。下载最新版 <a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/assets/cscore-assets/co-submit.zip"><code>co-submit</code></a>，用压缩包中的 <code>co-submit.py</code> 覆盖 <code>/opt/co-submit/co-submit.py</code> 即可解决问题。</p>
+<p>参考：<a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/883/1317/posts">关于使用虚拟机提交题目时遇到的问题</a></p>
+<h3 id="修改-ISE-设计属性"><a href="#修改-ISE-设计属性" class="headerlink" title="修改 ISE 设计属性"></a>修改 ISE 设计属性</h3><p>如果虚拟机的 ISE 在仿真（Synthesize - XST）时出现如下报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR:Xst:2883 - Option &quot;-verilog2001&quot; is not available for the selected device family.</span><br><span class="line">ERROR:Xst:2883 - Option &quot;-mux_extract&quot; is not available for the selected device family.</span><br></pre></td></tr></table></figure>
+<p>需要在设计属性（Design Properties）中将“Family”修改为“Automotive Spartan3”，将“Device”修改为“XA3S50”。（此处为教程中使用的型号，其他某些型号也可以工作。）</p>
+<h3 id="ISE-testbench-生成错误"><a href="#ISE-testbench-生成错误" class="headerlink" title="ISE testbench 生成错误"></a>ISE testbench 生成错误</h3><p>如果虚拟机的 ISE 在生成 testbench 时生成了错误的内容，且无法与被测试模块相关联，那么可能是因为被测试模块中含有 <code>parameter</code>。注释掉 <code>parameter</code>，生成测试文件，然后再取消注释即可解决问题。<del>当然也可以自己手写 testbench</del></p>
+<p>参考：<a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/1037/1299/posts">经验分享：如何解决 ISE 自动生成的 testbench 错误的问题</a></p>
 
       
     </div>

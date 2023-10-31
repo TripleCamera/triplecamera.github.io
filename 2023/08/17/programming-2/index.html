@@ -28,7 +28,7 @@
 <meta property="og:description" content="眼下正是八月，当我们正在享受这美好而又漫长的暑假的时候，竟然收到了来自计算机组成原理课程团队的一份礼物——预习任务。可喜可贺，可喜可贺。 为了省去安装软件的麻烦，课程团队贴心地为我们准备了虚拟机：Debian 11 系统、LXDE 桌面环境。但是虚拟机在我的高分屏电脑上表现不佳。于是我花了好大功夫来调好它。 助教告诉我：  课程组提供的虚拟机以“轻量”为目标进行构建，选用的桌面环境为LXDE，其优">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-27T16:00:00.000Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
 
@@ -180,7 +180,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-10 00:00:00" itemprop="dateModified" datetime="2023-09-10T00:00:00+08:00">2023-09-10</time>
+                <time title="修改时间：2023-10-28 00:00:00" itemprop="dateModified" datetime="2023-10-28T00:00:00+08:00">2023-10-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,7 +241,13 @@
 <li><a href="/images/openbox-3/shade.xbm">shade.xbm</a></li>
 </ul>
 <p>之后重启即可。（<a target="_blank" rel="noopener" href="https://forum.xfce.org/viewtopic.php?id=9312">参考链接</a>）</p>
-<h2 id="更新-co-submit"><a href="#更新-co-submit" class="headerlink" title="更新 co-submit"></a>更新 <code>co-submit</code></h2><p>虚拟机自带的 <code>co-submit</code> 会在提交时询问工具链，让人不知所云。按照讨论区帖子“关于使用虚拟机提交题目时遇到的问题”操作即可更新 <code>co-submit</code>。</p>
+<h2 id="一些其他的问题"><a href="#一些其他的问题" class="headerlink" title="一些其他的问题"></a>一些其他的问题</h2><h3 id="更新-co-submit"><a href="#更新-co-submit" class="headerlink" title="更新 co-submit"></a>更新 <code>co-submit</code></h3><p>虚拟机自带的 <code>co-submit</code> 会在提交时询问工具链，让人不知所云。下载最新版 <a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/assets/cscore-assets/co-submit.zip"><code>co-submit</code></a>，用压缩包中的 <code>co-submit.py</code> 覆盖 <code>/opt/co-submit/co-submit.py</code> 即可解决问题。</p>
+<p>参考：<a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/883/1317/posts">关于使用虚拟机提交题目时遇到的问题</a></p>
+<h3 id="修改-ISE-设计属性"><a href="#修改-ISE-设计属性" class="headerlink" title="修改 ISE 设计属性"></a>修改 ISE 设计属性</h3><p>如果虚拟机的 ISE 在仿真（Synthesize - XST）时出现如下报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR:Xst:2883 - Option &quot;-verilog2001&quot; is not available for the selected device family.</span><br><span class="line">ERROR:Xst:2883 - Option &quot;-mux_extract&quot; is not available for the selected device family.</span><br></pre></td></tr></table></figure>
+<p>需要在设计属性（Design Properties）中将“Family”修改为“Automotive Spartan3”，将“Device”修改为“XA3S50”。（此处为教程中使用的型号，其他某些型号也可以工作。）</p>
+<h3 id="ISE-testbench-生成错误"><a href="#ISE-testbench-生成错误" class="headerlink" title="ISE testbench 生成错误"></a>ISE testbench 生成错误</h3><p>如果虚拟机的 ISE 在生成 testbench 时生成了错误的内容，且无法与被测试模块相关联，那么可能是因为被测试模块中含有 <code>parameter</code>。注释掉 <code>parameter</code>，生成测试文件，然后再取消注释即可解决问题。<del>当然也可以自己手写 testbench</del></p>
+<p>参考：<a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/1037/1299/posts">经验分享：如何解决 ISE 自动生成的 testbench 错误的问题</a></p>
 
     </div>
 
@@ -340,7 +346,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-DPI"><span class="nav-number">1.</span> <span class="nav-text">修改 DPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%9B%BE%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.</span> <span class="nav-text">修改文件管理器图标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F"><span class="nav-number">3.</span> <span class="nav-text">修改文件管理器字体大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%8B%E6%96%B9%E9%9D%A2%E6%9D%BF%E5%A4%A7%E5%B0%8F"><span class="nav-number">4.</span> <span class="nav-text">修改下方面板大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%BA%94%E7%94%A8%E6%96%87%E6%9C%AC%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.</span> <span class="nav-text">修改应用文本大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%BC%A0%E6%A0%87%E5%85%89%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">6.</span> <span class="nav-text">修改鼠标光标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%AA%97%E5%8F%A3%E6%8C%89%E9%92%AE%E5%A4%A7%E5%B0%8F"><span class="nav-number">7.</span> <span class="nav-text">修改窗口按钮大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-co-submit"><span class="nav-number">8.</span> <span class="nav-text">更新 co-submit</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-DPI"><span class="nav-number">1.</span> <span class="nav-text">修改 DPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%9B%BE%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.</span> <span class="nav-text">修改文件管理器图标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F"><span class="nav-number">3.</span> <span class="nav-text">修改文件管理器字体大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%8B%E6%96%B9%E9%9D%A2%E6%9D%BF%E5%A4%A7%E5%B0%8F"><span class="nav-number">4.</span> <span class="nav-text">修改下方面板大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%BA%94%E7%94%A8%E6%96%87%E6%9C%AC%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.</span> <span class="nav-text">修改应用文本大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%BC%A0%E6%A0%87%E5%85%89%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">6.</span> <span class="nav-text">修改鼠标光标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%AA%97%E5%8F%A3%E6%8C%89%E9%92%AE%E5%A4%A7%E5%B0%8F"><span class="nav-number">7.</span> <span class="nav-text">修改窗口按钮大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">一些其他的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-co-submit"><span class="nav-number">8.1.</span> <span class="nav-text">更新 co-submit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-ISE-%E8%AE%BE%E8%AE%A1%E5%B1%9E%E6%80%A7"><span class="nav-number">8.2.</span> <span class="nav-text">修改 ISE 设计属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ISE-testbench-%E7%94%9F%E6%88%90%E9%94%99%E8%AF%AF"><span class="nav-number">8.3.</span> <span class="nav-text">ISE testbench 生成错误</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
