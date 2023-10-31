@@ -1,7 +1,7 @@
 ---
 title: 编程随笔（二）
 date: 2023-08-18
-updated: 2023-09-10
+updated: 2023-10-28
 categories:
 - 编程随笔
 ---
@@ -71,5 +71,21 @@ iGtk/CursorThemeSize=72
 
 之后重启即可。（[参考链接](https://forum.xfce.org/viewtopic.php?id=9312)）
 
-## 更新 `co-submit`
-虚拟机自带的 `co-submit` 会在提交时询问工具链，让人不知所云。按照讨论区帖子“关于使用虚拟机提交题目时遇到的问题”操作即可更新 `co-submit`。
+## 一些其他的问题
+### 更新 `co-submit`
+虚拟机自带的 `co-submit` 会在提交时询问工具链，让人不知所云。下载最新版 [`co-submit`](http://cscore.buaa.edu.cn/assets/cscore-assets/co-submit.zip)，用压缩包中的 `co-submit.py` 覆盖 `/opt/co-submit/co-submit.py` 即可解决问题。
+
+参考：[关于使用虚拟机提交题目时遇到的问题](http://cscore.buaa.edu.cn/#/discussion_area/883/1317/posts)
+
+### 修改 ISE 设计属性
+如果虚拟机的 ISE 在仿真（Synthesize - XST）时出现如下报错：
+```
+ERROR:Xst:2883 - Option "-verilog2001" is not available for the selected device family.
+ERROR:Xst:2883 - Option "-mux_extract" is not available for the selected device family.
+```
+需要在设计属性（Design Properties）中将“Family”修改为“Automotive Spartan3”，将“Device”修改为“XA3S50”。（此处为教程中使用的型号，其他某些型号也可以工作。）
+
+### ISE testbench 生成错误
+如果虚拟机的 ISE 在生成 testbench 时生成了错误的内容，且无法与被测试模块相关联，那么可能是因为被测试模块中含有 `parameter`。注释掉 `parameter`，生成测试文件，然后再取消注释即可解决问题。~~当然也可以自己手写 testbench~~
+
+参考：[经验分享：如何解决 ISE 自动生成的 testbench 错误的问题](http://cscore.buaa.edu.cn/#/discussion_area/1037/1299/posts)
