@@ -18,3 +18,7 @@ gitalk:
   client_secret: 3a6c863d9640cee4d16dc8e59c8053fa56d7591b
   admin_user: TripleCamera
   language: zh-CN
+
+math:
+  mathjax:
+    enable: true
