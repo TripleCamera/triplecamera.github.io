@@ -204,50 +204,93 @@
 
       
         <p>眼下正是八月，当我们正在享受这美好而又漫长的暑假的时候，竟然收到了来自计算机组成原理课程团队的一份礼物——预习任务。<del>可喜可贺，可喜可贺。</del></p>
-<p>为了省去安装软件的麻烦，课程团队贴心地为我们准备了虚拟机：Debian 11 系统、LXDE 桌面环境。但是虚拟机在我的高分屏电脑上表现不佳。于是我花了好大功夫来调好它。</p>
+<p>为了省去安装软件的麻烦，课程团队贴心地为我们准备了虚拟机：Debian 11
+系统、LXDE
+桌面环境。但是虚拟机在我的高分屏电脑上表现不佳。于是我花了好大功夫来调好它。</p>
 <p>助教告诉我：</p>
 <blockquote>
 <p>课程组提供的虚拟机以“轻量”为目标进行构建，选用的桌面环境为LXDE，其优点是占用资源少，缺点之一便是你遇到的——缺乏完善的图形界面支持，没有一键式的适配配置方案。</p>
 </blockquote>
 <p>但是为什么不换一个桌面环境呢？因为<del>我乐意</del>教程里说：</p>
 <blockquote>
-<p>在本地，我们可以换用 GNOME、KDE Plasma 等其他桌面环境，这类桌面环境的功能较默认的 LXDE 更齐全，兼容性更好。但往往占用的资源也较多，在虚拟化环境下性能表现较差，建议谨慎尝试。</p>
+<p>在本地，我们可以换用 GNOME、KDE Plasma
+等其他桌面环境，这类桌面环境的功能较默认的 LXDE
+更齐全，兼容性更好。但往往占用的资源也较多，在虚拟化环境下性能表现较差，建议谨慎尝试。</p>
 </blockquote>
 <p>注：以下配置适合于我的电脑，自己操作时请自行调整。</p>
-<h2 id="修改-DPI"><a href="#修改-DPI" class="headerlink" title="修改 DPI"></a>修改 DPI</h2><p><strong>这一部分按照教程即可。</strong></p>
+<h2 id="修改-dpi">修改 DPI</h2>
+<p><strong>这一部分按照教程即可。</strong></p>
 <p>向 <code>~/.Xresources</code> 文件中写入：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Xft.dpi: 283</span><br></pre></td></tr></table></figure>
+
 <p>然后 <code>sudo reboot</code> 重启。</p>
-<h2 id="修改文件管理器图标大小"><a href="#修改文件管理器图标大小" class="headerlink" title="修改文件管理器图标大小"></a>修改文件管理器图标大小</h2><p>打开文件管理器 PCManFM，在“编辑 &gt; 偏好设置 &gt; 显示 &gt; 图标”里将图标大小调为原来的 2 倍。</p>
-<h2 id="修改文件管理器字体大小"><a href="#修改文件管理器字体大小" class="headerlink" title="修改文件管理器字体大小"></a>修改文件管理器字体大小</h2><p>调高 DPI 会使文件管理器字体过大。右键桌面，在“桌面偏好设置 &gt; 外观 &gt; 文本 &gt; 标签文本字体”中将“大小”调为 8。</p>
+<h2 id="修改文件管理器图标大小">修改文件管理器图标大小</h2>
+<p>打开文件管理器 PCManFM，在“编辑 &gt; 偏好设置 &gt; 显示 &gt;
+图标”里将图标大小调为原来的 2 倍。</p>
+<h2 id="修改文件管理器字体大小">修改文件管理器字体大小</h2>
+<p>调高 DPI 会使文件管理器字体过大。右键桌面，在“桌面偏好设置 &gt; 外观
+&gt; 文本 &gt; 标签文本字体”中将“大小”调为 8。</p>
 <p>注：使用文件管理器时建议勾选“视图 &gt; 显示隐藏内容”。</p>
-<h2 id="修改下方面板大小"><a href="#修改下方面板大小" class="headerlink" title="修改下方面板大小"></a>修改下方面板大小</h2><p><strong>感谢助教的帮助！</strong></p>
-<p>右键下方面板，在“面板设置 &gt; 几何形状 &gt; 大小”中将“高度”和“图标大小”修改为原来的 2 倍。这导致了背景出错，于是又在此窗口下的“外观 &gt; 背景”中修改了背景。</p>
-<h2 id="修改应用文本大小"><a href="#修改应用文本大小" class="headerlink" title="修改应用文本大小"></a>修改应用文本大小</h2><p><strong>这一部分按照教程即可。</strong></p>
-<p>在终端键入 <code>gsettings set org.gnome.desktop.interface text-scaling-factor 2.5</code>（教程中推荐使用 0.5 的整数倍），之后重启。</p>
-<h2 id="修改鼠标光标大小"><a href="#修改鼠标光标大小" class="headerlink" title="修改鼠标光标大小"></a>修改鼠标光标大小</h2><p><strong>感谢助教的帮助！</strong></p>
+<h2 id="修改下方面板大小">修改下方面板大小</h2>
+<p><strong>感谢助教的帮助！</strong></p>
+<p>右键下方面板，在“面板设置 &gt; 几何形状 &gt;
+大小”中将“高度”和“图标大小”修改为原来的 2
+倍。这导致了背景出错，于是又在此窗口下的“外观 &gt;
+背景”中修改了背景。</p>
+<h2 id="修改应用文本大小">修改应用文本大小</h2>
+<p><strong>这一部分按照教程即可。</strong></p>
+<p>在终端键入
+<code>gsettings set org.gnome.desktop.interface text-scaling-factor 2.5</code>（教程中推荐使用
+0.5 的整数倍），之后重启。</p>
+<h2 id="修改鼠标光标大小">修改鼠标光标大小</h2>
+<p><strong>感谢助教的帮助！</strong></p>
 <p>打开 <code>~/.config/lxsession/LXDE/desktop.conf</code>，将</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iGtk/CursorThemeSize=18</span><br></pre></td></tr></table></figure>
+
 <p>修改为</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iGtk/CursorThemeSize=72</span><br></pre></td></tr></table></figure>
-<p>然后重启以确保更改完全生效。（<a target="_blank" rel="noopener" href="https://www.reddit.com/r/linux4noobs/comments/64nj3y/increasing_cursor_size_arch_lxde/">参考链接</a>）</p>
-<h2 id="修改窗口按钮大小"><a href="#修改窗口按钮大小" class="headerlink" title="修改窗口按钮大小"></a>修改窗口按钮大小</h2><p>虚拟机使用的默认主题为 Nightmare，存储路径为 <code>/usr/share/themes/Nightmare/openbox-3</code>。窗口按钮的位图为 XBM 文件，大小固定为 5x5。需要将其放大到 20x20，放大后的文件如下：（你可以直接使用它们覆盖你的虚拟机中的对应文件）</p>
+
+<p>然后重启以确保更改完全生效。（<a
+target="_blank" rel="noopener" href="https://www.reddit.com/r/linux4noobs/comments/64nj3y/increasing_cursor_size_arch_lxde/">参考链接</a>）</p>
+<h2 id="修改窗口按钮大小">修改窗口按钮大小</h2>
+<p>虚拟机使用的默认主题为 Nightmare，存储路径为
+<code>/usr/share/themes/Nightmare/openbox-3</code>。窗口按钮的位图为 XBM
+文件，大小固定为 5x5。需要将其放大到
+20x20，放大后的文件如下：（你可以直接使用它们覆盖你的虚拟机中的对应文件）</p>
 <ul>
 <li><a href="/images/openbox-3/bullet.xbm">bullet.xbm</a></li>
 <li><a href="/images/openbox-3/close.xbm">close.xbm</a></li>
 <li><a href="/images/openbox-3/iconify.xbm">iconify.xbm</a></li>
 <li><a href="/images/openbox-3/max.xbm">max.xbm</a></li>
-<li><a href="/images/openbox-3/shade_toggled.xbm">shade_toggled.xbm</a></li>
+<li><a
+href="/images/openbox-3/shade_toggled.xbm">shade_toggled.xbm</a></li>
 <li><a href="/images/openbox-3/shade.xbm">shade.xbm</a></li>
 </ul>
-<p>之后重启即可。（<a target="_blank" rel="noopener" href="https://forum.xfce.org/viewtopic.php?id=9312">参考链接</a>）</p>
-<h2 id="一些其他的问题"><a href="#一些其他的问题" class="headerlink" title="一些其他的问题"></a>一些其他的问题</h2><h3 id="更新-co-submit"><a href="#更新-co-submit" class="headerlink" title="更新 co-submit"></a>更新 <code>co-submit</code></h3><p>虚拟机自带的 <code>co-submit</code> 会在提交时询问工具链，让人不知所云。下载最新版 <a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/assets/cscore-assets/co-submit.zip"><code>co-submit</code></a>，用压缩包中的 <code>co-submit.py</code> 覆盖 <code>/opt/co-submit/co-submit.py</code> 即可解决问题。</p>
-<p>参考：<a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/883/1317/posts">关于使用虚拟机提交题目时遇到的问题</a></p>
-<h3 id="修改-ISE-设计属性"><a href="#修改-ISE-设计属性" class="headerlink" title="修改 ISE 设计属性"></a>修改 ISE 设计属性</h3><p>如果虚拟机的 ISE 在仿真（Synthesize - XST）时出现如下报错：</p>
+<p>之后重启即可。（<a
+target="_blank" rel="noopener" href="https://forum.xfce.org/viewtopic.php?id=9312">参考链接</a>）</p>
+<h2 id="一些其他的问题">一些其他的问题</h2>
+<h3 id="更新-co-submit">更新 <code>co-submit</code></h3>
+<p>虚拟机自带的 <code>co-submit</code>
+会在提交时询问工具链，让人不知所云。下载最新版 <a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/assets/cscore-assets/co-submit.zip"><code>co-submit</code></a>，用压缩包中的
+`co-submit.py` 覆盖 `/opt/co-submit/co-submit.py` 即可解决问题。</p>
+<p>参考：<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/883/1317/posts">关于使用虚拟机提交题目时遇到的问题</a></p>
+<h3 id="修改-ise-设计属性">修改 ISE 设计属性</h3>
+<p>如果虚拟机的 ISE 在仿真（Synthesize - XST）时出现如下报错：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR:Xst:2883 - Option &quot;-verilog2001&quot; is not available for the selected device family.</span><br><span class="line">ERROR:Xst:2883 - Option &quot;-mux_extract&quot; is not available for the selected device family.</span><br></pre></td></tr></table></figure>
-<p>需要在设计属性（Design Properties）中将“Family”修改为“Automotive Spartan3”，将“Device”修改为“XA3S50”。（此处为教程中使用的型号，其他某些型号也可以工作。）</p>
-<h3 id="ISE-testbench-生成错误"><a href="#ISE-testbench-生成错误" class="headerlink" title="ISE testbench 生成错误"></a>ISE testbench 生成错误</h3><p>如果虚拟机的 ISE 在生成 testbench 时生成了错误的内容，且无法与被测试模块相关联，那么可能是因为被测试模块中含有 <code>parameter</code>。注释掉 <code>parameter</code>，生成测试文件，然后再取消注释即可解决问题。<del>当然也可以自己手写 testbench</del></p>
-<p>参考：<a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/1037/1299/posts">经验分享：如何解决 ISE 自动生成的 testbench 错误的问题</a></p>
+
+<p>需要在设计属性（Design Properties）中将“Family”修改为“Automotive
+Spartan3”，将“Device”修改为“XA3S50”。（此处为教程中使用的型号，其他某些型号也可以工作。）</p>
+<h3 id="ise-testbench-生成错误">ISE testbench 生成错误</h3>
+<p>如果虚拟机的 ISE 在生成 testbench
+时生成了错误的内容，且无法与被测试模块相关联，那么可能是因为被测试模块中含有
+<code>parameter</code>。注释掉
+<code>parameter</code>，生成测试文件，然后再取消注释即可解决问题。<del>当然也可以自己手写
+testbench</del></p>
+<p>参考：<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/1037/1299/posts">经验分享：如何解决
+ISE 自动生成的 testbench 错误的问题</a></p>
 
     </div>
 
@@ -346,7 +389,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-DPI"><span class="nav-number">1.</span> <span class="nav-text">修改 DPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%9B%BE%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.</span> <span class="nav-text">修改文件管理器图标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F"><span class="nav-number">3.</span> <span class="nav-text">修改文件管理器字体大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%8B%E6%96%B9%E9%9D%A2%E6%9D%BF%E5%A4%A7%E5%B0%8F"><span class="nav-number">4.</span> <span class="nav-text">修改下方面板大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%BA%94%E7%94%A8%E6%96%87%E6%9C%AC%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.</span> <span class="nav-text">修改应用文本大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%BC%A0%E6%A0%87%E5%85%89%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">6.</span> <span class="nav-text">修改鼠标光标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%AA%97%E5%8F%A3%E6%8C%89%E9%92%AE%E5%A4%A7%E5%B0%8F"><span class="nav-number">7.</span> <span class="nav-text">修改窗口按钮大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">一些其他的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-co-submit"><span class="nav-number">8.1.</span> <span class="nav-text">更新 co-submit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-ISE-%E8%AE%BE%E8%AE%A1%E5%B1%9E%E6%80%A7"><span class="nav-number">8.2.</span> <span class="nav-text">修改 ISE 设计属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ISE-testbench-%E7%94%9F%E6%88%90%E9%94%99%E8%AF%AF"><span class="nav-number">8.3.</span> <span class="nav-text">ISE testbench 生成错误</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-dpi"><span class="nav-number">1.</span> <span class="nav-text">修改 DPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%9B%BE%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.</span> <span class="nav-text">修改文件管理器图标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F"><span class="nav-number">3.</span> <span class="nav-text">修改文件管理器字体大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%8B%E6%96%B9%E9%9D%A2%E6%9D%BF%E5%A4%A7%E5%B0%8F"><span class="nav-number">4.</span> <span class="nav-text">修改下方面板大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%BA%94%E7%94%A8%E6%96%87%E6%9C%AC%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.</span> <span class="nav-text">修改应用文本大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%BC%A0%E6%A0%87%E5%85%89%E6%A0%87%E5%A4%A7%E5%B0%8F"><span class="nav-number">6.</span> <span class="nav-text">修改鼠标光标大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%AA%97%E5%8F%A3%E6%8C%89%E9%92%AE%E5%A4%A7%E5%B0%8F"><span class="nav-number">7.</span> <span class="nav-text">修改窗口按钮大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">一些其他的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-co-submit"><span class="nav-number">8.1.</span> <span class="nav-text">更新 co-submit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-ise-%E8%AE%BE%E8%AE%A1%E5%B1%9E%E6%80%A7"><span class="nav-number">8.2.</span> <span class="nav-text">修改 ISE 设计属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ise-testbench-%E7%94%9F%E6%88%90%E9%94%99%E8%AF%AF"><span class="nav-number">8.3.</span> <span class="nav-text">ISE testbench 生成错误</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -392,7 +435,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -447,6 +490,8 @@
 
 
 
+
+  
 
   
 
