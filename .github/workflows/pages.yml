@@ -27,7 +27,9 @@ jobs:
         run: npm install
       # hexo-renderer-pandoc 需要外部 Pandoc
       - name: Install Pandoc
-        run: apt install -y pandoc
+        uses: pandoc/actions/setup@{main}
+        with:
+          version: 3.1.11.1
       - name: Build
         run: npm run build
       - name: Deploy
