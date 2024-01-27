@@ -25,6 +25,9 @@ jobs:
             ${{ runner.OS }}-npm-cache
       - name: Install Dependencies
         run: npm install
+      # hexo-renderer-pandoc 需要外部 Pandoc
+      - name: Install Pandoc
+        run: apt install -y pandoc
       - name: Build
         run: npm run build
       - name: Deploy

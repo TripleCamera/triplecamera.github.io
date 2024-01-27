@@ -103,3 +103,11 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+
+pandoc:
+  args:
+    - "-f"
+    - "gfm" # 默认的 "markdown" 不稳定
+    - "-t"
+    - "html"
+    - "--mathjax"
