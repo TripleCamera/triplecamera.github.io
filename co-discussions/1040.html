@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Ap0stader（贾同学） | 2023-10-21 18:39:10 | ⭐️ 3 | 💬️ 1  P2、分享、MIPS     贾博驿    P2课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！ P2.Q1 P2_L0_matrix 题目编号 1121-37 思考 这道题一是熟悉教程中二维数组内存操作的.macro写">
+<meta property="og:type" content="website">
+<meta property="og:title" content="P2课下做题记录分享">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1040.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="Ap0stader（贾同学） | 2023-10-21 18:39:10 | ⭐️ 3 | 💬️ 1  P2、分享、MIPS     贾博驿    P2课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！ P2.Q1 P2_L0_matrix 题目编号 1121-37 思考 这道题一是熟悉教程中二维数组内存操作的.macro写">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1040">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>P2课下做题记录分享 | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">P2课下做题记录分享
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>Ap0stader（贾同学）</span>
+|
+<abbr title="2023-10-21T18:39:10.76486+08:00"><time datetime="2023-10-21T18:39:10.76486+08:00">2023-10-21 18:39:10</time></abbr>
+|
+<span>⭐️ 3</span>
+|
+<span>💬️ 1</span>
+<br>
+<span>P2、分享、MIPS</span>
+</div>
+
+<div id="reply-3998" class="reply">
+<div class="reply-header">
+<span>贾博驿</span>
+</div>
+<div class="reply-text">
+
+<p><strong>P2课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！</strong></p>
+<h2 id="p2q1-p2_l0_matrix-题目编号-1121-37">P2.Q1 P2_L0_matrix 题目编号
+1121-37</h2>
+<h3 id="思考">思考</h3>
+<p>这道题一是熟悉教程中二维数组内存操作的<code>.macro</code>写法，二是复习for循环的汇编写法。矩阵相乘的C语言写法，在大一程设时已经写过了（当时写的还是<a
+target="_blank" rel="noopener" href="https://accoding.buaa.edu.cn/problem/6343/index">矩阵的幂次mini</a>）。
+编写时以下几点需要留意：</p>
+<ol type="1">
+<li><code>.space</code>后的数字的单位是bytes，如果在C语言中使用了长度为100的int型数组，<code>.space</code>后需要为400。</li>
+<li>如果使用<code>lw</code>和<code>sw</code>指令，访问的地址必须是4的非负整数倍。<strong>在<code>.data</code>中应该先写<code>.space</code>，再写<code>.asciiz</code></strong>。因为<code>.asciiz</code>不会对齐到4的整数倍。</li>
+<li>for循环嵌套for循环时容易出现结构混乱、标签混乱、寄存器混乱等情况。像C语言一样，先把<code>for (int i = 0; i &lt; n; ++i)</code>这一部分的结构写好，再去填充循环内的逻辑能有效避免最后返工修改的麻烦。嵌套或复用时<strong>框架</strong>上更改<strong>循环变量的寄存器4处</strong>和<strong>标签4处</strong>。我的for循环模板如下。
+ <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先前步骤：</span></span><br><span class="line"><span class="comment"># n &lt;= $s0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># for (int i = 0; i &lt; n; ++i)</span></span><br><span class="line"><span class="comment"># int i = 0</span></span><br><span class="line">li $<span class="built_in">s1</span>, <span class="number">0</span></span><br><span class="line"><span class="comment"># for循环标签模板</span></span><br><span class="line"><span class="comment"># for_(任务)_(循环变量名称)_begin/end</span></span><br><span class="line"><span class="symbol">for_input_i_begin:</span></span><br><span class="line">    <span class="comment"># i &lt; n</span></span><br><span class="line">    <span class="keyword">beq </span>$<span class="built_in">s1</span>, $<span class="built_in">s0</span>, for_input_i_end</span><br><span class="line"></span><br><span class="line">    <span class="comment"># do something</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ++i</span></span><br><span class="line">    <span class="keyword">addiu </span>$<span class="built_in">s1</span>, $<span class="built_in">s1</span>, <span class="number">1</span></span><br><span class="line">    <span class="keyword">j </span>for_input_i_begin</span><br><span class="line"><span class="symbol"></span></span><br><span class="line"><span class="symbol">for_input_i_end:</span></span><br><span class="line"><span class="comment"># do something</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="c语言代码">C语言代码</h3>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://github.com/ap0stader/CO_Note_2023_Fall/tree/main/7.P2%E8%AF%BE%E4%B8%8B/C/Q1.c">Q1.c</a></li>
+</ul>
+<h2 id="p2q2-p2_l0_judge-题目编号-1121-34">P2.Q2 P2_L0_judge 题目编号
+1121-34</h2>
+<h3 id="思考-1">思考</h3>
+<p>这道题是熟悉MARS中读取字符的syscall的特性（题目中有测评机与MARS表现不同的相关说明）。</p>
+<ol type="1">
+<li>使用<code>li $v0, 5</code>读取数字，会“吃”掉行尾的换行符。这与<code>scanf("%d", &amp;n)</code>不同。在C语言中，<code>scanf("%d", &amp;n)</code>后应该用<code>getchar()</code>“吃”掉行尾的换行符再循环调用<code>fgets()</code>，否则第一次<code>fgets()</code>只读取换行符。</li>
+<li>MARS的帮助文档中说明<code>li $v0, 8</code>与<code>fgets()</code>行为相同。如果<code>li $a0, 1</code>，不会有内容写入到内存中。如果<code>li $a0, 2</code>，将会一次读取字母，一次读取换行符。如果<code>li $a0, 3</code>，那么将一次性读取一个字母加换行符。因为只关心字母，下一读取时写入的内存地址只需+1，覆盖掉换行符。</li>
+</ol>
+<h3 id="c语言代码-1">C语言代码</h3>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://github.com/ap0stader/CO_Note_2023_Fall/tree/main/7.P2%E8%AF%BE%E4%B8%8B/C/Q2.c">Q2.c</a></li>
+</ul>
+<h2 id="p2q3-p2_l0_conv-题目编号-1121-281">P2.Q3 P2_L0_conv 题目编号
+1121-281</h2>
+<h3 id="思考-2">思考</h3>
+<p>P2.Q1的加强版，嵌套循环4层。编写时应十分注意标签的修改和寄存器与循环变量的对应关系。</p>
+<h3 id="c语言代码-2">C语言代码</h3>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://github.com/ap0stader/CO_Note_2023_Fall/tree/main/7.P2%E8%AF%BE%E4%B8%8B/C/Q3.c">Q3.c</a></li>
+</ul>
+<h2 id="p2q4-p2_l0_full_1-题目编号-1121-36">P2.Q4 P2_L0_full_1 题目编号
+1121-36</h2>
+<h3 id="思考-3">思考</h3>
+<p>这道题是复习递归函数的写法。全排列的C语言写法，在大一程设时已经编写过了（<a
+target="_blank" rel="noopener" href="https://accoding.buaa.edu.cn/problem/6020/index">重炮的数学时间</a>）。</p>
+<ol type="1">
+<li>和一般函数调用一样，应在开头和返回前对<code>$ra</code>和<code>$s</code>类的值进行保存和恢复。</li>
+<li><strong>要格外注意对于<code>$a</code>类和<code>$t</code>类寄存器的值的保存和恢复</strong>。一般函数调用时这些寄存器大都不做保护，但是递归时因为执行相同的指令，这些寄存器的值一定会被改变。若这些值在递归后还需要使用，一定要对其进行保存和恢复。</li>
+</ol>
+<h3 id="c语言代码-3">C语言代码</h3>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://github.com/ap0stader/CO_Note_2023_Fall/tree/main/7.P2%E8%AF%BE%E4%B8%8B/C/Q4.c">Q4.c</a></li>
+</ul>
+<h3 id="问题">问题</h3>
+<ol type="1">
+<li>翻译C语言的时候漏翻译了一个对于中间变量的操作，导致WA了一次。</li>
+</ol>
+<h2 id="p2附加题1-p2_l1_puzzle-题目编号-1121-38">P2.附加题1 P2_L1_puzzle
+题目编号 1121-38</h2>
+<h3 id="思考-4">思考</h3>
+<ol type="1">
+<li>题目提示使用深度优先搜索。比较简单的实现方式是“图数组 +
+是否已经访问的标记数组”的数据结构以及“出发 -&gt;
+判断是否可行&amp;是否已经访问 -&gt; 递归调用四个方向”的算法。</li>
+<li>为了使算法逻辑更加简单，在整个图的四个边加上了一圈表示不可以走的1，这样就不用判断这个值是否是边界值从而决定是否不向某个方向递归。实现的方法是先将一个(n
++ 2) * (m + 2)的二维数组置1，然后再把数据输入到中间的n *
+m的区域中。</li>
+<li>由于在内存中二维数组是线性存储的，故在进行顺序访问时不必使用两个for循环以及计算二维数组内存地址的<code>.macro</code>。使用一个for循环，从起始地址循环到终止地址即可。如：按照上一点读取输入的图，同一行内的两个相邻数字循环变量加4，换到下一行第一个数字循环变量加12，从0循环到<code>(n * m) &lt;&lt; 2</code>即可。</li>
+<li>题目中要求了<em>每组数据最多执行5,000,000条指令</em>，似乎需要一些高效的算法和优化，但是测试数据应该比较友善，基础的递归算法也能通过。<del>变态的测试数据例如6
+x 6的迷宫，全为0，从(1,1)到(6,6)，有1262816种走法。</del></li>
+<li><del><a
+target="_blank" rel="noopener" href="https://accoding.buaa.edu.cn/problem/178/index">accoding上与这题类似的古老题目</a></del></li>
+</ol>
+<h3 id="c语言代码-4">C语言代码</h3>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://github.com/ap0stader/CO_Note_2023_Fall/tree/main/7.P2%E8%AF%BE%E4%B8%8B/C/A1.c">A1.c</a></li>
+</ul>
+<h3 id="问题-1">问题</h3>
+<ol type="1">
+<li>入栈时先延长栈，再写入数据。出栈时先读取数据，再缩短栈。先进栈的后出栈。第一次编写时，写了两处错误的代码，导致了程序运行表现混乱。
+ <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">.macro</span> pop (%dst)</span><br><span class="line">    <span class="keyword">addiu </span>$<span class="built_in">sp</span>, $<span class="built_in">sp</span>, <span class="number">4</span></span><br><span class="line">    <span class="keyword">lw </span>%dst, ($<span class="built_in">sp</span>)</span><br><span class="line">.end_macro</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">push($<span class="built_in">a0</span>)</span><br><span class="line">push($<span class="built_in">a1</span>)</span><br><span class="line"><span class="comment"># do something</span></span><br><span class="line">pop($<span class="built_in">a0</span>)</span><br><span class="line">pop($<span class="built_in">a1</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="p2附加题2-p2_l1_factorial-题目编号-1121-418">P2.附加题2
+P2_L1_factorial 题目编号 1121-418</h2>
+<h3 id="思考-5">思考</h3>
+<p>本题的思想基础是高精度乘法。高精度乘法的C语言写法，在大一程设时已经编写过了（<a
+target="_blank" rel="noopener" href="https://accoding.buaa.edu.cn/problem/6386/index">求求你了帮帮可莉吧！</a>）。比较简单的实现方法是从1循环到输入给定的数值，每一轮都与之前的结果进行低精度乘高精度乘法。题目中保证***输出字符串长度小于等于1000***，即不会计算大于449的阶乘。第一版C语言代码如下。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 1000</span></span><br><span class="line"><span class="type">int</span> result[N];</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    result[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> in = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; N; j++) &#123;</span><br><span class="line">            <span class="type">int</span> temp_result = result[j] * i + in;</span><br><span class="line">            result[j] = temp_result % <span class="number">10</span>;</span><br><span class="line">            in = temp_result / <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> top_number = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = N - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">if</span> (result[i] != <span class="number">0</span>) &#123;</span><br><span class="line">            top_number = i;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = top_number; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, result[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="优化">优化</h3>
+<p>在MARS中，可以通过菜单栏中<code>Tools</code>-&gt;<code>Instruction Counter</code>或<code>Instruction Statistics</code>查看运行的指令数和不同类型的指令的分布情况。使用前点击<code>Connect to MIPS</code>。该计数器在复位之后的值不会清零会继续累加，需要手动点击<code>Reset</code>重置计数器。
+题目中要求<em><strong>步数限制为200,000</strong></em>，若直接按照上述代码翻译，将会获得<strong>TLE</strong>。</p>
+<ol type="1">
+<li><p>TLE -&gt; O1（已经能AC）: <strong>限长</strong><br />
+TLE版之所以步数特别多，主要来源于<code>for (int j = 0; j &lt; N; j++)</code>，每一次循环时都要对1000个位做乘法。但是实际上很多时候都是在做没有意义的乘0。故设一变量保存当前最高位的数组下标。这个值在已经乘到了最高位，但是进位仍不为0的情况下+1，继续循环直到进位为0。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> size = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="type">int</span> in = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= size; j++) &#123;</span><br><span class="line">        <span class="type">int</span> temp_result = result[j] * i + in;</span><br><span class="line">        result[j] = temp_result % <span class="number">10</span>;</span><br><span class="line">        in = temp_result / <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">if</span> (j == size &amp;&amp; in &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            size++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优化之后，因为测试数据也比较友善，已经能够AC了。TLE版本计算82位的60!需要832552步，O1版本只需要29295步。能在要求步数内计算完的值达到了242位的140!。</p></li>
+<li><p>O1 -&gt; O2 : <strong>压位</strong><br />
+虽然已经AC了，但是受到了<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/1027/1158/posts">http://cscore.buaa.edu.cn/#/discussion_area/1027/1158/posts</a>的启发，故继续在O1版上进行优化。<br />
+O1版中虽然已经限制了每次计算的位数，但是计算机并不是只能计算1位乘3位的乘法的。如果每个int单元都保存多位数字，在做乘法时就能一次性对多位进行乘法，保存的位数越多，能减少额计算步数就越多。由题目的限制可知，不会计算超过449的阶乘，而<br />
+<code>999999 x 449 = 44899951 &lt; 2147483647</code><br />
+<code>9999999 x 449 = 4489999551 &gt; 2147483647</code><br />
+故为了保证计算安全，每个int单元保存6位数字。只需要长度为167的int数组</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> result[<span class="number">167</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> size = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="type">int</span> in = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= size; j++) &#123;</span><br><span class="line">        <span class="type">int</span> temp_result = result[j] * i + in;</span><br><span class="line">        result[j] = temp_result % <span class="number">1000000</span>;</span><br><span class="line">        in = temp_result / <span class="number">1000000</span>;</span><br><span class="line">        <span class="keyword">if</span> (j == size &amp;&amp; in &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            size++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每个int单元保存6位数字，但每个单元可能高位为0，故输出时应该补0到6位。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%06d&quot;</span>, result[i]);</span><br></pre></td></tr></table></figure>
+
+<p>汇编中可以通过连续判断以及输出0实现<code>%06d</code>的效果。</p>
+ <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">bge </span>$<span class="built_in">t0</span>, <span class="number">1000</span>, output</span><br><span class="line">li $<span class="built_in">v0</span> -&gt; li $<span class="built_in">a0</span> -&gt; <span class="keyword">syscall</span></span><br><span class="line"><span class="keyword"></span>   <span class="keyword">bge </span>$<span class="built_in">t0</span>, <span class="number">100</span>, output</span><br><span class="line">li $<span class="built_in">v0</span> -&gt; li $<span class="built_in">a0</span> -&gt; <span class="keyword">syscall</span></span><br><span class="line"><span class="keyword"></span>   ......</span><br></pre></td></tr></table></figure>
+
+<p>优化之后，O1版本需要198291步计算的242位的140!，在O2版本只需要35451步。能在要求步数内计算完的值达到了637位的309!。</p></li>
+<li><p>O2 -&gt; O3 : <strong>换指令</strong><br />
+距离题目给定的最大值1000位还有距离，还可以在什么地方进行优化呢？换指令！步数的大头来源于这两个for循环。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= size; j++) &#123;</span><br><span class="line">        <span class="comment">// do something</span></span><br><span class="line">        <span class="keyword">if</span> (j == size &amp;&amp; in &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            size++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我在汇编中实现for循环中的<code>i &lt;= n</code>使用其逆关系所对应的分支指令<code>bgt</code>。然而<code>bgt</code>并不是基本指令，在编译之后会变为<code>slt</code>和<code>bne</code>两条基本指令，即每次循环时这一处都会执行两步。但是，若for循环中的判断逻辑是<code>i &lt; n</code>，则可以用<code>beq</code>实现在<code>i == n</code>时跳转到<code>for_end</code>。故外层的for循环可以做如下修改。</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt; n + <span class="number">1</span>; i++) &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是要注意，此时我们用<code>beq</code>，如果<code>n == 0</code>的话，
+<strong>i无论如何自增都不可能触发beq的分支，需要特判。</strong>
+因为在循环之前已经通过<code>result[0] = 1;</code>赋了初值，直接跳转到输出部分即可。</p>
+<p>但是内层的for循环在<code>j == size</code>时需要执行<code>size++</code>，并且循环有可能继续。此时直接使用<code>beq</code>指令跳转到<code>for_end</code>并不合适。此时汇编语言相比高级编程语言灵活的一点体现出来了，那就是灵活的跳转。虽然C语言存在goto语句，但是在几乎所有情况下我们都不会使用goto，因为这会破坏结构化程序设计的模式。但是在汇编中我们经常使用各种跳转。故内层的for循环可以做如下修改。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> size = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt; n + <span class="number">1</span>; i++) &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="type">int</span> j = <span class="number">0</span>;</span><br><span class="line">    loop_begin:</span><br><span class="line">    <span class="keyword">while</span> (j &lt; size)&#123;</span><br><span class="line">        <span class="comment">// do something</span></span><br><span class="line">        j++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (in &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        size++;</span><br><span class="line">        <span class="keyword">goto</span> loop_begin;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我将判断逻辑修改为了<code>j &lt; size</code>以使用<code>beq</code>指令。<strong>同时将<code>size</code> 的初值设置为1</strong>，当<code>j == size</code>时<code>result[j]</code>指向可能要增加的新的单元。此时若进位<code>in</code>不为零，则<code>size++</code>。再跳转回循环中，<code>j &lt; size</code>成立，可以继续执行循环内的语句。这样同时减少了<code>bgt</code>指令导致的拓展指令占用步数的问题，还解决了在for循环中反复进行if判断的问题。</p>
+<p>除此之外，删除了循环对一个寄存器赋值立即数。在最后进行输出时是一直在输出数字，不必每次都完成<code>li $v0 -&gt; li $a0 -&gt; syscall</code>的路径，在循环开始前<code>li $v0 1</code>即可。对于上一点实现<code>printf("%06d", result[i]);</code>中的立即数也可以先赋值给一个寄存器。这样可以避免对于<strong>大于等于32768的立即数使用bge指令会被翻译成四条基本指令。</strong></p>
+<p>优化之后，O2版本需要198821步计算的637位的309!，在O3版本只需要181119步。能在要求步数内计算完的值达到了700位的334!。</p>
+<p>虽然距离题目给定的最大值1000位还有距离，输出部分虽然还可再优化，但输出部分的步数只有几千步，优化的意义不大。每一条指令都已经是压着MIPS指令集设计的规范，个人分析也没有重复的判断和运算。在不修改算法的情况下，已经基本达到了我的极限了。<br />
+忽然想起《庄子》中写道“吾生也有涯，而知也无涯。以有涯随无涯，殆已！”，这一次的优化就到这里吧
+<del>，还有OO作业要写。</del></p></li>
+</ol>
+<p>总结：</p>
+<ol type="1">
+<li><p>各版本对比 | 版本 | 计算60!的步数 | | :--: | :-----------: | |
+TLE | 832552 | | O1 | 29295 | | O2 | 5878 | | O3 | 4879 |</p></li>
+<li><p>O3版优化结果 | 计算数字 | 结果位数 | 步数 | | :------: | :------:
+| :----: | | 60! | 82 | 4879 | | 334! | 700 | 198906 | | 335! | 703 |
+200215 | | 449! | 999 | 380022 |</p></li>
+</ol>
+<h3 id="问题-2">问题</h3>
+<ol type="1">
+<li>忘记了<code>.space</code>后的数字的单位是bytes，<code>int result[1000]</code>翻译成了<code>result: .space 1000</code>，虽然并不会导致程序的运行出现异常，但是者本身就是个错误。</li>
+</ol>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-21T18:39:10.772363+08:00"><time datetime="2023-10-21T18:39:10.772363+08:00">2023-10-21 18:39:10</time></abbr>
+|
+<span>CC BY-NC 4.0</span>
+<span class="reply-vote">❤️ 18</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#p2q1-p2_l0_matrix-%E9%A2%98%E7%9B%AE%E7%BC%96%E5%8F%B7-1121-37"><span class="nav-number">1.</span> <span class="nav-text">P2.Q1 P2_L0_matrix 题目编号
+1121-37</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">1.1.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">C语言代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#p2q2-p2_l0_judge-%E9%A2%98%E7%9B%AE%E7%BC%96%E5%8F%B7-1121-34"><span class="nav-number">2.</span> <span class="nav-text">P2.Q2 P2_L0_judge 题目编号
+1121-34</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83-1"><span class="nav-number">2.1.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81-1"><span class="nav-number">2.2.</span> <span class="nav-text">C语言代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#p2q3-p2_l0_conv-%E9%A2%98%E7%9B%AE%E7%BC%96%E5%8F%B7-1121-281"><span class="nav-number">3.</span> <span class="nav-text">P2.Q3 P2_L0_conv 题目编号
+1121-281</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83-2"><span class="nav-number">3.1.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81-2"><span class="nav-number">3.2.</span> <span class="nav-text">C语言代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#p2q4-p2_l0_full_1-%E9%A2%98%E7%9B%AE%E7%BC%96%E5%8F%B7-1121-36"><span class="nav-number">4.</span> <span class="nav-text">P2.Q4 P2_L0_full_1 题目编号
+1121-36</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83-3"><span class="nav-number">4.1.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81-3"><span class="nav-number">4.2.</span> <span class="nav-text">C语言代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">4.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#p2%E9%99%84%E5%8A%A0%E9%A2%981-p2_l1_puzzle-%E9%A2%98%E7%9B%AE%E7%BC%96%E5%8F%B7-1121-38"><span class="nav-number">5.</span> <span class="nav-text">P2.附加题1 P2_L1_puzzle
+题目编号 1121-38</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83-4"><span class="nav-number">5.1.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81-4"><span class="nav-number">5.2.</span> <span class="nav-text">C语言代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-1"><span class="nav-number">5.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#p2%E9%99%84%E5%8A%A0%E9%A2%982-p2_l1_factorial-%E9%A2%98%E7%9B%AE%E7%BC%96%E5%8F%B7-1121-418"><span class="nav-number">6.</span> <span class="nav-text">P2.附加题2
+P2_L1_factorial 题目编号 1121-418</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83-5"><span class="nav-number">6.1.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">6.2.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-2"><span class="nav-number">6.3.</span> <span class="nav-text">问题</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : 'fb6529bb4e510933be0c6c269be9287d',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

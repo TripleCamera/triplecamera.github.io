@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="离.nvme0n1p2 | 2023-10-27 23:11:35 | ⭐️ 1 | 💬️ 2       石伊聪    TL;DR(或许也没有那么长) 食用方法  下载Python脚本replace.py （或者也许你愿意从文末复制？）   https:&#x2F;&#x2F;bhpan.buaa.edu.cn&#x2F;link&#x2F;AA142FF068D230494AB6CF02281EEFE6FF Name: repl">
+<meta property="og:type" content="website">
+<meta property="og:title" content="一个向ROM导入机器码的Python脚本">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1061.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="离.nvme0n1p2 | 2023-10-27 23:11:35 | ⭐️ 1 | 💬️ 2       石伊聪    TL;DR(或许也没有那么长) 食用方法  下载Python脚本replace.py （或者也许你愿意从文末复制？）   https:&#x2F;&#x2F;bhpan.buaa.edu.cn&#x2F;link&#x2F;AA142FF068D230494AB6CF02281EEFE6FF Name: repl">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1061">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>一个向ROM导入机器码的Python脚本 | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">一个向ROM导入机器码的Python脚本
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>离.nvme0n1p2</span>
+|
+<abbr title="2023-10-27T23:11:35.620132+08:00"><time datetime="2023-10-27T23:11:35.620132+08:00">2023-10-27 23:11:35</time></abbr>
+|
+<span>⭐️ 1</span>
+|
+<span>💬️ 2</span>
+<br>
+<span></span>
+</div>
+
+<div id="reply-4075" class="reply">
+<div class="reply-header">
+<span>石伊聪</span>
+</div>
+<div class="reply-text">
+
+<h1 id="tldr或许也没有那么长">TL;DR(或许也没有那么长)</h1>
+<h2 id="食用方法">食用方法</h2>
+<ul>
+<li>下载Python脚本<code>replace.py</code>
+（或者也许你愿意从文末复制？）</li>
+</ul>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://bhpan.buaa.edu.cn/link/AA142FF068D230494AB6CF02281EEFE6FF">https://bhpan.buaa.edu.cn/link/AA142FF068D230494AB6CF02281EEFE6FF</a>
+Name: replace.py Expires: 2023-11-26 21:59 Pickup Code:
+<code>0xdeadbeef</code></p>
+</blockquote>
+<ul>
+<li>执行以下命令：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python replace.py &lt;.circ文件名&gt; &lt;机器码文本文件名&gt;</span><br></pre></td></tr></table></figure>
+
+<p>大功告成！修改后的.circ文件将保存在当前目录中，文件名为原文件名后加上当前的时间，格式为<code>原文件名_机器码文本文件名_hhmmss.circ</code></p>
+<p>使用例： <img
+src="/assets/cscore-image/22371207/6d2f1ef9-1929-4db9-9ec0-915871db36d4/image.png"
+alt="image.png" /></p>
+<h2 id="值得注意的事">值得注意的事</h2>
+<h3 id="支持什么机器码文本文件">支持什么机器码文本文件？</h3>
+<ol type="1">
+<li><code>Mars</code>以<code>Hexadecimal Text</code>格式导出的文件</li>
+<li><code>Logisim</code>通过<code>ROM-&gt;Contents-&gt;Save</code>方式导出的文件</li>
+</ol>
+<h3 id="提示-no-match">提示 No match?</h3>
+<p>鉴于P3课下的需求，本脚本设置为匹配<code>Address Bit Width = 12</code>且<code>Data Bit Width=32</code>的ROM，如果有其他需求，可以自行修改<code>pattern</code>变量的相关内容</p>
+<h1 id="背景">背景</h1>
+<p>向Logisim中导入取自Mars的机器码时，需要手动修改文本文件，且涉及多次鼠标点击。鉴于笔者较懒，遂尝试编写脚本一劳永逸地解决问题。</p>
+<h1 id="前期准备">前期准备</h1>
+<p>瞪眼法发现，Logisim
+以<code>.circ</code>文件格式保存电路，这些文件本质上是 XML
+文档，允许以文本形式进行读取和编辑,样式如下图：</p>
+<p><img
+src="/assets/cscore-image/22371207/3cbc9e24-f22c-4c7f-85c5-43ec162f5f2f/image.png"
+alt="image.png" /></p>
+<p>以文本格式打开某含有ROM组件的<code>.circ</code>文件，搜索<code>ROM</code>关键词得：</p>
+<p><img
+src="/assets/cscore-image/22371207/617b71ad-aa00-4905-b15b-96fcbdba8620/image.png"
+alt="image.png" /></p>
+<p>我们先看第一个：</p>
+<p><img
+src="/assets/cscore-image/22371207/f23c9619-e826-4260-af84-8fda24d2af50/image.png"
+alt="image.png" /></p>
+<p>这个显然不是，略过（逃</p>
+<blockquote>
+<p>在此部分实际上存储的是从左侧工具栏选择组件时的默认设置。你可能注意到，当从侧边栏选择一个组件并在将其放置到画布上之前修改了左下角的组件属性，那么下一次选择该组件时，其默认属性就会变为之前修改过的设置，这些设置重启Logisim后仍会保留。这些个默认设置就存储在这里。</p>
+</blockquote>
+<p>再看第二个:</p>
+<p><img
+src="/assets/cscore-image/22371207/4fc76d5f-d272-4d6c-a853-39fe690919df/image.png"
+alt="image.png" /></p>
+<p>直觉告诉我们它就是我们想要的，我们观察它的几个标签：</p>
+<ul>
+<li><code>loc=(310，170)</code>决定了组件在画布上的位置，鉴于每个人的画布布局（通常来说）都不同，这部分的影响需要排除</li>
+<li><code>addrWidth=12</code>和<code>dataWidth=32</code>规定了组件的地址位宽的数据位宽，在P3中，ROM的要求是地址位宽12位，数据位宽32位</li>
+<li><code>contents</code>显然我们想要替换的机器码就保存在这里</li>
+</ul>
+<h1 id="脚本编写">脚本编写</h1>
+<h2 id="正则表达式设计">正则表达式设计</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(&lt;comp lib=&quot;4&quot; loc=&quot;\([^&quot;]+\)&quot; name=&quot;ROM&quot;&gt;\s*&lt;a name=&quot;addrWidth&quot; val=&quot;12&quot;/&gt;\s*&lt;a name=&quot;dataWidth&quot; val=&quot;32&quot;/&gt;\s*&lt;a name=&quot;contents&quot;&gt;addr/data: 12 32\s*)(.*?)(&lt;/a&gt;\s*&lt;/comp&gt;)</span><br></pre></td></tr></table></figure>
+
+<p>比OOPre的三个式子简单多了()</p>
+<h2 id="python程序设计">Python程序设计</h2>
+<p>略，总之就是读取-查找-替换-输出四步走</p>
+<h1 id="改进空间">改进空间</h1>
+<p>本脚本有很多改进的方向，笔者本人就想到了两个</p>
+<ul>
+<li>当前脚本使用的<code>re.search()</code>方法只返回第一个匹配结果，对于P3的要求足够，但是可以改进</li>
+<li>可以接受可选的多个输入，决定匹配ROM的<code>addrWidth</code>和<code>dataWidth</code></li>
+</ul>
+<h1 id="源代码">源代码</h1>
+<blockquote>
+<p>（或者也许你愿意从文末复制？）</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_file</span>(<span class="params">file_name</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_name, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            <span class="keyword">return</span> f.readlines()</span><br><span class="line">    <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;File not found: &quot;</span> + file_name)</span><br><span class="line">        exit(<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write_file</span>(<span class="params">file_name, lines</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_name, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.writelines(lines)</span><br><span class="line">    <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;File not found: &quot;</span> + file_name)</span><br><span class="line">        exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">circ_flie_path, hex_text_path</span>):</span><br><span class="line">    circ_data = read_file(circ_flie_path)</span><br><span class="line">    hex_data = read_file(hex_text_path)</span><br><span class="line"></span><br><span class="line">    new_hex_code = []</span><br><span class="line">    start = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> hex_data:</span><br><span class="line">        <span class="keyword">if</span> line.strip() != <span class="string">&#x27;v2.0 raw&#x27;</span>:</span><br><span class="line">            start = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">if</span> start:</span><br><span class="line">            new_hex_code.append(line)</span><br><span class="line"></span><br><span class="line">    circ_content = <span class="string">&quot;&quot;</span>.join(circ_data)</span><br><span class="line">    pattern = (</span><br><span class="line">        <span class="string">r&#x27;(&lt;comp lib=&quot;4&quot; loc=&quot;\([^&quot;]+\)&quot; name=&quot;ROM&quot;&gt;\s*&#x27;</span></span><br><span class="line">        <span class="string">r&#x27;&lt;a name=&quot;addrWidth&quot; val=&quot;12&quot;/&gt;\s*&#x27;</span></span><br><span class="line">        <span class="string">r&#x27;&lt;a name=&quot;dataWidth&quot; val=&quot;32&quot;/&gt;\s*&#x27;</span></span><br><span class="line">        <span class="string">r&#x27;&lt;a name=&quot;contents&quot;&gt;addr/data: 12 32\s*)(.*?)(&lt;/a&gt;\s*&lt;/comp&gt;)&#x27;</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">match</span> = re.search(pattern, circ_content, re.DOTALL)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">match</span> <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;No match&quot;</span>)</span><br><span class="line">        exit(<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    result = []</span><br><span class="line"></span><br><span class="line">    result.append(circ_content[:<span class="keyword">match</span>.start()])</span><br><span class="line">    result.append(<span class="keyword">match</span>.group(<span class="number">1</span>))</span><br><span class="line">    result.append(<span class="string">&quot;&quot;</span>.join(new_hex_code))</span><br><span class="line">    result.append(<span class="keyword">match</span>.group(<span class="number">3</span>))</span><br><span class="line">    result.append(circ_content[<span class="keyword">match</span>.end():])</span><br><span class="line"></span><br><span class="line">    result = <span class="string">&quot;&quot;</span>.join(result)</span><br><span class="line"></span><br><span class="line">    circ_name = circ_flie_path.split(<span class="string">&#x27;\\&#x27;</span>)[-<span class="number">1</span>].split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">    hex_name = hex_text_path.split(<span class="string">&#x27;\\&#x27;</span>)[-<span class="number">1</span>].split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">    new_file_name =  circ_name + <span class="string">&quot;_&quot;</span> + hex_name + <span class="string">&quot;_&quot;</span> + datetime.datetime.now().strftime(<span class="string">&quot;%H%M%S&quot;</span>) + <span class="string">&quot;.circ&quot;</span></span><br><span class="line">    </span><br><span class="line">    write_file(new_file_name, result)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Replace success, new file: &#x27;</span> + new_file_name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) != <span class="number">3</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Usage: python replace.py &lt;circ_file_path&gt; &lt;hex_text_path&gt;&quot;</span>)</span><br><span class="line">        exit(<span class="number">1</span>)</span><br><span class="line">    main(sys.argv[<span class="number">1</span>], sys.argv[<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-27T23:11:35.626538+08:00"><time datetime="2023-10-27T23:11:35.626538+08:00">2023-10-27 23:11:35</time></abbr>
+|
+<span>CC BY-SA 4.0（代码 MIT）</span>
+<span class="reply-vote">❤️ 1</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4095" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-29T18:46:13.758725+08:00"><time datetime="2023-10-29T18:46:13.758725+08:00">2023-10-29 18:46:13</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tldr%E6%88%96%E8%AE%B8%E4%B9%9F%E6%B2%A1%E6%9C%89%E9%82%A3%E4%B9%88%E9%95%BF"><span class="nav-number">1.</span> <span class="nav-text">TL;DR(或许也没有那么长)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A3%9F%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">食用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%80%BC%E5%BE%97%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B"><span class="nav-number">1.2.</span> <span class="nav-text">值得注意的事</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E4%BB%80%E4%B9%88%E6%9C%BA%E5%99%A8%E7%A0%81%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">支持什么机器码文本文件？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA-no-match"><span class="nav-number">1.2.2.</span> <span class="nav-text">提示 No match?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-number">3.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99"><span class="nav-number">4.</span> <span class="nav-text">脚本编写</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.1.</span> <span class="nav-text">正则表达式设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.2.</span> <span class="nav-text">Python程序设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B%E7%A9%BA%E9%97%B4"><span class="nav-number">5.</span> <span class="nav-text">改进空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="nav-number">6.</span> <span class="nav-text">源代码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : 'cdf130bd1f06d1f1e90d1c9b56e0515d',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

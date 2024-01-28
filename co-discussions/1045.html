@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="fysszlr（张同学） | 2023-10-24 12:29:09 | ⭐️ 1 | 💬️ 2  P2、分享、MIPS     张栗瑞    在十分紧张的情况下幸运完成了P2，于是结合考试中做的一些笔记与大家略微分享我的思路 由于大家编写MIPS代码时主要以翻译为主，且选择工具链不一（指各种语言），所以本文将只展示思路，以伪代码形式呈现，并将我遇到的MIPS难点单独列出 和《算法设计与分析》">
+<meta property="og:type" content="website">
+<meta property="og:title" content="P2上机分析与记录">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1045.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="fysszlr（张同学） | 2023-10-24 12:29:09 | ⭐️ 1 | 💬️ 2  P2、分享、MIPS     张栗瑞    在十分紧张的情况下幸运完成了P2，于是结合考试中做的一些笔记与大家略微分享我的思路 由于大家编写MIPS代码时主要以翻译为主，且选择工具链不一（指各种语言），所以本文将只展示思路，以伪代码形式呈现，并将我遇到的MIPS难点单独列出 和《算法设计与分析》">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1045">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>P2上机分析与记录 | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">P2上机分析与记录
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>fysszlr（张同学）</span>
+|
+<abbr title="2023-10-24T12:29:09.182335+08:00"><time datetime="2023-10-24T12:29:09.182335+08:00">2023-10-24 12:29:09</time></abbr>
+|
+<span>⭐️ 1</span>
+|
+<span>💬️ 2</span>
+<br>
+<span>P2、分享、MIPS</span>
+</div>
+
+<div id="reply-4021" class="reply">
+<div class="reply-header">
+<span>张栗瑞</span>
+</div>
+<div class="reply-text">
+
+<p>在十分紧张的情况下幸运完成了P2，于是结合考试中做的一些笔记与大家略微分享我的思路</p>
+<p>由于大家编写MIPS代码时主要以翻译为主，且选择工具链不一（指各种语言），所以本文将只展示思路，以伪代码形式呈现，并将我遇到的MIPS难点单独列出</p>
+<p><del>和《算法设计与分析》考试是笔试一个道理www</del></p>
+<hr />
+<h2 id="t1p2_l2_merorder_2023"><a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/problem?ProblemId=1141&amp;PieId=1122">T1：P2_L2_merorder_2023</a></h2>
+<h3 id="main-idea">Main Idea</h3>
+<p>由于两个序列均为已经排好序的不下降数组，所以在编写程序时只需要遍历两个数组一遍，将较小者逐一合入新数组即可</p>
+<h3 id="pseudo-code">Pseudo Code</h3>
+<p>输入：两个长度分别为m，n的不下降数组a[] b[]</p>
+<p>输出：一个长度为(m+n)的数组ans[]，为所求合并后的数组 <span
+class="math display">\[
+\begin{aligned}
+&amp;i\leftarrow 0;\\
+&amp;j\leftarrow 0;\\
+&amp;while\ (i&lt;n\ \&amp;\&amp;\ j&lt;m)\ do\\
+&amp;\quad while\ (A[i]&lt;=B[j])\ do\\
+&amp;\qquad print\ (A[i++]);\\
+&amp;\quad end\\
+&amp;\quad while\ (A[i]&gt;B[j])\ do\\
+&amp;\qquad print\ (B[j++]);\\
+&amp;\quad end\\
+&amp;end\\
+&amp;while\ (i&lt;n)\ do\\
+&amp;\quad print(A[i++]);\\
+&amp;end\\
+&amp;while\ (j&lt;m)\ do\\
+&amp;\quad print(B[j++]);\\
+&amp;end\\
+\end{aligned}
+\]</span> 复杂度分析：i和j需要遍历完两个数组一遍，所以复杂度为O(n+m)</p>
+<h3 id="注意点">注意点：</h3>
+<ol type="1">
+<li><p>这种写法由于是while套while，会导致lable上增加难度，建议提前在代码中为不同的while注释不同的名字，方便程序写作，如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>()&#123;</span><br><span class="line"><span class="comment">//while1</span></span><br><span class="line">    <span class="keyword">while</span>()<span class="comment">/*do something*/</span>;</span><br><span class="line">    <span class="comment">//while2</span></span><br><span class="line">    <span class="keyword">while</span>()<span class="comment">/*do something*/</span>;</span><br><span class="line">	<span class="comment">//while3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span>()<span class="comment">/*do something*/</span>;</span><br><span class="line"><span class="comment">//while4</span></span><br><span class="line"><span class="keyword">while</span>()<span class="comment">/*do something*/</span>;</span><br><span class="line"><span class="comment">//while5</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在实际写作中，因为不考虑效率要求，也可以将内层循环中的while改为if，设置标签时会更简单一些</p></li>
+<li><p>本题数据范围较小，所以也可以使用类似计数排序的方法，期望复杂度和遍历两个数组一致</p></li>
+<li><p>说出来给大家乐呵一下，在下<code>.space</code>忘乘4了，de了好一会儿🙏</p></li>
+</ol>
+<hr />
+<h2 id="t2p2_l1_asteroids_2023"><a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/problem?ProblemId=1162&amp;PieId=1122">T2：P2_L1_asteroids_2023</a></h2>
+<p>题目编号 1122-1162</p>
+<p>本题的代码已经给出来啦~而且方法很巧妙，对着翻译就好！</p>
+<p><del>甚至可以不看题面</del></p>
+<p>没有想到可以补充的地方，过~</p>
+<hr />
+<h2 id="t3leetcode-390-消除游戏"><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/elimination-game">T3：LeetCode: 390.
+消除游戏</a></h2>
+<p>为大家找到了代码的提交入口（误）</p>
+<p>除用标程的递归外（标程的参数可以减少至一个），本题也可以使用位运算完成</p>
+<h3 id="main-idea-1">Main Idea</h3>
+<p>将这n个数标记为0…n-1</p>
+<p>若当前为奇数轮，则删除操作为从0开始，隔一个删除一个，可以等效为“删除所有二进制末尾为0的数字“，答案当前位的二进制赋1</p>
+<p>若当前为偶数轮，则删除操作为从最后一个数开始，隔一个删除一个，可以等效为”删除所有二进制下末尾数与最大数末位数相同的数字“，答案当前位的二进制赋最大数末位数的反</p>
+<p>换种说法，就是： <span class="math display">\[
+(ans)_2[i]=\left\{
+\begin{aligned}
+&amp;1&amp;i\equiv 0(mod\ 2)\\
+&amp;(n)_2[i]&amp;i\equiv 1(mod\ 2)\\
+\end{aligned}
+\right.
+\]</span> 注意，在上式中：</p>
+<ol type="1">
+<li><p>i代表的是二进制第i位，奇数轮的i为偶数，偶数轮的i为奇数</p></li>
+<li><p>编号从0开始，所以 <span class="math display">\[
+(n)_2[i]==\sim (n-1)_2[i]
+\]</span></p></li>
+</ol>
+<p>我们的编号是从0开始的，最后别忘了将答案加一</p>
+<h3 id="pseudo-code1">Pseudo Code1</h3>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;ans\leftarrow 0;\\
+&amp;for\ i\ from\ 0\ to\ \log(n)-1\ do\\
+&amp;\quad if\ (i\&amp;1)\ then\\
+&amp;\qquad ans\leftarrow ans\ |\ (2^i\ \&amp;\ n);\\
+&amp;\quad else\\
+&amp;\qquad ans\leftarrow ans\ |\ 2^i;\\
+&amp;\quad endif\\
+&amp;end\\
+&amp;ans\leftarrow ans+1;\\
+&amp;print(ans);
+\end{aligned}
+\]</span></p>
+<p>复杂度分析：i从0循环到logn-1，整体复杂度为O(log)</p>
+<h3 id="pseudo-code2">Pseudo Code2</h3>
+<p>或者我们换一种实现方法，将for循环拆开 <span class="math display">\[
+\begin{aligned}
+&amp;mod\leftarrow 2^{[\log(n)]};\\
+&amp;ans\leftarrow (n\ |\ 1431655765);\\
+&amp;ans\leftarrow ans\mod mod;\\
+&amp;ans\leftarrow ans+1;\\
+&amp;print(ans);\\
+\end{aligned}
+\]</span> 其中：</p>
+<ul>
+<li><p>mod为n二进制下最高位1对应的数</p></li>
+<li><p><span class="math display">\[
+1431655765=2^0+2^2+......2^{2k}
+\]</span></p></li>
+</ul>
+<p><strong>复杂度分析：O(1)</strong></p>
+<p>(家人们谁懂啊 把nlog的朴素方法优化到O(1)，真的是一件很酷的事~)</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-24T12:29:09.209678+08:00"><time datetime="2023-10-24T12:29:09.209678+08:00">2023-10-24 12:29:09</time></abbr>
+|
+<span>CC BY-NC-ND 4.0</span>
+<span class="reply-vote">❤️ 8</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4022" class="reply">
+<div class="reply-header">
+<span>廖鹏飞</span>
+</div>
+<div class="reply-text">
+
+<p><strong>栗瑞gg好强</strong>，给我开拓了一种新的思路，把算法设计和mips汇编相结合，这让我联系起来之前pre的时候有一道哈密顿回路的题也可以用状压dp。</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-24T12:33:47.348022+08:00"><time datetime="2023-10-24T12:33:47.348022+08:00">2023-10-24 12:33:47</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#t1p2_l2_merorder_2023"><span class="nav-number">1.</span> <span class="nav-text">T1：P2_L2_merorder_2023</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#main-idea"><span class="nav-number">1.1.</span> <span class="nav-text">Main Idea</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pseudo-code"><span class="nav-number">1.2.</span> <span class="nav-text">Pseudo Code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">1.3.</span> <span class="nav-text">注意点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#t2p2_l1_asteroids_2023"><span class="nav-number">2.</span> <span class="nav-text">T2：P2_L1_asteroids_2023</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#t3leetcode-390-%E6%B6%88%E9%99%A4%E6%B8%B8%E6%88%8F"><span class="nav-number">3.</span> <span class="nav-text">T3：LeetCode: 390.
+消除游戏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#main-idea-1"><span class="nav-number">3.1.</span> <span class="nav-text">Main Idea</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pseudo-code1"><span class="nav-number">3.2.</span> <span class="nav-text">Pseudo Code1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pseudo-code2"><span class="nav-number">3.3.</span> <span class="nav-text">Pseudo Code2</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : '393f7787570ed5667d4dbd1727682357',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="cuzn | 2023-12-12 23:49:42 | ⭐️ 3 | 💬️ 1  P7、分享     童欣    p7-课下总结 以下是我在写p7课下时看教程与博客产生的一些问题,记录一下它们的回答~ eret不支持延迟槽,若正常操作会带来什么影响?应如何操作以避免这种影响?  如图所示, 设计1:当eret流到D级时检测eret,并把F级NPC改成EPC. 1NPC &#x3D; (D_eret)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="p7-搭建时的细节总结">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1205.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="cuzn | 2023-12-12 23:49:42 | ⭐️ 3 | 💬️ 1  P7、分享     童欣    p7-课下总结 以下是我在写p7课下时看教程与博客产生的一些问题,记录一下它们的回答~ eret不支持延迟槽,若正常操作会带来什么影响?应如何操作以避免这种影响?  如图所示, 设计1:当eret流到D级时检测eret,并把F级NPC改成EPC. 1NPC &#x3D; (D_eret)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.075Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1205">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>p7-搭建时的细节总结 | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">p7-搭建时的细节总结
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>cuzn</span>
+|
+<abbr title="2023-12-12T23:49:42.086277+08:00"><time datetime="2023-12-12T23:49:42.086277+08:00">2023-12-12 23:49:42</time></abbr>
+|
+<span>⭐️ 3</span>
+|
+<span>💬️ 1</span>
+<br>
+<span>P7、分享</span>
+</div>
+
+<div id="reply-4843" class="reply">
+<div class="reply-header">
+<span>童欣</span>
+</div>
+<div class="reply-text">
+
+<h1 id="p7-课下总结">p7-课下总结</h1>
+<p>以下是我在写p7课下时看教程与博客产生的一些问题,记录一下它们的回答~</p>
+<h3
+id="eret不支持延迟槽若正常操作会带来什么影响应如何操作以避免这种影响"><strong>eret不支持延迟槽,若正常操作会带来什么影响?应如何操作以避免这种影响?</strong></h3>
+<p><img
+src="/assets/cscore-image/22371101/390a0d5c-f2f8-4aee-9b3c-c0dd2e81b722/img1.png"
+alt="img1.png" /> 如图所示,</p>
+<p>设计1:当eret流到D级时检测eret,并把F级NPC改成EPC.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NPC = (D_eret) ? EPC : <span class="keyword">else</span>;</span><br></pre></td></tr></table></figure>
+
+<p>导致的问题:直接类比beq的跳转,eret的下一条指令A不可避免地会从IM中被取出来,而它本来不应该流进来的.故这样的设计会导致<strong>PC一个周期的错误</strong>.但是,之前beq如此设计是因为只有流到D级利用D级CMP模块比较两个数,才能得到跳转结果(即NPC);而<strong>eret的下一条指令的PC一定是EPC</strong>.</p>
+<p>所以改成设计2:当eret流到D级时检测eret,若为eret则<strong>F级PC直接输出为EPC</strong>,否则仍为原来的值.NPC从而为<code>PC + 4</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">F_PC = (D_eret) ? EPC : F_PC_tmp;</span><br><span class="line">F_NPC = (D_eret) ? EPC + 4;</span><br></pre></td></tr></table></figure>
+
+<p>直观的图像表示:(来自答疑时一位同学画的图)</p>
+<p><img
+src="/assets/cscore-image/22371101/0c179bb0-7f6c-434c-88cc-5575a4b19d6f/img2.png"
+alt="img2.png" /></p>
+<h3 id="syscall的exccode在哪一级判断">syscall的exccode在哪一级判断?</h3>
+<p>无所谓.在我的设计中,我在D级判断.</p>
+<p>不过其实在教程中<code>异常处理流的实现</code>-&gt;<code>异常码</code>这一节中,异常码exccode越小的异常,优先级越高.</p>
+<h3
+id="在未出现异常时exccode应该用哪个数字表示">在未出现异常时,exccode应该用哪个数字表示?</h3>
+<p>教程中,中断的exccode为0,但是中断是从外部输入的,与内部异常无关;而exccode是由内部异常被判断出来的.故<strong>把未出现异常的exccode设置为0即可</strong>.
+(不要设置一些奇怪的数,比如<code>5'd31</code>之类的()一是因为上机可能增加新的异常exccode,二是因为这样每一级判断exccode的时候把异常exccode当成"非零值",而非"非31值"处理,从而出错)</p>
+<h3
+id="f级中npc模块对rstreqstalleret的处理">F级中NPC模块对rst/req/stall/eret的处理?</h3>
+<ul>
+<li><strong>优先级rst&gt;req&gt;stall&gt;D_eret</strong></li>
+<li>为什么req&gt;D_eret?
+其实这种情况不会发生.req的同时D_eret,意味着异常处理程序出现了异常,而这是得到保证不会出现的.</li>
+<li>为什么stall&gt;D_eret?
+当D_eret和stall同时发生,即D级是eret,E/M级存在<code>mtc0</code>指令产生stall信号,这意味着EPC还没有准备好,还需要再stall一会儿.那么必须要优先处理stall,再处理D_eret.</li>
+<li>以上讨论也可以理解为,D_eret只是流水级内部的一个小指令,而req/stall都更为宏观,故应处理更为宏观的信号.</li>
+</ul>
+<h3
+id="pcbd在流水时对rstreqstall的异常处理">PC\bd在流水时对rst/req/stall的异常处理?</h3>
+<p>(基于CP0设置在M级)</p>
+<ul>
+<li><p>bd在F级判断后,向后流水,直至流到CP0模块用于判断EPC</p></li>
+<li><p><code>rst</code>清空:<code>PC</code>归为<code>32'h0000_3000</code>,其它信号都为0</p>
+<p><code>req</code>清空:<code>PC</code>归为<code>32'h0000_4180</code>,其它信号都为0</p>
+<p>注意<strong>以下的信号优先级</strong>!!否则中测会出现interrupt
+count的问题！</p></li>
+<li><p>FD级:<strong>优先级:rst&gt;req&gt;stall</strong></p>
+<ul>
+<li><code>rst</code>:全部流水信号按照<code>rst</code>清空;</li>
+<li><code>req</code>:部分流水信号按照<code>req</code>清空</li>
+<li><code>stall</code>:所有流水信号保持不变.</li>
+</ul></li>
+<li><p>DE级:<strong>优先级rst&gt;req&gt;stall</strong></p>
+<ul>
+<li><code>rst</code>:全部流水信号按照<code>rst</code>清空;</li>
+<li><code>req</code>:全部流水信号按照<code>req</code>清空</li>
+<li><code>stall</code>:部分流水信号清空,<code>PC</code>,<code>bd</code>继续向下一级正常流水</li>
+</ul></li>
+<li><p>EM级:<strong>优先级rst&gt;req</strong></p>
+<ul>
+<li><code>rst</code>:全部流水信号按照<code>rst</code>清空</li>
+<li><code>req</code>:全部流水信号按照<code>req</code>清空</li>
+</ul></li>
+<li><p>MW级:<strong>优先级rst&gt;req</strong></p>
+<ul>
+<li><code>rst</code>:全部流水信号按照<code>rst</code>清空</li>
+<li><code>req</code>:全部流水信号按照<code>req</code>清空</li>
+</ul></li>
+</ul>
+<h3 id="怎么保证异常指令不会产生结果">怎么保证异常指令不会产生结果?</h3>
+<p>这里的结果指向各种寄存器里存进去了值,包括<strong>GRF,DM,hi,lo</strong>
+一种比较粗暴的实现方法:假如这条指令有异常,那么就把它视作nop向后流水,具体来说是这样:</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E_instr = (E_exccode != <span class="number">0</span>) ? <span class="number">0</span> : E_instr_tmp;<span class="comment">//以E级要从EM流水线寄存器向M级流水的E_instr为例子</span></span><br></pre></td></tr></table></figure>
+
+<p>通过这种方法,大多数异常指令都将不能发挥作用.但是当CP0放在M级时,有可能产生一个小bug,见下一个问题</p>
+<h3
+id="cp0设在m级时怎么保证dm不会存进异常指令让它存的值">CP0设在M级时,怎么保证DM不会存进异常指令让它存的值?</h3>
+<p>有两种方法.</p>
+<ul>
+<li><p>法一:将存数/取数异常(<code>adel</code>/<code>ades</code>)置于E级判断.即在ALU运算出<code>ALU_result</code>之后,判断其是否是这两种异常,得到<code>E_exccode</code>.
+由上一个问题的例子可知,因为<code>E_exccode</code>不为0,我们将从E级准备向M级流水的<code>E_instr</code>清零了,从而M级得不到存数/取数的相关
+信息, 不会对DM产生影响.</p></li>
+<li><p>法二:将存数/取数异常(<code>adel</code>/<code>ades</code>)置于M级初判断,得到<code>M_exccode</code>接入CP0.若CP0显示产生异常(即<code>req</code>为1),那么将DM的写使能<code>byteen</code>置0,从而无法写入(这里<strong>易错</strong>,上一个问题提到的"视为nop"处理方法在这种架构中会因为<strong>太晚判断(即到了CP0所在级才判断)exccode</strong>而失效,必须要改DM写使能)</p>
+<p>具体来说:</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> m_data_byteen = (req) ? <span class="number">4&#x27;b0</span> :</span><br><span class="line">					   m_data_byteen_tmp;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3
+id="乘除槽mdu怎么对中断信号进行反应">乘除槽MDU怎么对中断信号进行反应?</h3>
+<p>根据教程<code>P7提交要求</code>-&gt;<code>中断异常约束</code>中下图:</p>
+<p><img
+src="/assets/cscore-image/22371101/5d22bcdb-4777-4972-b809-8c94cf45d714/img3.png"
+alt="img3.png" /></p>
+<p>我们只需要在mult/div/multu/divu等乘除法相关指令的<strong>启动信号</strong>判断中加入<code>!req</code>,在mthi/mtlo等写hi/lo相关指令的写使能信号中加入<code>!req</code>即可.</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-12-12T23:49:42.091697+08:00"><time datetime="2023-12-12T23:49:42.091697+08:00">2023-12-12 23:49:42</time></abbr>
+|
+<span>CC BY-NC-SA 4.0</span>
+<span class="reply-vote">❤️ 6</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#p7-%E8%AF%BE%E4%B8%8B%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">p7-课下总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#eret%E4%B8%8D%E6%94%AF%E6%8C%81%E5%BB%B6%E8%BF%9F%E6%A7%BD%E8%8B%A5%E6%AD%A3%E5%B8%B8%E6%93%8D%E4%BD%9C%E4%BC%9A%E5%B8%A6%E6%9D%A5%E4%BB%80%E4%B9%88%E5%BD%B1%E5%93%8D%E5%BA%94%E5%A6%82%E4%BD%95%E6%93%8D%E4%BD%9C%E4%BB%A5%E9%81%BF%E5%85%8D%E8%BF%99%E7%A7%8D%E5%BD%B1%E5%93%8D"><span class="nav-number">1.0.1.</span> <span class="nav-text">eret不支持延迟槽,若正常操作会带来什么影响?应如何操作以避免这种影响?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#syscall%E7%9A%84exccode%E5%9C%A8%E5%93%AA%E4%B8%80%E7%BA%A7%E5%88%A4%E6%96%AD"><span class="nav-number">1.0.2.</span> <span class="nav-text">syscall的exccode在哪一级判断?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%9C%AA%E5%87%BA%E7%8E%B0%E5%BC%82%E5%B8%B8%E6%97%B6exccode%E5%BA%94%E8%AF%A5%E7%94%A8%E5%93%AA%E4%B8%AA%E6%95%B0%E5%AD%97%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.0.3.</span> <span class="nav-text">在未出现异常时,exccode应该用哪个数字表示?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#f%E7%BA%A7%E4%B8%ADnpc%E6%A8%A1%E5%9D%97%E5%AF%B9rstreqstalleret%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">1.0.4.</span> <span class="nav-text">F级中NPC模块对rst&#x2F;req&#x2F;stall&#x2F;eret的处理?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pcbd%E5%9C%A8%E6%B5%81%E6%B0%B4%E6%97%B6%E5%AF%B9rstreqstall%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">1.0.5.</span> <span class="nav-text">PC\bd在流水时对rst&#x2F;req&#x2F;stall的异常处理?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E5%BC%82%E5%B8%B8%E6%8C%87%E4%BB%A4%E4%B8%8D%E4%BC%9A%E4%BA%A7%E7%94%9F%E7%BB%93%E6%9E%9C"><span class="nav-number">1.0.6.</span> <span class="nav-text">怎么保证异常指令不会产生结果?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp0%E8%AE%BE%E5%9C%A8m%E7%BA%A7%E6%97%B6%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81dm%E4%B8%8D%E4%BC%9A%E5%AD%98%E8%BF%9B%E5%BC%82%E5%B8%B8%E6%8C%87%E4%BB%A4%E8%AE%A9%E5%AE%83%E5%AD%98%E7%9A%84%E5%80%BC"><span class="nav-number">1.0.7.</span> <span class="nav-text">CP0设在M级时,怎么保证DM不会存进异常指令让它存的值?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%98%E9%99%A4%E6%A7%BDmdu%E6%80%8E%E4%B9%88%E5%AF%B9%E4%B8%AD%E6%96%AD%E4%BF%A1%E5%8F%B7%E8%BF%9B%E8%A1%8C%E5%8F%8D%E5%BA%94"><span class="nav-number">1.0.8.</span> <span class="nav-text">乘除槽MDU怎么对中断信号进行反应?</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : '5e887c7567aec3b011f5bdc3f7d78913',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

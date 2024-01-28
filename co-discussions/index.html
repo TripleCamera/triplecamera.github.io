@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在学习计组的过程中，许多同学在讨论区里发帖求助、分享经验，助教则会择优加精，以资鼓励。在大家的努力下，2023 年一共诞生了 28 篇精华帖，这是集体的智慧。为了将大佬们的经验留给学弟学妹，在征得作者同意后，我整理了其中的 26 篇，在此分享。 说明 目前这个项目仍然没有完工，但是我希望大家可以提一些建议，所以先把这些发布到了博客上。 注意事项：  所有发布的内容都获得了作者的授权，没有取得授权的">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CO 2023 讨论区精华帖汇总">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/index.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="在学习计组的过程中，许多同学在讨论区里发帖求助、分享经验，助教则会择优加精，以资鼓励。在大家的努力下，2023 年一共诞生了 28 篇精华帖，这是集体的智慧。为了将大佬们的经验留给学弟学妹，在征得作者同意后，我整理了其中的 26 篇，在此分享。 说明 目前这个项目仍然没有完工，但是我希望大家可以提一些建议，所以先把这些发布到了博客上。 注意事项：  所有发布的内容都获得了作者的授权，没有取得授权的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CO 2023 讨论区精华帖汇总 | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">CO 2023 讨论区精华帖汇总
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>在学习计组的过程中，许多同学在讨论区里发帖求助、分享经验，助教则会择优加精，以资鼓励。在大家的努力下，2023
+年一共诞生了 28
+篇精华帖，这是集体的智慧。为了将大佬们的经验留给学弟学妹，在征得作者同意后，我整理了其中的
+26 篇，在此分享。</p>
+<h2 id="说明">说明</h2>
+<p>目前这个项目仍然没有完工，但是我希望大家可以提一些建议，所以先把这些发布到了博客上。</p>
+<p>注意事项：</p>
+<ol type="1">
+<li>所有发布的内容都获得了作者的授权，没有取得授权的文章不会被上传，没有取得授权的评论会被隐藏（比如，助教的文章和评论）。如果你们希望我找助教要授权的话可以告诉我。</li>
+<li>需要修改授权协议的作者请联系我修改，目前所有文章及评论暂时<strong>保留所有权利</strong>（评论左下角的协议标注无效），直到正式公开发布。</li>
+<li>本页面只能通过链接访问，博客主页并没有指向本页面的链接。</li>
+</ol>
+<p>改进目标：</p>
+<ol type="1">
+<li>目前我只保存了精华帖，但是看起来其他一些帖子也有价值（如：<a
+target="_blank" rel="noopener" href="https://cscore.buaa.edu.cn/#/discussion_area/1199/1020/posts">coKiller
+（P567）支持两人对拍，mars对拍两种，支持自己写测试点等很多新功能</a>），所以如果看到有价值的帖子请告诉我，我会保存一份。</li>
+<li>有些文章使用的是 CC 协议，但是附带了代码，而代码不建议使用 CC
+协议。如果你发现含代码的文章底下的授权协议没有用括号注明代码协议，请告诉我，我会联系作者加上代码协议。</li>
+<li>排版格式仍需改进。转换文章的源码位于 <a
+href="/images/co-discussions/process.py">process.py</a>，网页样式位于 <a
+target="_blank" rel="noopener" href="https://github.com/TripleCamera/triplecamera.github.io/tree/main/source/_data/styles.styl">styles.styl</a>，如有建议请不吝赐教
+orz</li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th>标题</th>
+<th>作者</th>
+<th>发布日期</th>
+<th>协议</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+href="854">关于M系列芯片MacBook使用虚拟镜像的一些解决方案</a></td>
+<td>魏东霖（匿不匿名都行）</td>
+<td>2023-08-11</td>
+<td>任何不商用的协议都行</td>
+</tr>
+<tr class="even">
+<td><a href="886">使用 VSCode 作为 ISE 的外部编辑器进行 Verilog
+代码的编写、检查、格式化方法探究</a></td>
+<td>沈锎</td>
+<td>2023-08-30</td>
+<td>CC BY-NC 4.0</td>
+</tr>
+<tr class="odd">
+<td><a
+href="905">在Mac端使用iverilog和gtkwave进行本地仿真编译运行</a></td>
+<td>FyVoid</td>
+<td>2023-09-05</td>
+<td>保留所有权利</td>
+</tr>
+<tr class="even">
+<td><a href="951">「BUAA-CO」2023Pre</a></td>
+<td>lhz</td>
+<td>2023-09-26</td>
+<td>保留所有权利</td>
+</tr>
+<tr class="odd">
+<td><a href="959">CRC 校验码计算时为何要补 0
+及相关内容的简单探索</a></td>
+<td>沈锎</td>
+<td>2023-09-28</td>
+<td>CC BY-NC 4.0</td>
+</tr>
+<tr class="even">
+<td><a href="977">P0课下做题记录分享</a></td>
+<td>Ap0stader（贾同学）</td>
+<td>2023-10-08</td>
+<td>CC BY-NC 4.0</td>
+</tr>
+<tr class="odd">
+<td><a href="982">P0做题记录</a></td>
+<td>pigKiller</td>
+<td>2023-10-10</td>
+<td>CC BY-NC-SA 4.0</td>
+</tr>
+<tr class="even">
+<td><a href="983">P0上机分析与记录</a></td>
+<td>fysszlr（张同学）</td>
+<td>2023-10-10</td>
+<td>CC BY-NC-ND 4.0</td>
+</tr>
+<tr class="odd">
+<td><a href="999">P1课下做题记录分享</a></td>
+<td>Ap0stader（贾同学）</td>
+<td>2023-10-14</td>
+<td>CC BY-NC 4.0</td>
+</tr>
+<tr class="even">
+<td><a href="1002">verilog(常见)错误总结(来自p1和推荐题)</a></td>
+<td>陈子祥</td>
+<td>2023-10-14</td>
+<td>保留所有权利</td>
+</tr>
+<tr class="odd">
+<td><a href="1013">P1上机分析与记录</a></td>
+<td>fysszlr（张同学）</td>
+<td>2023-10-17</td>
+<td>CC BY-NC-ND 4.0</td>
+</tr>
+<tr class="even">
+<td><a href="1016">P1做题记录</a></td>
+<td>pigKiller</td>
+<td>2023-10-17</td>
+<td>CC BY-NC-SA 4.0</td>
+</tr>
+<tr class="odd">
+<td><a href="1020">P1上机思路分享</a></td>
+<td>nyx</td>
+<td>2023-10-17</td>
+<td>保留所有权利</td>
+</tr>
+<tr class="even">
+<td>一个优化了部分使用体验的修改版 Mars</td>
+<td>???</td>
+<td>2023-10-17</td>
+<td>???</td>
+</tr>
+<tr class="odd">
+<td><a href="1040">P2课下做题记录分享</a></td>
+<td>Ap0stader（贾同学）</td>
+<td>2023-10-21</td>
+<td>CC BY-NC 4.0</td>
+</tr>
+<tr class="even">
+<td><a href="1045">P2上机分析与记录</a></td>
+<td>fysszlr（张同学）</td>
+<td>2023-10-24</td>
+<td>CC BY-NC-ND 4.0</td>
+</tr>
+<tr class="odd">
+<td>Logisim CPU 调试工具</td>
+<td>???</td>
+<td>2023-10-26</td>
+<td>???</td>
+</tr>
+<tr class="even">
+<td><a href="1061">一个向ROM导入机器码的Python脚本</a></td>
+<td>离.nvme0n1p2</td>
+<td>2023-10-27</td>
+<td>CC BY-SA 4.0（代码 MIT）</td>
+</tr>
+<tr class="odd">
+<td><a href="1064">支持打印过程变化量的修改版 Mars</a></td>
+<td>沈锎</td>
+<td>2023-10-29</td>
+<td>CC BY-NC 4.0</td>
+</tr>
+<tr class="even">
+<td><a
+href="1066">一个随机生成mips汇编指令和其对应机器码的python程序</a></td>
+<td>alkaid</td>
+<td>2023-10-29</td>
+<td>保留所有权利（代码 MIT）</td>
+</tr>
+<tr class="odd">
+<td><a href="1070">P3-CPU自动化测试</a></td>
+<td>Shae</td>
+<td>2023-10-31</td>
+<td>保留所有权利</td>
+</tr>
+<tr class="even">
+<td><a
+href="1075">包含指令生成，verilog编译的可自定义的自动化测试流程脚本</a></td>
+<td>FyVoid</td>
+<td>2023-11-02</td>
+<td>保留所有权利</td>
+</tr>
+<tr class="odd">
+<td><a href="1098">462oj自动化测试数据生成思路分享</a></td>
+<td>廖鹏飞</td>
+<td>2023-11-07</td>
+<td>保留所有权利</td>
+</tr>
+<tr class="even">
+<td><a href="1102">基于代码块的数据生成器</a></td>
+<td>沈锎</td>
+<td>2023-11-08</td>
+<td>CC BY-NC 4.0</td>
+</tr>
+<tr class="odd">
+<td><a href="1145">本地评测机 coKiller</a></td>
+<td>hanz</td>
+<td>2023-11-18</td>
+<td>CC BY-NC 4.0（代码 BSD）</td>
+</tr>
+<tr class="even">
+<td><a href="1188">Mars 右键菜单小工具</a></td>
+<td>陈睿正</td>
+<td>2023-12-05</td>
+<td>CC BY-SA 4.0（代码 MIT）</td>
+</tr>
+<tr class="odd">
+<td><a href="1205">p7-搭建时的细节总结</a></td>
+<td>cuzn</td>
+<td>2023-12-12</td>
+<td>CC BY-NC-SA 4.0</td>
+</tr>
+<tr class="even">
+<td><a href="1211">关于p7中断测试分享</a></td>
+<td>Carbon</td>
+<td>2023-12-15</td>
+<td>CC BY 4.0</td>
+</tr>
+</tbody>
+</table>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : 'c9f4897921b8a732ed99a271c9393e8d',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

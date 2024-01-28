@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="nyx | 2023-10-17 02:42:31 | ⭐️ 1 | 💬️ 2       倪宇轩    T1上机题目思路分享 Verilog向量点乘 题面简述 两个位宽为 32 的 wire 型变量来表示两个需要点乘的 32 维向量，每一位只能是0或者1，输出点乘的结果。 思路分析 比较容易，实际上就是将两个wire型变量的各位进行&amp;操作，再将得到的结果各位相加；当然，更容易想到的应">
+<meta property="og:type" content="website">
+<meta property="og:title" content="P1上机思路分享">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1020.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="nyx | 2023-10-17 02:42:31 | ⭐️ 1 | 💬️ 2       倪宇轩    T1上机题目思路分享 Verilog向量点乘 题面简述 两个位宽为 32 的 wire 型变量来表示两个需要点乘的 32 维向量，每一位只能是0或者1，输出点乘的结果。 思路分析 比较容易，实际上就是将两个wire型变量的各位进行&amp;操作，再将得到的结果各位相加；当然，更容易想到的应">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1020">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>P1上机思路分享 | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">P1上机思路分享
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>nyx</span>
+|
+<abbr title="2023-10-17T02:42:31.131063+08:00"><time datetime="2023-10-17T02:42:31.131063+08:00">2023-10-17 02:42:31</time></abbr>
+|
+<span>⭐️ 1</span>
+|
+<span>💬️ 2</span>
+<br>
+<span></span>
+</div>
+
+<div id="reply-3900" class="reply">
+<div class="reply-header">
+<span>倪宇轩</span>
+</div>
+<div class="reply-text">
+
+<h1 id="t1上机题目思路分享">T1上机题目思路分享</h1>
+<h2 id="verilog向量点乘">Verilog向量点乘</h2>
+<h3 id="题面简述">题面简述</h3>
+<p>两个位宽为 32 的 wire 型变量来表示两个需要点乘的 32
+维向量，每一位只能是0或者1，输出点乘的结果。</p>
+<h3 id="思路分析">思路分析</h3>
+<p>比较容易，实际上就是将两个wire型变量的各位进行&amp;操作，再将得到的结果各位相加；当然，更容易想到的应该是直接对比两个输入的各位即可。</p>
+<h3 id="部分代码实现">部分代码实现</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">integer</span> i;</span><br><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span> </span><br><span class="line"><span class="comment">//do something</span></span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i = i + <span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (vector_a[i] == <span class="number">1</span> &amp;&amp; vector_b[i] == <span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">            <span class="comment">//add one to your register</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>当然可以先进行&amp;运算在相加，不过感觉并没有太大优势（？）</p>
+<h3 id="注意事项反思总结">注意事项&amp;&amp;反思总结</h3>
+<p>1、always并不是只能运用于时序逻辑电路中，<code>always@(*)</code>就可以运用于组合逻辑中</p>
+<p>2、寄存器跟C语言中的数组有些类似（更像python），可以通过调用<code>数组名[x:y]</code>调用一个模块</p>
+<p>3、循环的使用和C很相似，但是值得注意的是<strong>没有i++</strong>,自增自减要用<strong>i=i+1
+、i=i-1</strong></p>
+<p>4、注意每次使用的时候<strong>寄存器要清零！</strong></p>
+<h2 id="verilog-涂色方案">Verilog 涂色方案</h2>
+<h3 id="题面简述-1">题面简述</h3>
+<p>使用R、G、B三种颜色涂色，要求：同一颜色不得<strong>连续出现三次</strong>，<strong>红色不得与绿色相连</strong>。</p>
+<p>clk上升沿一个颜色代号：0（红色）、1（绿色）、2（蓝色）。设计
+<strong>Moore</strong>
+状态机检测该涂色序列的合法性，并在检测到不合法的序列之后将输出端口 check
+置为 1。</p>
+<p><strong>另外，在检测到不合法序列之后，将最近的一次涂色擦除，重新涂色。</strong></p>
+<h3 id="思路分析-1">思路分析</h3>
+<p>题目要求用有限状态机来实现，最直接想到的一般是用<code>define/parameter</code>之类的语句利用<code>status</code>实现，这当然是一种十分通用的解法，我们可以这样子来列状态表：</p>
+<p>因为考虑到我们最重要的是判断涂色是否<strong>不符合</strong>，所以只要重点关注可能会寄掉的状态来规划状态机状态就行，如下是一种方法：
+|颜色状态|编码| |-|-| |Empty|3'b000| |Red|3'b001| |Green|3'b010|
+|Blue|3'b011| |RedRed|3'b100| |GreenGreen|3'b101| |BlueBlue|3'b110|</p>
+<p>使用三位的寄存器即可表示，还是在可以手搓的范围之内。（当然这不是唯一一中的表示方法，比如也可以用两个寄存器，分别表示当前颜色是R/G/B/Empty的哪一种,再来一个寄存器表示出现的次数）各位各显神通即可。</p>
+<p>需要注意的是，题目要求用的是<strong>Moore</strong>,采取这种编码方法需要设置一个寄存器<code>flag</code>来存状态，不然就要用4位的<code>status</code>了。<del>（当然不嫌麻烦的可以trytry）</del></p>
+<p>状态机转换图所示： <img
+src="/assets/cscore-image/22371305/be210ba0-e47d-478f-857e-fbe5016fe7ab/bc775293193d949ab80fb15a059bb36.jpg"
+alt="bc775293193d949ab80fb15a059bb36.jpg" /></p>
+<p>相信大家对于这种基本的格式应该很熟悉了，就不放代码了。但是实际上做题的时候我用的并不是这种方法。我们可以考虑一下C语言中是如何处理这类问题的。大概应该像是这样子的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> firstcolor=<span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> secondcolor=<span class="number">0</span>;<span class="comment">//empty</span></span><br><span class="line"><span class="type">int</span> nowcolor;</span><br><span class="line"><span class="type">int</span> check=<span class="number">0</span>;</span><br><span class="line"><span class="comment">//do something</span></span><br><span class="line"><span class="keyword">if</span>(firstcolor == secondcolor &amp;&amp; secondcolor == nowcolor)&#123;</span><br><span class="line">	check=<span class="number">1</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="comment">//other cases </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那我们是不是也可以考虑这样子来实施呢？答案当然是<strong>肯定</strong>的。我们可以使用两个寄存器<code>first , second</code>存放先前的两个颜色（R/G/B/Empty)，在每次时钟上升沿来临时读入一个新的颜色并且比对：如果坏事了那就<code>check=1</code>,这次不改变<code>first 和 second</code>的值；如果没寄那就把<code>second</code>的值赋给<code>first</code>,再把<code>color</code>赋给<code>second</code>（刚好非阻塞赋值让我们实现了这一点变得很简单）</p>
+<h3 id="部分代码实现-1">部分代码实现</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span> [<span class="number">1</span>:<span class="number">0</span>] first;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">1</span>:<span class="number">0</span>] second;</span><br><span class="line"><span class="keyword">reg</span> check;</span><br><span class="line"><span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">//initial block</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n) <span class="keyword">begin</span> </span><br><span class="line">    <span class="keyword">if</span>(~rst_n) <span class="keyword">begin</span></span><br><span class="line">         <span class="comment">//reset</span></span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">         <span class="keyword">if</span> (first==second &amp;&amp;second==color) <span class="keyword">begin</span></span><br><span class="line">             <span class="comment">//do something</span></span><br><span class="line">             check=<span class="number">1</span>;</span><br><span class="line">         <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">             <span class="keyword">if</span> (<span class="comment">/*other wrong cases*/</span>) <span class="keyword">begin</span></span><br><span class="line">                 <span class="comment">//do something </span></span><br><span class="line">                 check=<span class="number">1</span>;</span><br><span class="line">             <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                 <span class="comment">//do state transferring</span></span><br><span class="line">                 check=<span class="number">0</span>;</span><br><span class="line">             <span class="keyword">end</span></span><br><span class="line">         <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>这可比用S0表示<code>status</code>那种方法快多了。<strong>这也告诉我们学习不要拘谨于某种固定的舒适圈，走出去看看，外面风景可能更美。（手动狗头）</strong></p>
+<h3 id="反思总结">反思总结</h3>
+<p>1、<strong>区分同步复位与异步复位！！！</strong>
+同步复位指的是在clk上升沿来临时，复位信号才有效被读入，也就是说如果不在clk上升沿的reset=1，也屁用没有。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n) <span class="keyword">begin</span> </span><br><span class="line">    <span class="keyword">if</span>(~rst_n) <span class="keyword">begin</span></span><br><span class="line">      </span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span><span class="comment">//异步复位模板（rst_n低电平有效）</span></span><br></pre></td></tr></table></figure>
+
+<p>注意到这个信号是<code>negedge rst_n</code>,意味着如果<code>rst_n</code>一直保持0的话也是不会触发这部分条件的。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span> </span><br><span class="line">    <span class="keyword">if</span>(~rst_n) <span class="keyword">begin</span></span><br><span class="line">      </span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span><span class="comment">//同步复位模板（rst_n低电平有效）</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，两者差别其实只是复位信号是否为always的敏感信号源，仅此而已。</p>
+<p>2、<strong>尝试走出舒适圈</strong>，并不一定要遵循那一套固有模板，现在才P2有试错成本的（再次狗头）。</p>
+<h2 id="verilog-数字掌控领域numbernest其实就是特殊的字符串匹配">Verilog
+数字掌控领域NumberNest（其实就是特殊的字符串匹配）</h2>
+<h3 id="题面简述回忆应该大差不差">题面简述（回忆，应该大差不差）</h3>
+<p>输入序列一共含有1-5五个数字，每两个相同的数字之间的区域成为掌控领域（原文忘了qwq），如<code>12334421</code>，<code>1</code>的掌控领域为<code>233442</code>,要求进行NumberNest的合法性检查，要求如下:</p>
+<p>1、每个数字的掌控领域之内，只能出现比他更大的数字；</p>
+<p>2、对于一个合法的序列来说，每一个数字都必须是一个掌控领域的两边组成之一，如<code>121</code>不合法；</p>
+<p>3、合法性序列中只能越一级掌控，不能越多级，如<code>12344321</code>合法，而<code>134431</code>不合法；</p>
+<p>如果不合法将<code>check</code>置为<code>1</code>,并且将之前的所有输入一锅端清理掉，重新计数，并且数据保证每次开头的数字一定是<code>1</code>。</p>
+<h3 id="思路分析-2">思路分析</h3>
+<p>Okay这题我是老老实实的用有限状态机的基本做法实现的，已经跳过一次舒适圈了。最重要的步骤之一就是确定表示什么状态。考虑到输入与之前输出产生联系，用S~i~（i=0~5)表示现在位于谁的掌控领域之内,S0与S6表示空与不合法，具体定义如下：
+|掌控领域|编码|check| |-|-|-| |Empty|3'b000|0| |1|3'b0001|0|
+|2|3'b010|0| |3|3'b011|0| |4|3'b100|0| |5|3'b101|0| |WA|3'b110|1|</p>
+<p>接下来需要确定如何状态转化，这个每个人的理解可能不一样，在此分享我的理解，若有更好的解法希望大佬们能不吝赐教。</p>
+<p>对于S~1-5~的状态S~i~来说，下一位输入的如果是<code>i</code>，那么这个<code>i</code>与先前进入掌控领域状态S~i~的那个<code>i</code>相匹配掉了，由于要求3，那么他会返回上一个状态也就是S~i-1~;下一位输入的如果是<code>i+1</code>，就进入<code>i</code>的掌控领域之中，状态变为S~i+1~；其余输入均是<code>WA</code>,转化为状态S~6~并且清理门户，开始新的一轮。</p>
+<h3 id="部分代码实现-2">部分代码实现</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n) <span class="keyword">begin</span> </span><br><span class="line">    <span class="keyword">if</span>(~rst_n) <span class="keyword">begin</span></span><br><span class="line">      <span class="comment">//reset</span></span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span>(status)</span><br><span class="line">        <span class="comment">//previous state</span></span><br><span class="line">        `S3: </span><br><span class="line">        <span class="keyword">if</span>(number==<span class="number">4&#x27;b0011</span>) <span class="keyword">begin</span></span><br><span class="line">            status&lt;=`S2;</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span> (number==<span class="number">4&#x27;b0100</span>) <span class="keyword">begin</span></span><br><span class="line">                status&lt;=`S4;</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                status&lt;=`S6;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="comment">//then S4 and S5</span></span><br><span class="line">        `S6:</span><br><span class="line">        <span class="keyword">if</span> (number==<span class="number">4&#x27;b0001</span>) <span class="keyword">begin</span></span><br><span class="line">            status&lt;=`S1;</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            status&lt;=`S6;<span class="comment">//若按照题面意思这句话不用写，但其实题目完全可以删掉要求3的保证刚开始输入是1的条件</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>最后当<code>status==S6</code>的时候，<code>check</code>为1
+，结束上机。</p>
+<h3 id="反思总结-1">反思总结</h3>
+<p>这一题是非常经典的一道Moore型有限状态机的题目，难度适中。但是我这个笨蛋卡了好久，为什么呢，因为写一堆<code>case</code>中有一个地方打错了导致寄了半个多小时（抱头痛哭qwq),所以大家写<code>case</code>比较多的时候一定要写慢一点、认真检查。</p>
+<h2 id="总结陈词">总结陈词</h2>
+<p>本次主要考察了位运算以及状态机的Verilog实现，难度适中，但是对于我们大部分初学者可能有一定的难度，建议大家还是要加强复习。若有任何问题希望大家斧正，谢谢！</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-17T02:42:31.1367+08:00"><time datetime="2023-10-17T02:42:31.1367+08:00">2023-10-17 02:42:31</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 2</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-3914" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-17T16:36:19.199046+08:00"><time datetime="2023-10-17T16:36:19.199046+08:00">2023-10-17 16:36:19</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#t1%E4%B8%8A%E6%9C%BA%E9%A2%98%E7%9B%AE%E6%80%9D%E8%B7%AF%E5%88%86%E4%BA%AB"><span class="nav-number">1.</span> <span class="nav-text">T1上机题目思路分享</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#verilog%E5%90%91%E9%87%8F%E7%82%B9%E4%B9%98"><span class="nav-number">1.1.</span> <span class="nav-text">Verilog向量点乘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2%E7%AE%80%E8%BF%B0"><span class="nav-number">1.1.1.</span> <span class="nav-text">题面简述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90"><span class="nav-number">1.1.2.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.3.</span> <span class="nav-text">部分代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E5%8F%8D%E6%80%9D%E6%80%BB%E7%BB%93"><span class="nav-number">1.1.4.</span> <span class="nav-text">注意事项&amp;&amp;反思总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#verilog-%E6%B6%82%E8%89%B2%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">Verilog 涂色方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2%E7%AE%80%E8%BF%B0-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">题面简述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">部分代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E6%80%9D%E6%80%BB%E7%BB%93"><span class="nav-number">1.2.4.</span> <span class="nav-text">反思总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#verilog-%E6%95%B0%E5%AD%97%E6%8E%8C%E6%8E%A7%E9%A2%86%E5%9F%9Fnumbernest%E5%85%B6%E5%AE%9E%E5%B0%B1%E6%98%AF%E7%89%B9%E6%AE%8A%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D"><span class="nav-number">1.3.</span> <span class="nav-text">Verilog
+数字掌控领域NumberNest（其实就是特殊的字符串匹配）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2%E7%AE%80%E8%BF%B0%E5%9B%9E%E5%BF%86%E5%BA%94%E8%AF%A5%E5%A4%A7%E5%B7%AE%E4%B8%8D%E5%B7%AE"><span class="nav-number">1.3.1.</span> <span class="nav-text">题面简述（回忆，应该大差不差）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">部分代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E6%80%9D%E6%80%BB%E7%BB%93-1"><span class="nav-number">1.3.4.</span> <span class="nav-text">反思总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E9%99%88%E8%AF%8D"><span class="nav-number">1.4.</span> <span class="nav-text">总结陈词</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : 'fe21beb4ee81ece1730b6f657e562bda',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

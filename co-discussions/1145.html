@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="hanz | 2023-11-18 10:22:17 | ⭐️ 3 | 💬️ 17  P5、分享、测试、Verilog     姜涵章    3.2更新 1. 当比对结果完全一致时输出Accept!!否则输出wrong answer 2. 支持一次测试多个测试点 3. 加强了交互界面，能更清晰的知道自己为何无法运行评测机 4. 解决了运行完全部指令后pc一直+4导致的cpu输出结果过多 5.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="本地评测机 coKiller">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1145.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="hanz | 2023-11-18 10:22:17 | ⭐️ 3 | 💬️ 17  P5、分享、测试、Verilog     姜涵章    3.2更新 1. 当比对结果完全一致时输出Accept!!否则输出wrong answer 2. 支持一次测试多个测试点 3. 加强了交互界面，能更清晰的知道自己为何无法运行评测机 4. 解决了运行完全部指令后pc一直+4导致的cpu输出结果过多 5.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.075Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1145">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>本地评测机 coKiller | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">本地评测机 coKiller
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>hanz</span>
+|
+<abbr title="2023-11-18T10:22:17.120116+08:00"><time datetime="2023-11-18T10:22:17.120116+08:00">2023-11-18 10:22:17</time></abbr>
+|
+<span>⭐️ 3</span>
+|
+<span>💬️ 17</span>
+<br>
+<span>P5、分享、测试、Verilog</span>
+</div>
+
+<div id="reply-4489" class="reply">
+<div class="reply-header">
+<span>姜涵章</span>
+</div>
+<div class="reply-text">
+
+<h2 id="32更新">3.2更新</h2>
+<h4 id="1-当比对结果完全一致时输出accept否则输出wrong-answer">1.
+当比对结果完全一致时输出Accept!!否则输出wrong answer</h4>
+<h4 id="2-支持一次测试多个测试点">2. 支持一次测试多个测试点</h4>
+<h4 id="3-加强了交互界面能更清晰的知道自己为何无法运行评测机">3.
+加强了交互界面，能更清晰的知道自己为何无法运行评测机</h4>
+<h4 id="4-解决了运行完全部指令后pc一直4导致的cpu输出结果过多">4.
+解决了运行完全部指令后pc一直+4导致的cpu输出结果过多</h4>
+<h4 id="5-加强了p5的数据生成程序预加载了p6相关的交互">5.
+加强了P5的数据生成程序，预加载了P6相关的交互</h4>
+<h3
+id="集成了测试点生成自动运行仿真自动和魔改mars的比对周期数比对测试点覆盖率等功能">集成了测试点生成，自动运行仿真，自动和魔改mars的比对，周期数比对，测试点覆盖率等功能</h3>
+<h1 id="cokiller-使用教程"><strong>coKiller 使用教程</strong></h1>
+<h3
+id="压缩包中的readme文件中也有使用教程">压缩包中的README文件中也有使用教程</h3>
+<h4 id="1-将cokillerzip解压到任意文件夹"><strong>1.
+将coKiller.zip解压到任意文件夹</strong></h4>
+<h4 id="2-将所有v文件放到一个文件夹中此步可以省略"><strong>2.
+将所有.v文件放到一个文件夹中（此步可以省略）</strong></h4>
+<h4
+id="3-打开cokiller文件夹中的_internal文件夹找到-filepathtxt双击打开设置三行路径如下"><strong>3.
+打开coKiller文件夹中的_internal文件夹，找到
+"filePath.txt"，双击打开，设置三行路径，如下</strong></h4>
+<ol type="1">
+<li><p><strong>v文件的目录（若第二步省略，这里同样也为含有.v文件的目录）</strong></p></li>
+<li><p><strong>ise的下载目录(一般以 D:/ISE/14.7/ISE_DS/ISE
+开头，和计组P5教程中的“自动化测试"一节要求相同”)</strong></p></li>
+<li><p><strong>你希望的测评结果的输出目录(假设目录为D:,
+则最终结果会一起放在 D:\result 文件夹中)</strong></p></li>
+</ol>
+<p><strong>示例如下</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:/Users/tree/Desktop/P5/CPU/</span><br><span class="line">D:/ISE/14.7/ISE_DS/ISE</span><br><span class="line">D:\python_code\myCoKiller\coKiller</span><br></pre></td></tr></table></figure>
+
+<h2
+id="注意不要有中文路径"><strong>注意！！不要有中文路径！</strong>！！</h2>
+<h4 id="4-最后双击运行cokillerexe文件即可请跟随提示指令行动"><strong>4.
+最后，双击运行coKiller.exe文件即可！请跟随提示指令行动！</strong></h4>
+<p>下载zip文件后阅读根据README文档配置好三条路径后即可使用 效果如下 <img
+src="/assets/cscore-image/21375212/fb527905-9e1d-49cc-911c-5e30c6aeb4ef/image.png"
+alt="image.png" /> <img
+src="/assets/cscore-image/21375212/d616d58a-5474-42eb-807d-9c211971e074/image.png"
+alt="image.png" /> <img
+src="/assets/cscore-image/21375212/f107bcfd-26dc-48f1-a84c-fd3979b4df6c/image.png"
+alt="image.png" /> <img
+src="/assets/cscore-image/21375212/e7ca1435-f39a-42d3-aa62-3d272f1dbe8f/image.png"
+alt="image.png" /></p>
+<h3
+id="若程序有任何问题欢迎在讨论区提出">若程序有任何问题欢迎在讨论区提出！</h3>
+<h4 id="开发者姜涵章钟芳梽">开发者：姜涵章，钟芳梽</h4>
+<p><a
+target="_blank" rel="noopener" href="https://bhpan.buaa.edu.cn/link/AA0E3BBD86FE8C4255A4609212139CB62C">coKiller4.1下载地址</a></p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-18T10:22:17.126401+08:00"><time datetime="2023-11-18T10:22:17.126401+08:00">2023-11-18 10:22:17</time></abbr>
+|
+<span>CC BY-NC 4.0（代码 BSD）</span>
+<span class="reply-vote">❤️ 11</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4494" class="reply">
+<div class="reply-header">
+<span>卞卓航</span>
+</div>
+<div class="reply-text">
+
+<p>同学你好，在我使用中发现，如果模块实例化有端口闲置的现象，即没有实例化，则会报警告。</p>
+<p>这种warning在本地和课程组的评测机都是<strong>不影响实际测试</strong>的，但在你们的评测机中会出现警告后卡着不运行的现象（如下图）。</p>
+<p><img
+src="https://pigkiller-011955-1319328397.cos.ap-beijing.myqcloud.com/img/202311181426121.png" /></p>
+<p>（但这个可能算我代码的bug而不是你们评测机的？</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-18T15:00:18.465245+08:00"><time datetime="2023-11-18T15:00:18.465245+08:00">2023-11-18 15:00:18</time></abbr>
+|
+<span>CC BY-NC-SA 4.0</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4495" class="reply">
+<div class="reply-header">
+<span>姜涵章</span>
+</div>
+<div class="reply-text">
+
+<p>同学你好，这个运行不成功的原因可能是你的重置信号名字为clear,而我生成的tb连接时使用的是reset，你可以改一个名字试一试？</p>
+<p><img
+src="/assets/cscore-image/21375212/7bf86a4e-d49f-4c4c-b058-2d3140e4ec91/image.png"
+alt="image.png" /></p>
+<p>目前是以P5的要求写的tb，还没有适配P6，所以tb中没有m_data_rdata和i_inst_rdata两个输入端口
+无法运行应该是由于输入端口不匹配导致的，输出端口没有影响</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-18T15:27:50.835199+08:00"><time datetime="2023-11-18T15:27:50.835199+08:00">2023-11-18 15:27:50</time></abbr>
+|
+<span>CC BY-NC 4.0（代码 BSD）</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4496" class="reply">
+<div class="reply-header">
+<span>卞卓航</span>
+</div>
+<div class="reply-text">
+
+<p>谢谢同学，改成P5文件以后顺利评测了，非常好评测机</p>
+<p>（我的<code>clear</code>其实是延迟槽的清空信号，不过无所谓orzorz）</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-18T15:45:06.621243+08:00"><time datetime="2023-11-18T15:45:06.621243+08:00">2023-11-18 15:45:06</time></abbr>
+|
+<span>CC BY-NC-SA 4.0</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4497" class="reply">
+<div class="reply-header">
+<span>姜涵章</span>
+</div>
+<div class="reply-text">
+
+<p>好的 感谢认可！</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-18T16:07:04.780596+08:00"><time datetime="2023-11-18T16:07:04.780596+08:00">2023-11-18 16:07:04</time></abbr>
+|
+<span>CC BY-NC 4.0（代码 BSD）</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4500" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-18T16:27:42.00369+08:00"><time datetime="2023-11-18T16:27:42.00369+08:00">2023-11-18 16:27:42</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4501" class="reply">
+<div class="reply-header">
+<span>姜涵章</span>
+</div>
+<div class="reply-text">
+
+<p>嗯嗯，感谢你的建议，之后会更新版本的，加一个通过的提示，或是直接打印一个总的测评报告</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-18T16:41:03.309083+08:00"><time datetime="2023-11-18T16:41:03.309083+08:00">2023-11-18 16:41:03</time></abbr>
+|
+<span>CC BY-NC 4.0（代码 BSD）</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4513" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-19T02:10:02.030342+08:00"><time datetime="2023-11-19T02:10:02.030342+08:00">2023-11-19 02:10:02</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4514" class="reply">
+<div class="reply-header">
+<span>姜涵章</span>
+</div>
+<div class="reply-text">
+
+<p>同学你好，标准周期数是使用p5教程中给的测试工具测的，应该是满足要求的</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-19T09:15:58.725961+08:00"><time datetime="2023-11-19T09:15:58.725961+08:00">2023-11-19 09:15:58</time></abbr>
+|
+<span>CC BY-NC 4.0（代码 BSD）</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4524" class="reply">
+<div class="reply-header">
+<span>陈睿正</span>
+</div>
+<div class="reply-text">
+
+<p>同学你好，请问评测时发生如下问题可能是什么原因？</p>
+<p><img
+src="/assets/cscore-image/22371213/0e966649-8f4f-4274-a685-6e7f415dcf22/image.png"
+alt="image.png" /></p>
+<p>我注意到你似乎更新了评测机版本，但问题依然存在。在新版中会显示如下提示：</p>
+<p><img
+src="/assets/cscore-image/22371213/9b380339-c29b-498c-b774-58ce811ce7bc/image.png"
+alt="image.png" /></p>
+<p>而且，你的评测机似乎有一定概率生成超过正常Mars可以容纳的指令条数的数据，我觉得这个问题可以通过在魔改Mars命令行中使用<code>mc CompactLargeText</code>来解决：</p>
+<p><code>mc CompactLargeText: 在原版 mc CompactDataAtZero 的基础上支持多达4096条32位机器码</code></p>
+<p>（摘自石睿知学长魔改Mars说明）</p>
+<p><img
+src="/assets/cscore-image/22371213/a248a691-949b-4a0c-96e0-3c8764b8bb3b/image.png"
+alt="image.png" /></p>
+<p>此外，你的评测机仍然存在一些细节上的问题，从报错中可以推断出，你似乎漏写了exit后面的括号，虽然这个漏写可以使程序因报错而退出，同样达到了退出程序的效果</p>
+<p><img
+src="/assets/cscore-image/22371213/c8113487-d020-48c1-8c80-5aad0ee7c68a/image.png"
+alt="image.png" /></p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-19T20:31:17.525634+08:00"><time datetime="2023-11-19T20:31:17.525634+08:00">2023-11-19 20:31:17</time></abbr>
+|
+<span>CC BY-SA 4.0（代码 MIT）</span>
+<span class="reply-vote">❤️ 1</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4525" class="reply">
+<div class="reply-header">
+<span>姜涵章</span>
+</div>
+<div class="reply-text">
+
+<p><strong>同学你好，非常感谢你的提问！</strong></p>
+<h3
+id="第一个问题关于无法处理仿真结果">第一个问题（关于无法处理仿真结果）</h3>
+<p><img
+src="/assets/cscore-image/21375212/2e877400-773f-46ef-ac01-c7c279aca249/image.png"
+alt="image.png" /></p>
+<p>可能是因为你的grf和dm在输出的时候没有加$time，导致我在识别输出的时候出现了问题，可以再看一下计组P5教程里面的作业要求</p>
+<h3 id="第二个问题关于指令超行">第二个问题（关于指令超行）</h3>
+<p>经过检查，我之前确实使用的是CompactDataAtZero,已采纳你的建议！ <img
+src="/assets/cscore-image/21375212/76ecc5f4-f80d-4bf6-9f96-e7d24b891611/image.png"
+alt="image.png" /></p>
+<h3 id="第三个问题关于exit">第三个问题（关于exit）</h3>
+<p>我的设计其实只要你输入的是空白符后回车，程序都会继续运行，否则exit（0）
+<img
+src="/assets/cscore-image/21375212/09a7e796-029c-4fcb-a468-a3b4f454abb3/image.png"
+alt="image.png" /></p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-19T21:02:31.271693+08:00"><time datetime="2023-11-19T21:02:31.271693+08:00">2023-11-19 21:02:31</time></abbr>
+|
+<span>CC BY-NC 4.0（代码 BSD）</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4526" class="reply">
+<div class="reply-header">
+<span>陈睿正</span>
+</div>
+<div class="reply-text">
+
+<p>感谢回复，确实是这个问题！但对于第三个问题，在结束程序时，确实会出现exit未定义这个奇怪的报错（如果不在cmd中执行，则报错之后程序立即退出，看不到报错信息），不知是何原因，但也无伤大雅。望评测机可以继续推出更好的版本！</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-19T21:15:19.980468+08:00"><time datetime="2023-11-19T21:15:19.980468+08:00">2023-11-19 21:15:19</time></abbr>
+|
+<span>CC BY-SA 4.0（代码 MIT）</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4527" class="reply">
+<div class="reply-header">
+<span>姜涵章</span>
+</div>
+<div class="reply-text">
+
+<p>感谢！
+exit的问题我经过查询发现改成os._exit()或sys.exit()应该就能就好了</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-19T21:21:38.892441+08:00"><time datetime="2023-11-19T21:21:38.892441+08:00">2023-11-19 21:21:38</time></abbr>
+|
+<span>CC BY-NC 4.0（代码 BSD）</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4600" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-26T18:23:19.13814+08:00"><time datetime="2023-11-26T18:23:19.13814+08:00">2023-11-26 18:23:19</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4601" class="reply">
+<div class="reply-header">
+<span>姜涵章</span>
+</div>
+<div class="reply-text">
+
+<p>同学你好，请问你用的是哪个版本的呀，是3.2还是4.1，如果是前者的话可以下载这个最新的，看看还有没有问题</p>
+<p><a
+target="_blank" rel="noopener" href="https://bhpan.buaa.edu.cn/link/AA0E3BBD86FE8C4255A4609212139CB62C">coKiller4.1下载地址</a></p>
+<p>还有就是，第一行的.v文件地址需要是你源代码的地址，也就是你可以自己运行仿真的地址，而不是只有.v文件的文件夹</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-26T18:34:14.426735+08:00"><time datetime="2023-11-26T18:34:14.426735+08:00">2023-11-26 18:34:14</time></abbr>
+|
+<span>CC BY-NC 4.0（代码 BSD）</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4602" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-26T19:07:06.790912+08:00"><time datetime="2023-11-26T19:07:06.790912+08:00">2023-11-26 19:07:06</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4802" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-12-09T20:15:50.262104+08:00"><time datetime="2023-12-09T20:15:50.262104+08:00">2023-12-09 20:15:50</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#32%E6%9B%B4%E6%96%B0"><span class="nav-number">1.</span> <span class="nav-text">3.2更新</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%BD%93%E6%AF%94%E5%AF%B9%E7%BB%93%E6%9E%9C%E5%AE%8C%E5%85%A8%E4%B8%80%E8%87%B4%E6%97%B6%E8%BE%93%E5%87%BAaccept%E5%90%A6%E5%88%99%E8%BE%93%E5%87%BAwrong-answer"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.
+当比对结果完全一致时输出Accept!!否则输出wrong answer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%94%AF%E6%8C%81%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95%E5%A4%9A%E4%B8%AA%E6%B5%8B%E8%AF%95%E7%82%B9"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 支持一次测试多个测试点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%8A%A0%E5%BC%BA%E4%BA%86%E4%BA%A4%E4%BA%92%E7%95%8C%E9%9D%A2%E8%83%BD%E6%9B%B4%E6%B8%85%E6%99%B0%E7%9A%84%E7%9F%A5%E9%81%93%E8%87%AA%E5%B7%B1%E4%B8%BA%E4%BD%95%E6%97%A0%E6%B3%95%E8%BF%90%E8%A1%8C%E8%AF%84%E6%B5%8B%E6%9C%BA"><span class="nav-number">1.0.3.</span> <span class="nav-text">3.
+加强了交互界面，能更清晰的知道自己为何无法运行评测机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E8%A7%A3%E5%86%B3%E4%BA%86%E8%BF%90%E8%A1%8C%E5%AE%8C%E5%85%A8%E9%83%A8%E6%8C%87%E4%BB%A4%E5%90%8Epc%E4%B8%80%E7%9B%B44%E5%AF%BC%E8%87%B4%E7%9A%84cpu%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%E8%BF%87%E5%A4%9A"><span class="nav-number">1.0.4.</span> <span class="nav-text">4.
+解决了运行完全部指令后pc一直+4导致的cpu输出结果过多</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%8A%A0%E5%BC%BA%E4%BA%86p5%E7%9A%84%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E7%A8%8B%E5%BA%8F%E9%A2%84%E5%8A%A0%E8%BD%BD%E4%BA%86p6%E7%9B%B8%E5%85%B3%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="nav-number">1.0.5.</span> <span class="nav-text">5.
+加强了P5的数据生成程序，预加载了P6相关的交互</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E6%88%90%E4%BA%86%E6%B5%8B%E8%AF%95%E7%82%B9%E7%94%9F%E6%88%90%E8%87%AA%E5%8A%A8%E8%BF%90%E8%A1%8C%E4%BB%BF%E7%9C%9F%E8%87%AA%E5%8A%A8%E5%92%8C%E9%AD%94%E6%94%B9mars%E7%9A%84%E6%AF%94%E5%AF%B9%E5%91%A8%E6%9C%9F%E6%95%B0%E6%AF%94%E5%AF%B9%E6%B5%8B%E8%AF%95%E7%82%B9%E8%A6%86%E7%9B%96%E7%8E%87%E7%AD%89%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text">集成了测试点生成，自动运行仿真，自动和魔改mars的比对，周期数比对，测试点覆盖率等功能</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cokiller-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="nav-number"></span> <span class="nav-text">coKiller 使用教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B8%AD%E7%9A%84readme%E6%96%87%E4%BB%B6%E4%B8%AD%E4%B9%9F%E6%9C%89%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="nav-number">0.1.</span> <span class="nav-text">压缩包中的README文件中也有使用教程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%B0%86cokillerzip%E8%A7%A3%E5%8E%8B%E5%88%B0%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">0.1.1.</span> <span class="nav-text">1.
+将coKiller.zip解压到任意文件夹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%B0%86%E6%89%80%E6%9C%89v%E6%96%87%E4%BB%B6%E6%94%BE%E5%88%B0%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%AD%A4%E6%AD%A5%E5%8F%AF%E4%BB%A5%E7%9C%81%E7%95%A5"><span class="nav-number">0.1.2.</span> <span class="nav-text">2.
+将所有.v文件放到一个文件夹中（此步可以省略）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%89%93%E5%BC%80cokiller%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E7%9A%84_internal%E6%96%87%E4%BB%B6%E5%A4%B9%E6%89%BE%E5%88%B0-filepathtxt%E5%8F%8C%E5%87%BB%E6%89%93%E5%BC%80%E8%AE%BE%E7%BD%AE%E4%B8%89%E8%A1%8C%E8%B7%AF%E5%BE%84%E5%A6%82%E4%B8%8B"><span class="nav-number">0.1.3.</span> <span class="nav-text">3.
+打开coKiller文件夹中的_internal文件夹，找到
+&quot;filePath.txt&quot;，双击打开，设置三行路径，如下</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%B8%8D%E8%A6%81%E6%9C%89%E4%B8%AD%E6%96%87%E8%B7%AF%E5%BE%84"><span class="nav-number">1.</span> <span class="nav-text">注意！！不要有中文路径！！！</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%9C%80%E5%90%8E%E5%8F%8C%E5%87%BB%E8%BF%90%E8%A1%8Ccokillerexe%E6%96%87%E4%BB%B6%E5%8D%B3%E5%8F%AF%E8%AF%B7%E8%B7%9F%E9%9A%8F%E6%8F%90%E7%A4%BA%E6%8C%87%E4%BB%A4%E8%A1%8C%E5%8A%A8"><span class="nav-number">1.0.1.</span> <span class="nav-text">4.
+最后，双击运行coKiller.exe文件即可！请跟随提示指令行动！</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%A5%E7%A8%8B%E5%BA%8F%E6%9C%89%E4%BB%BB%E4%BD%95%E9%97%AE%E9%A2%98%E6%AC%A2%E8%BF%8E%E5%9C%A8%E8%AE%A8%E8%AE%BA%E5%8C%BA%E6%8F%90%E5%87%BA"><span class="nav-number">1.1.</span> <span class="nav-text">若程序有任何问题欢迎在讨论区提出！</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%A7%9C%E6%B6%B5%E7%AB%A0%E9%92%9F%E8%8A%B3%E6%A2%BD"><span class="nav-number">1.1.1.</span> <span class="nav-text">开发者：姜涵章，钟芳梽</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E5%85%B3%E4%BA%8E%E6%97%A0%E6%B3%95%E5%A4%84%E7%90%86%E4%BB%BF%E7%9C%9F%E7%BB%93%E6%9E%9C"><span class="nav-number">1.2.</span> <span class="nav-text">第一个问题（关于无法处理仿真结果）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%97%AE%E9%A2%98%E5%85%B3%E4%BA%8E%E6%8C%87%E4%BB%A4%E8%B6%85%E8%A1%8C"><span class="nav-number">1.3.</span> <span class="nav-text">第二个问题（关于指令超行）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E4%B8%AA%E9%97%AE%E9%A2%98%E5%85%B3%E4%BA%8Eexit"><span class="nav-number">1.4.</span> <span class="nav-text">第三个问题（关于exit）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : 'ffd1da304ee4734564bcbc9f1a96fe32',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

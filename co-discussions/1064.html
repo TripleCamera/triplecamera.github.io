@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="沈锎 | 2023-10-29 14:13:21 | ⭐️ 1 | 💬️ 2  分享、MIPS     沈锎    因为之前不知道 Toby 学长开发的修改版 Mars，所以自己动手尝试了一下。但是现在要用的话，肯定用学长的修改版更好啦！ https:&#x2F;&#x2F;github.com&#x2F;Toby-Shi-cloud&#x2F;Mars-with-BUAA-CO-extension 下载 看到右侧的 Release">
+<meta property="og:type" content="website">
+<meta property="og:title" content="支持打印过程变化量的修改版 Mars">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1064.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="沈锎 | 2023-10-29 14:13:21 | ⭐️ 1 | 💬️ 2  分享、MIPS     沈锎    因为之前不知道 Toby 学长开发的修改版 Mars，所以自己动手尝试了一下。但是现在要用的话，肯定用学长的修改版更好啦！ https:&#x2F;&#x2F;github.com&#x2F;Toby-Shi-cloud&#x2F;Mars-with-BUAA-CO-extension 下载 看到右侧的 Release">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1064">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>支持打印过程变化量的修改版 Mars | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">支持打印过程变化量的修改版 Mars
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>沈锎</span>
+|
+<abbr title="2023-10-29T14:13:21.597193+08:00"><time datetime="2023-10-29T14:13:21.597193+08:00">2023-10-29 14:13:21</time></abbr>
+|
+<span>⭐️ 1</span>
+|
+<span>💬️ 2</span>
+<br>
+<span>分享、MIPS</span>
+</div>
+
+<div id="reply-4089" class="reply">
+<div class="reply-header">
+<span>沈锎</span>
+</div>
+<div class="reply-text">
+
+<p>因为之前不知道 Toby 学长开发的修改版
+Mars，所以自己动手尝试了一下。但是现在要用的话，肯定用学长的修改版更好啦！</p>
+<p><a
+target="_blank" rel="noopener" href="https://github.com/Toby-Shi-cloud/Mars-with-BUAA-CO-extension">https://github.com/Toby-Shi-cloud/Mars-with-BUAA-CO-extension</a></p>
+<h2 id="下载">下载</h2>
+<p>看到右侧的 Release，目前最新版是
+0.4.2【11月11日才更新的！优化了新增配置的用户体验】</p>
+<h2 id="从源代码构建">从源代码构建</h2>
+<p>Clone 下来源代码，丢到 IDEA 里面，运行 <code>Mars.java</code>
+即可，若想打包成 jar，可以参考一下百度，新建一个工件，不赘述。</p>
+<h2 id="对修改版进行贡献">对修改版进行贡献</h2>
+<p>首先 fork 一下原始仓库，然后在自己 fork
+下来的仓库中进行修改、提交等。原仓库配置了 github 的工作流，可以通过</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag vx.y.z</span><br><span class="line">git push --tag</span><br></pre></td></tr></table></figure>
+
+<p>给最近的一次提交打上 tag，x.y.z
+是你写的版本号，然后推送上去（推送到你自己的仓库），会自动进行打包，并运行一些测试。</p>
+<p>接着，在 github 上发起 Pull
+Request！学长就有可能去合并你的代码哦！</p>
+<p>【以下内容不属于学长的修改版 Mars，用法不适用】</p>
+<hr />
+<p>众所周知，Logisim 的 <code>Logging</code> 功能可以输出 CPU
+<strong>运行过程中</strong>的一些信息，如对寄存器或者 Memory 的写入，而
+Mars 的 <code>dump</code>
+参数可以输出<strong>运行结束后</strong>的寄存器或者 Memory
+中的数据。</p>
+<p>这俩真不般配！</p>
+<p>但是，倘若对其中的某一个进行修改，是不是就可以拿 Mars 和自己写的 CPU
+进行对拍了呢？答案是肯定的。</p>
+<p>我发现问题远比想象中的要简单。</p>
+<h2 id="使用方法">使用方法</h2>
+<p>新增参数：<code>record</code>，按照固定格式打印寄存器及内存的变化。注意，这里的
+“变化” 指
+“写入”，即使内容没有发生变化，只要有写入的动作，就会被打印（应该吧）。</p>
+<p>打印格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&lt;reg_name&gt;($&lt;reg_id&gt;): &lt;old&gt; =&gt; &lt;new&gt;</span><br><span class="line">*&lt;address&gt;: &lt;old&gt; =&gt; &lt;new&gt;</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$t9($25): 0000eebb =&gt; 0000ffff</span><br><span class="line">*000002e4: 00000000 =&gt; 0000ffff</span><br></pre></td></tr></table></figure>
+
+<p>对于寄存器，只会打印 <code>$1</code> ~ <code>$31</code> 的变化。</p>
+<hr />
+<p>命令行举例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar Mars_with_record_headless.jar mc CompactDataAtZero record test.asm</span><br></pre></td></tr></table></figure>
+
+<p>注意，打印的“目的地”是标准输出，而 Mars
+的一些提示语默认也是打印到标准输出，不过好在它们很容易区分。</p>
+<h2 id="修改内容">修改内容</h2>
+<ul>
+<li>禁用了 <code>mars.MarsLaunch</code> 中启用 GUI
+的代码（这是为了避免后续修改可能造成的不良影响）</li>
+<li>在 <code>mars.Globals</code> 增加了全局配置
+<code>record</code>，及其相关的参数解析</li>
+<li>在 <code>mars.mips.hardware.Register</code>
+中增加了对寄存器变化的打印</li>
+<li>在 <code>mars.mips.hardware.Memory</code>
+中增加了对内存变化的打印</li>
+</ul>
+<h2 id="下载链接">下载链接</h2>
+<p>不能用这个 <code>jar</code> 包来启动 Mars 界面！！！</p>
+<p><a
+target="_blank" rel="noopener" href="https://bhpan.buaa.edu.cn/link/AA2B7CEECAD915432EA982A2509B60A861">https://bhpan.buaa.edu.cn/link/AA2B7CEECAD915432EA982A2509B60A861</a></p>
+<p>文件名：Mars_with_record_headless.jar</p>
+<p>字节码版本：52.0 (jdk1.8)</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-29T14:13:21.60318+08:00"><time datetime="2023-10-29T14:13:21.60318+08:00">2023-10-29 14:13:21</time></abbr>
+|
+<span>CC BY-NC 4.0</span>
+<span class="reply-vote">❤️ 8</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4488" class="reply">
+<div class="reply-header">
+<span>姜涵章</span>
+</div>
+<div class="reply-text">
+
+<pre><code>1</code></pre>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-18T10:18:11.475079+08:00"><time datetime="2023-11-18T10:18:11.475079+08:00">2023-11-18 10:18:11</time></abbr>
+|
+<span>CC BY-NC 4.0（代码 BSD）</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E6%9E%84%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">从源代码构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E4%BF%AE%E6%94%B9%E7%89%88%E8%BF%9B%E8%A1%8C%E8%B4%A1%E7%8C%AE"><span class="nav-number">3.</span> <span class="nav-text">对修改版进行贡献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%86%85%E5%AE%B9"><span class="nav-number">5.</span> <span class="nav-text">修改内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">下载链接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : '23246a4a37f9f45b37b48749adb45701',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

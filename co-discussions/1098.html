@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="廖鹏飞 | 2023-11-07 13:12:06 | ⭐️ 3 | 💬️ 3  P4、测试、Verilog     廖鹏飞    CPU自动化测试 有幸和zlr同学一起开发462oj，这让我收获了一次非常宝贵的自动化测试经验。作为数据构造者，我想介绍一下评测机数据生成部分背后的一些细节，希望能从自动化数据生成的角度给同学们一些启示。 本文主要分享样例自动生成程序的思路（P4部分），分为四部分">
+<meta property="og:type" content="website">
+<meta property="og:title" content="462oj自动化测试数据生成思路分享">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1098.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="廖鹏飞 | 2023-11-07 13:12:06 | ⭐️ 3 | 💬️ 3  P4、测试、Verilog     廖鹏飞    CPU自动化测试 有幸和zlr同学一起开发462oj，这让我收获了一次非常宝贵的自动化测试经验。作为数据构造者，我想介绍一下评测机数据生成部分背后的一些细节，希望能从自动化数据生成的角度给同学们一些启示。 本文主要分享样例自动生成程序的思路（P4部分），分为四部分">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1098">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>462oj自动化测试数据生成思路分享 | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">462oj自动化测试数据生成思路分享
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>廖鹏飞</span>
+|
+<abbr title="2023-11-07T13:12:06.51607+08:00"><time datetime="2023-11-07T13:12:06.51607+08:00">2023-11-07 13:12:06</time></abbr>
+|
+<span>⭐️ 3</span>
+|
+<span>💬️ 3</span>
+<br>
+<span>P4、测试、Verilog</span>
+</div>
+
+<div id="reply-4345" class="reply">
+<div class="reply-header">
+<span>廖鹏飞</span>
+</div>
+<div class="reply-text">
+
+<p><font size=5><strong>CPU自动化测试</strong></font></p>
+<p>有幸和zlr同学一起开发462oj，这让我收获了一次<strong>非常宝贵的自动化测试经验</strong>。作为数据构造者，我想介绍一下评测机数据生成部分背后的一些细节，希望能从自动化数据生成的角度给同学们一些启示。</p>
+<p>本文主要分享样例自动生成程序的思路（P4部分），分为四部分，分别是消除死循环、保证数据的正确性、扩大数据的覆盖范围和程序总体架构设计。
+<br></br></p>
+<p><font size=4><strong>一.消除死循环</strong></font> <br></br>
+1.问题</p>
+<p>死循环可谓是自动化数据生产的一大难题。这个问题不解决，那么在很有可能程序难以终止。讨论区的大佬们分别给出了不同的答案，比如固定跳跃次数等。</p>
+<p>2.思路</p>
+<p>经过不断的尝试后，我逐渐放弃了原先往后跳的思维定式，转为规定跳跃型指令必须向<strong>前</strong>跳。什么意思呢？比如说jr指令，我就必须要保证寄存器的值大于当前的PC，否则，干脆不跳。这种处理方法与我后面要谈到的在线模拟的思路相契合，简化了在线模拟的难度。</p>
+<p>3.论证</p>
+<p>我们不难证明，向<strong>前</strong>跳显然是不会导致死循环的，正确性上有了保证。那数据覆盖的全面性呢？其实，跳跃型指令检测的本身就是能不能保证PC能正确的指向下一条指令。那么，对于跳跃型指令本身，向前还是向后跳是没有区别的。至于其他指令的覆盖，只要我增强数据的规模，比如说1000条指令，那么向前条之后指令的检测率也能得到有效的保证。
+<br></br></p>
+<p><font size=4><strong>二.保证数据的正确性</strong></font></p>
+<p><strong><li>lw、sw相关的问题</li></strong><br></br> 1.背景</p>
+<p>通过浏览讨论区很多大佬的自动化生成数据思路，我受益良多。但是，通过对他们构造数据的进一步测试，我发现了一个问题：<strong>很多lw、sw指令指向非法的位置</strong>。</p>
+<p>2.分析</p>
+<p>为了探究产生这个问题的原因，我用Mars模拟了指令的行为，最终发现，原因由两部分组成，一是有些同学<strong>自身生成的lw、sw的偏移量并没有注意是4的倍数</strong>，二是虽然保证了直接的lw、sw偏移量是4的倍数，但是没有考虑到<strong>ori、lui等你指令对寄存器的改变</strong>。</p>
+<p>3.解决方案</p>
+<p>综合了上述的原因和分析，我想到了一个能完美解决这个问题的方案：将所有指令所涉及到的<strong>立即数都确保为4的倍数</strong>（通过同余定理可以证明最终所有的数都是4的倍数）。这个解决方案虽然从一定程度上削减了数据的多样性，但是大大简化了数据生成方面的复杂度，怎么算都是值得的。</p>
+<p><strong><li>地址边界等问题</strong></li></p>
+<p>1.问题</p>
+<p>通过对数据生成方面的实践，我逐渐意识到，地址边界的问题也着实需要考虑。在2023年CPU构造要求中，对指令存储器和数据存储器的大小均有要求，如果一味的随机化处理，那势必难以保证寄存器中的值满足存储器的范围。</p>
+<p>2.解决方案</p>
+<p>为了解决这个问题，我曾经尝试过很多不同的方案。刚开始的时候，我本来想通过随机化的后续跟踪测试来确认数据的合法性。但是通过实测，我发现这样生成的数据错误率过高，如果每次都是先数据生成再数据检测，那么数据的生产效率将会大大降低。在多次试错后，我产生了一种在线跟踪测试的想法。即<strong>在指令执行的同时，通过数组来仿真指令的行为</strong>（<del>其实就是用高级语言来实现低级语言。先将高级语言编译成低级语言，再用低级语言来实现低级语言，啊啊啊~</del>）。总之，通过同步的模拟，我可以很明确的保证每一步生成的指令从开始到现在都是合法的。这样的跟踪能够及时的进行纠错，大大提高了数据生成的效率。</p>
+<p><font size=4><strong>三.扩大数据的覆盖范围</strong></font> <br></br>
+1.背景</p>
+<p>自动化测试的本质就是帮助同学们在课下尽可能全面的测试CPU的各个模块，从边界和特殊情况来确保指令执行的正确性。所以数据的覆盖范围至关重要。</p>
+<p>2.数据生成思路</p>
+<p>在构造数据之前，我也对这个问题进行了很多的思考。在最终实现的时候，我将我能想到的思路都实现在了我的自动化生成代码中。首先，我明确了跳转结点的个数，决定了它们在指令中的位置。然后，在这些跳转结点之间，插入其他指令（满足正确性），尽量用rand使指令的分布接近于真实CPU的指令分布。最后，我通过<strong>随机和corner
+case检验</strong>来覆盖尽可能多的情况。</p>
+<p>3.不足和改进</p>
+<p>通过在自动化测试中一些同学的反馈，本次P4生成的数据随机不够彻底，边界测试还做得不充足。针对这些问题，我仔细思考并初步构思了下一步的改进策略。首先就是随机化生成部分，由于是第一次尝试构造数据，我只是简单的使用rand来生成数据，并不能保证数据分布的完全随机（伪随机数）。在下一步的改进中，我打算使用<strong>mt19937和伪蒙特卡洛算法</strong>对随机进行进一步的优化。其次，我可以再针对DM和IFC中的边界情况进行更多的倾斜，让更多的指令能覆盖到这些边界的情况，尽量提高指令之间的差异度。</p>
+<p><font size=4><strong>四.程序总体架构设计</strong></font> <br></br>
+在前面的叙述中，相信同学们也能对我的自动化生成思路有了一个大致的了解，现在，我想通过部分代码的展示，来进一步解释我的自动化数据生产的思路。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">start:</span><br><span class="line">++cnt;</span><br><span class="line"><span class="keyword">if</span>((c+r[a])/<span class="number">4</span>&gt;=<span class="number">3072</span>)&#123;</span><br><span class="line">	cnt--;</span><br><span class="line">	<span class="keyword">goto</span> start;</span><br><span class="line">&#125;</span><br><span class="line">uu[cnt]=uu[cnt]+<span class="string">&quot;lw $&quot;</span>+to_string(b)+<span class="string">&quot;,&quot;</span>+to_string(c)+<span class="string">&quot;($&quot;</span>+to_string(a)+<span class="string">&quot;)&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(to==cnt)&#123;</span><br><span class="line">	<span class="keyword">if</span>(b) r[b]=nei[(c+r[a])/<span class="number">4</span>];</span><br><span class="line">	to++;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个板块是lw的设计，主要结合了上述关于数据正确性保证的相关思路。可以发现，如果我检测到了lw的地址超出了题目要求的地址，我的程序就会跳转重来，直到它生成符合要求的数据为止。如果数据符合要求，我就用r和nei数组来模拟这次lw操作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> a=<span class="number">0</span>;a&lt;<span class="number">32</span>;++a)&#123;</span><br><span class="line">	<span class="keyword">if</span>(r[a]&lt;<span class="number">0x3000</span>) <span class="keyword">continue</span>;</span><br><span class="line">	<span class="type">int</span> t=(r[a]<span class="number">-0x3000</span>)/<span class="number">4</span>;</span><br><span class="line">	<span class="keyword">if</span>(t&lt;=to||t&gt;=n) <span class="keyword">continue</span>;</span><br><span class="line">	++cnt;</span><br><span class="line">	uu[cnt]=uu[cnt]+<span class="string">&quot;jr $&quot;</span>+to_string(a);</span><br><span class="line">	<span class="keyword">if</span>(to==cnt)&#123;</span><br><span class="line">		to=t;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个板块是jr的设计，主要结合了上述关于正确性保证和消除死循环的相关思路。可以看到，我对寄存器中各种非法的jr指令进行了判断和消除，直到找到一个正确的寄存器满足jr转跳的条件，最终执行转跳操作。</p>
+<p>在<strong>总体架构设计</strong>上，我主要采用了循环+随机+分指令处理的模式，对每一条指令进行分类处理。增加了代码的模块化，也便于日后增加新指令，提高了程序的可扩展性。</p>
+<p><font size=4><strong>总结与展望</strong></font> <br></br>
+这次CPU自动化数据生成工作让我收获了思考上的乐趣和很多宝贵的经验。同学们也在我们帖子下方积极留言，这让我感觉到很欣慰。在今后的P5、P6、P7中，我会继续思考，优化当前的数据生成工作，希望最终臻至佳境。最后十分感谢同学们和助教团队对462oj的大力支持，我们将努力精进，不负大家的期待！！！</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-07T13:12:06.52612+08:00"><time datetime="2023-11-07T13:12:06.52612+08:00">2023-11-07 13:12:06</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 5</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4353" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-07T17:56:17.769158+08:00"><time datetime="2023-11-07T17:56:17.769158+08:00">2023-11-07 17:56:17</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4354" class="reply">
+<div class="reply-header">
+<span>廖鹏飞</span>
+</div>
+<div class="reply-text">
+
+<p>十分感谢助教的指正，我会继续努力完善我的数据生成程序，并继续思考如何提升数据强度。最后我也非常期待能加入计组助教团队！</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-07T18:28:56.948082+08:00"><time datetime="2023-11-07T18:28:56.948082+08:00">2023-11-07 18:28:56</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 1</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : 'cc729766d01bbcd0086cac4dec00123d',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

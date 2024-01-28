@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="FyVoid | 2023-11-02 11:44:54 | ⭐️ 4 | 💬️ 12  P4、分享、测试、Verilog、MIPS     符悦    CO_tester  repo: https:&#x2F;&#x2F;github.com&#x2F;FyVoid&#x2F;BUAA_CO_tester 北航云盘提供的下载存在严重的bug，且难以随后续开发更新，现只提供github repo地址  本项目包括  python实现">
+<meta property="og:type" content="website">
+<meta property="og:title" content="包含指令生成，verilog编译的可自定义的自动化测试流程脚本">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1075.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="FyVoid | 2023-11-02 11:44:54 | ⭐️ 4 | 💬️ 12  P4、分享、测试、Verilog、MIPS     符悦    CO_tester  repo: https:&#x2F;&#x2F;github.com&#x2F;FyVoid&#x2F;BUAA_CO_tester 北航云盘提供的下载存在严重的bug，且难以随后续开发更新，现只提供github repo地址  本项目包括  python实现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://triplecamera.github.io/co-discussions/asset/tester.drawio.png">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://triplecamera.github.io/co-discussions/asset/tester.drawio.png">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1075">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>包含指令生成，verilog编译的可自定义的自动化测试流程脚本 | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">包含指令生成，verilog编译的可自定义的自动化测试流程脚本
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>FyVoid</span>
+|
+<abbr title="2023-11-02T11:44:54.644189+08:00"><time datetime="2023-11-02T11:44:54.644189+08:00">2023-11-02 11:44:54</time></abbr>
+|
+<span>⭐️ 4</span>
+|
+<span>💬️ 12</span>
+<br>
+<span>P4、分享、测试、Verilog、MIPS</span>
+</div>
+
+<div id="reply-4124" class="reply">
+<div class="reply-header">
+<span>符悦</span>
+</div>
+<div class="reply-text">
+
+<h1 id="co_tester">CO_tester</h1>
+<blockquote>
+<p>repo: <a
+target="_blank" rel="noopener" href="https://github.com/FyVoid/BUAA_CO_tester">https://github.com/FyVoid/BUAA_CO_tester</a>
+北航云盘提供的下载<strong>存在严重的bug</strong>，且难以随后续开发更新，现只提供github
+repo地址</p>
+</blockquote>
+<p>本项目包括</p>
+<ul>
+<li>python实现的MIPS汇编程序生成程序</li>
+<li>一套利用mars命令行和iverilog对随机生成的程序进行汇编、仿真并输出结果的流程</li>
+<li>可自定义的汇编指令生成、有一定扩展性</li>
+<li>通过魔改版MARS进行正确性验证</li>
+</ul>
+<h2 id="环境配置">环境配置</h2>
+<p>完整运行此测试流程，你需要至少有</p>
+<ul>
+<li>iverilog</li>
+<li>java（支持mars）</li>
+<li>shell脚本支持(windows可以尝试使用git bash)</li>
+</ul>
+<p>如果要通过gtkwave查看波形，则需要安装gtkwave并支持控制台命令gtkwave</p>
+<h2 id="太长不看">太长不看</h2>
+<p>clone或从北航云盘下载后，将CO_tester和你的verilog源代码置于同一个目录，将verilog源码（应该包含一个能正常运行的testbench）置于src文件夹下，此时目录应该类似于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── CO_tester</span><br><span class="line">│   ├── CO_test.sh</span><br><span class="line">│   ├── README.md</span><br><span class="line">│   ├── analyse.py</span><br><span class="line">│   ├── assemble.asm</span><br><span class="line">│   ├── assemble.sh</span><br><span class="line">│   ├── compile.sh</span><br><span class="line">│   ├── generate.py</span><br><span class="line">│   ├── mars.jar</span><br><span class="line">│   ├── pytester</span><br><span class="line">│   │   ├── analyser.py</span><br><span class="line">│   │   ├── hex2binary.py</span><br><span class="line">│   │   ├── instruction.py</span><br><span class="line">│   │   └── tester.py</span><br><span class="line">├── src</span><br><span class="line">│   ├── ... 你的verilog cpu源代码</span><br><span class="line">│   ├── mips.v</span><br><span class="line">│   ├── mips_tb.v	你的testbench（不需要同名）</span><br></pre></td></tr></table></figure>
+
+<p>在终端运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh CO_test.sh</span><br></pre></td></tr></table></figure>
+
+<p>程序会自动生成一个mips程序assemble.asm</p>
+<p>mars命令行会将该程序转化为code.txt，随后iverilog会编译verilog源码，并生成波形和cpu输出（存于cpu_output.txt)，python程序会对比verilog输出和魔改版MARS产生的标准输出，输出对应关系于log.txt，gtkwave会自动启动并显示波形</p>
+<p>log.txt应该类似这样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">@00003000: $18 &lt;= 29a30000        &lt;=&gt;    @00003000: $18 &lt;= 29a30000</span><br><span class="line">@00003004: $ 3 &lt;= 0000a435        &lt;=&gt;    @00003004: $ 3 &lt;= 0000a435</span><br><span class="line">@00003008: $ 8 &lt;= 0000009c        &lt;=&gt;    @00003008: $ 8 &lt;= 0000009c</span><br><span class="line">@0000300c: *00000dd0 &lt;= 0000a435  &lt;=&gt;    @0000300c: *00000dd0 &lt;= 0000a435</span><br><span class="line">@00003010: $ 6 &lt;= 54b80000        &lt;=&gt;    @00003010: $ 6 &lt;= 54b80000</span><br><span class="line">@00003014: $ 2 &lt;= 0000d7a6        &lt;=&gt;    @00003014: $ 2 &lt;= 0000d7a6</span><br><span class="line">@00003018: $ 3 &lt;= 00000000        &lt;=&gt;    @00003018: $ 3 &lt;= 00000000</span><br><span class="line">@00003020: $22 &lt;= b16e0000        &lt;=&gt;    @00003020: $22 &lt;= b16e0000</span><br><span class="line">@00003028: $31 &lt;= 0000302c        &lt;=&gt;    @00003028: $31 &lt;= 0000302c</span><br><span class="line">@000030d8: $20 &lt;= 0000a3a3        &lt;=&gt;    @000030d8: $20 &lt;= 0000a3a3</span><br><span class="line">@000030dc: $ 4 &lt;= ffff285a        &lt;=&gt;    @000030dc: $ 4 &lt;= ffff285a</span><br><span class="line">@000030e0: $23 &lt;= 00000000        &lt;=&gt;    @000030e0: $23 &lt;= 00000000</span><br><span class="line">@000030e4: $ 6 &lt;= 00000000        &lt;=&gt;    @000030e4: $ 6 &lt;= 00000000</span><br><span class="line">@000030e8: $ 7 &lt;= 00000000        &lt;=&gt;    @000030e8: $ 7 &lt;= 00000000</span><br><span class="line">@000030ec: $ 8 &lt;= 00000dd0        &lt;=&gt;    @000030ec: $ 8 &lt;= 00000dd0</span><br><span class="line">@000030f0: *00000dd0 &lt;= 00000000  &lt;=&gt;    @000030f0: *00000dd0 &lt;= 00000000</span><br><span class="line">@000030f4: $20 &lt;= 00000000        &lt;=&gt;    @000030f4: $20 &lt;= 00000000</span><br><span class="line">@000030f8: $19 &lt;= 0000b631        &lt;=&gt;    @000030f8: $19 &lt;= 0000b631</span><br><span class="line">@000030fc: $11 &lt;= ffff2d7f        &lt;=&gt;    @000030fc: $11 &lt;= ffff2d7f</span><br><span class="line">@00003100: $ 8 &lt;= 00000898        &lt;=&gt;    @00003100: $ 8 &lt;= 00000898</span><br><span class="line">@00003104: *000008e8 &lt;= 00000000  &lt;=&gt;    @00003104: *000008e8 &lt;= 00000000</span><br><span class="line">@00003108: $ 8 &lt;= 00000394        &lt;=&gt;    @00003108: $ 8 &lt;= 00000394</span><br><span class="line">@0000310c: $23 &lt;= 00000000        &lt;=&gt;    @0000310c: $23 &lt;= 00000000</span><br><span class="line">@00003110: $31 &lt;= 00003114        &lt;=&gt;    @00003110: $31 &lt;= 00003114</span><br><span class="line">@000031c8: *000007f4 &lt;= 29a30000  &lt;=&gt;    @000031c8: *000007f4 &lt;= 29a30000</span><br><span class="line">@000031cc: $ 2 &lt;= 0000142a        &lt;=&gt;    @000031cc: $ 2 &lt;= 0000142a</span><br><span class="line">@000031d0: $20 &lt;= 0000b631        &lt;=&gt;    @000031d0: $20 &lt;= 0000b631</span><br><span class="line">END</span><br><span class="line">All Correct Nya!</span><br></pre></td></tr></table></figure>
+
+<p>整个测试逻辑图如下，各个组件可以分开使用</p>
+<p><img src="./asset/tester.drawio.png" alt="tester.drawio" /></p>
+<h2 id="批量测试">批量测试</h2>
+<blockquote>
+<p>愿意折腾的学生能学到更多</p>
+</blockquote>
+<p>如果你去github上获取最新版，可以通过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh batch_test.sh &lt;batch_count&gt;</span><br></pre></td></tr></table></figure>
+
+<p>进行批量测试，如果不指定batch_count，则会进行50次测试<br />
+测试的结果会被汇总到batch_log.txt文件下</p>
+<h2 id="高级功能">高级功能</h2>
+<p>事实上，你可以通过一定的修改来自定义汇编程序的生成，可以自定义的部分包括</p>
+<ul>
+<li>自定义新指令</li>
+<li>自定义每个指令生成概率</li>
+<li>自定义某些行为的概率（如跳转和内存存取）</li>
+<li>自定义生成程序的指令条数</li>
+</ul>
+<h3 id="自定义新指令">自定义新指令</h3>
+<p>通过调整tester_config.txt的内容，你可以减少/添加已有的指令，控制每个指令生成的概率，<strong>甚至自定义新的指令</strong></p>
+<p>指令的格式为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[指令名] [参数1], (参数2), (参数3) | (output), (prob:生成概率)</span><br></pre></td></tr></table></figure>
+
+<p>指令名可以是任何合理的名字</p>
+<p>参数可选的值如下</p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>$reg</td>
+<td>随机产生$t, $s, $a, $v中的寄存器</td>
+</tr>
+<tr class="even">
+<td>$t</td>
+<td>随机产生$t0-$t9</td>
+</tr>
+<tr class="odd">
+<td>$s</td>
+<td>随机产生$s0-$s7</td>
+</tr>
+<tr class="even">
+<td>$a</td>
+<td>随机产生$a0-$a3</td>
+</tr>
+<tr class="odd">
+<td>$v</td>
+<td>随机产生$v0 or $v1</td>
+</tr>
+<tr class="even">
+<td>$im</td>
+<td>随机产生范围为0-0xffff的立即数</td>
+</tr>
+<tr class="odd">
+<td>$lb</td>
+<td>随机产生跳转标签、标签可能是已经存在的标签，也可能是新的标签，这个概率由generate.py中的参数决定</td>
+</tr>
+<tr class="even">
+<td>$rega</td>
+<td>随机产生一个形如offset($t0)的地址，地址的值（即offset+$t0)可能是先前使用过的地址，也可能是新的地址，如果是已经产生过的地址，则一定为0($t0)</td>
+</tr>
+</tbody>
+</table>
+<p><code>$rega</code>一定会在存取指令前产生一条<code>ori</code>指令，保证地址对齐</p>
+<p><strong>指令结尾的<code>|</code>是必须的</strong>，如果其后有<code>output</code>，表示该条指令会导致verilog仿真产生输出（根据CO课程规则），如果有<code>prob</code>，表示该指令的概率人为制定，格式为<code>prob:(0-1的数)f</code>，<strong>结尾的<code>f</code>是必须的</strong></p>
+<p>如果所有指令概率和&gt;1或所有指令概率和&lt;=1且每条指令均被指定概率，则每条指令概率为该条指令概率/总概率</p>
+<p>否则，未指定概率指令概率为(1-已指定指令概率和)/(未指定概率指令数)</p>
+<h3 id="自定义生成概率和生成数量">自定义生成概率和生成数量</h3>
+<p>generate.py文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gen_label_prob = 0.2		# 产生新标签的概率</span><br><span class="line">former_addr_prob = 0.5	# 产生新地址的概率</span><br><span class="line">total_instruct = 114		# 总的指令数量，由于$rega会产生ori，不是确定数量(可能+1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="shell脚本命令行参数">shell脚本命令行参数</h3>
+<ul>
+<li>nw: 不自动开启gtkwave</li>
+<li>nl: log中不保存所有指令对应关系</li>
+<li>ns: 命令行不输出log</li>
+<li>dir &lt;dirname&gt;: 保存临时文件和log的目录</li>
+</ul>
+<h2 id="最后">最后</h2>
+<ul>
+<li><p>现在采用学长开发的魔改版MARS生成</p>
+<ul>
+<li><blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://github.com/Toby-Shi-cloud/Mars-with-BUAA-CO-extension">https://github.com/Toby-Shi-cloud/Mars-with-BUAA-CO-extension</a></p>
+</blockquote></li>
+</ul></li>
+<li><p>github版本已经更新批量测试版本</p></li>
+</ul>
+<p>该自动化程序会继续更新适用新的课程要求</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T11:44:54.650389+08:00"><time datetime="2023-11-02T11:44:54.650389+08:00">2023-11-02 11:44:54</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 2</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4127" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T13:27:54.748272+08:00"><time datetime="2023-11-02T13:27:54.748272+08:00">2023-11-02 13:27:54</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4132" class="reply">
+<div class="reply-header">
+<span>符悦</span>
+</div>
+<div class="reply-text">
+
+<p>很好的建议，现在已经支持</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T17:03:41.884005+08:00"><time datetime="2023-11-02T17:03:41.884005+08:00">2023-11-02 17:03:41</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4135" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T17:59:42.420156+08:00"><time datetime="2023-11-02T17:59:42.420156+08:00">2023-11-02 17:59:42</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 1</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4137" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T18:04:53.889854+08:00"><time datetime="2023-11-02T18:04:53.889854+08:00">2023-11-02 18:04:53</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4141" class="reply">
+<div class="reply-header">
+<span>符悦</span>
+</div>
+<div class="reply-text">
+
+<p>如果用的是早上发布的版本会有这个问题，下午发布的版本应该已经修复了这个问题
+如果用的已经是新版本，能不能提供一下报错的指令内容</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T18:23:49.964859+08:00"><time datetime="2023-11-02T18:23:49.964859+08:00">2023-11-02 18:23:49</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4142" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T19:04:00.953298+08:00"><time datetime="2023-11-02T19:04:00.953298+08:00">2023-11-02 19:04:00</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4143" class="reply">
+<div class="reply-header">
+<span>符悦</span>
+</div>
+<div class="reply-text">
+
+<p>感谢助教的指正<br />
+其实采取配置文件定义指令的设计模式是出于以下考虑</p>
+<ul>
+<li>tester只负责指令的<strong>文本</strong>生成</li>
+<li>mars负责所有的指令实际译码和执行</li>
+</ul>
+<p>也就是希望通过隔离指令文本的生成和解释两个部分提供更加便捷、可扩展性更高的测试过程，例如如果我想加入qaq指令，只需要在config中加入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qaq $reg, $reg, $reg |  </span><br></pre></td></tr></table></figure>
+
+<p>而qaq指令具体的执行<strong>依赖于mars相关的修改</strong>，例如采用学长开发的魔改版mars添加class文件扩展<br />
+当然，未来如果已有的指令格式不足以表达需求，也会增加新的指令格式<br />
+另外感谢提出出现重复无用测试的情况，会想办法改进！</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T19:17:43.511885+08:00"><time datetime="2023-11-02T19:17:43.511885+08:00">2023-11-02 19:17:43</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 1</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4154" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T21:19:57.32927+08:00"><time datetime="2023-11-02T21:19:57.32927+08:00">2023-11-02 21:19:57</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4155" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T21:23:45.932853+08:00"><time datetime="2023-11-02T21:23:45.932853+08:00">2023-11-02 21:23:45</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 1</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4157" class="reply">
+<div class="reply-header">
+<span>符悦</span>
+</div>
+<div class="reply-text">
+
+<p>这个跟你的testbench有关系，例如我的testbench在1000多延时后会停止
+你可以用<code>$finish;</code>让verilog停止仿真</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T21:40:54.972717+08:00"><time datetime="2023-11-02T21:40:54.972717+08:00">2023-11-02 21:40:54</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4159" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T22:22:15.707151+08:00"><time datetime="2023-11-02T22:22:15.707151+08:00">2023-11-02 22:22:15</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#co_tester"><span class="nav-number">1.</span> <span class="nav-text">CO_tester</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%AA%E9%95%BF%E4%B8%8D%E7%9C%8B"><span class="nav-number">1.2.</span> <span class="nav-text">太长不看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E6%B5%8B%E8%AF%95"><span class="nav-number">1.3.</span> <span class="nav-text">批量测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E5%8A%9F%E8%83%BD"><span class="nav-number">1.4.</span> <span class="nav-text">高级功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%B0%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.1.</span> <span class="nav-text">自定义新指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%9F%E6%88%90%E6%A6%82%E7%8E%87%E5%92%8C%E7%94%9F%E6%88%90%E6%95%B0%E9%87%8F"><span class="nav-number">1.4.2.</span> <span class="nav-text">自定义生成概率和生成数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell%E8%84%9A%E6%9C%AC%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0"><span class="nav-number">1.4.3.</span> <span class="nav-text">shell脚本命令行参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">1.5.</span> <span class="nav-text">最后</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : '571fb8e31ed2b0f5c09e5720ae8f62ad',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

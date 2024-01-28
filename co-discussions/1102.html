@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="沈锎 | 2023-11-08 09:31:13 | ⭐️ 1 | 💬️ 3  分享、测试、Verilog     沈锎    本文主要交流两个方面的问题：数据生成器程序的结构与生成数据的强度。文末有代码获取链接与具体代码的介绍。个人观点，抛砖引玉，望批评交流！  目录  生成器采用的程序架构  面向接口与继承的指令设计 面向块的模板文件 此种设计方式的优劣  数据合法性与强度保障  跳转指令">
+<meta property="og:type" content="website">
+<meta property="og:title" content="基于代码块的数据生成器">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1102.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="沈锎 | 2023-11-08 09:31:13 | ⭐️ 1 | 💬️ 3  分享、测试、Verilog     沈锎    本文主要交流两个方面的问题：数据生成器程序的结构与生成数据的强度。文末有代码获取链接与具体代码的介绍。个人观点，抛砖引玉，望批评交流！  目录  生成器采用的程序架构  面向接口与继承的指令设计 面向块的模板文件 此种设计方式的优劣  数据合法性与强度保障  跳转指令">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1102">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>基于代码块的数据生成器 | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">基于代码块的数据生成器
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>沈锎</span>
+|
+<abbr title="2023-11-08T09:31:13.860967+08:00"><time datetime="2023-11-08T09:31:13.860967+08:00">2023-11-08 09:31:13</time></abbr>
+|
+<span>⭐️ 1</span>
+|
+<span>💬️ 3</span>
+<br>
+<span>分享、测试、Verilog</span>
+</div>
+
+<div id="reply-4357" class="reply">
+<div class="reply-header">
+<span>沈锎</span>
+</div>
+<div class="reply-text">
+
+<p>本文主要交流两个方面的问题：数据生成器<strong>程序的结构</strong>与生成数据的<strong>强度</strong>。文末有代码获取链接与具体代码的介绍。个人观点，抛砖引玉，望批评交流！</p>
+<hr />
+<h3 id="目录">目录</h3>
+<ul>
+<li>生成器采用的程序架构
+<ul>
+<li>面向接口与继承的指令设计</li>
+<li>面向块的模板文件</li>
+<li>此种设计方式的优劣</li>
+</ul></li>
+<li>数据合法性与强度保障
+<ul>
+<li>跳转指令</li>
+<li>内存读写指令</li>
+<li>过程调用</li>
+</ul></li>
+<li>代码设计分析
+<ul>
+<li>抽象基类与代码块</li>
+<li>软件包与模块</li>
+<li>模板文件与参数定制化</li>
+<li>完整代码获取</li>
+</ul></li>
+</ul>
+<hr />
+<h1 id="生成器采用的程序架构">生成器采用的程序架构</h1>
+<p>在之前分享的数据生成器设计思路中，有同学将指令<strong>硬编码</strong>进生成器，也有同学将指令<strong>写入配置文件</strong>，并设置相关参数，取得了比较理想的随机效果。</p>
+<p>在 P3
+的自动测试中，我采取了一种人工编写“<strong>描述文件</strong>”，由生成器进行解析，并生成随机产生的汇编代码。这种比较麻烦，而且添加指令需要对之前编写好的文件进行修改。同时，数据的强度非常依赖于编写描述文件时的设计与想法。</p>
+<p>如果不考虑新增指令与可拓展性，上述几种方式都可以取得比较好的效果，但问题的关键便在于<strong>可拓展性</strong>上。</p>
+<h2 id="面向接口与继承的指令设计">面向接口与继承的指令设计</h2>
+<p>不如先看一看我们的 “黄金标准” <strong>Mars</strong>
+是怎样处理那么多的指令的。如下是 “注册” <code>addu</code>
+指令的代码，添加的内容是一个类的对象，这个类在构造时需要指令的格式、描述、类型等。此外，还有一个实现了接口
+<code>SimulationCode</code> 的匿名类，其中有一个 <code>simulate</code>
+方法，定义了指令执行的具体过程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">instructionList.add(</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">BasicInstruction</span>(</span><br><span class="line">        <span class="string">&quot;addu $t1,$t2,$t3&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Addition unsigned without overflow : set $t1 to ($t2 plus $t3), no overflow&quot;</span>,</span><br><span class="line">        BasicInstructionFormat.R_FORMAT,</span><br><span class="line">        <span class="string">&quot;000000 sssss ttttt fffff 00000 100001&quot;</span>,</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">SimulationCode</span>() &#123;</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">simulate</span><span class="params">(ProgramStatement statement)</span> <span class="keyword">throws</span> ProcessingException &#123;</span><br><span class="line">                <span class="type">int</span>[] operands = statement.getOperands();</span><br><span class="line">                RegisterFile.updateRegister(</span><br><span class="line">                    operands[<span class="number">0</span>],</span><br><span class="line">                    RegisterFile.getValue(operands[<span class="number">1</span>]) + RegisterFile.getValue(operands[<span class="number">2</span>])</span><br><span class="line">                );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>总结以下，Mars
+采用的方法是抽象出一个<strong>基类</strong>或者<strong>接口</strong>，然后通过继承或者实现来添加指令。</p>
+<p>那它的设计思路<strong>适用于我们的需求</strong>吗？我觉得，适用，但略微不一样。Mars
+作为执行者，需要很明确地<strong>定义各个指令</strong>，而我们只需要生成这些指令。若不考虑特殊用途，面对海量的随机数据，<code>add</code>
+和 <code>sub</code> 没有本质的区别，因此可以将它们放在一起考虑。</p>
+<p>同时，很多指令并不能很随意的生成，比如分支跳转指令，它们需要被精心地设计，以满足既不出现死循环，也能够尽可能提高覆盖率的条件。</p>
+<p>基于这些原因，我在设计数据生成器时，采用了 “块”
+的设计思路。比如，将几条涉及“计算”的指令放在一起抽取，又比如，将
+<code>beq</code> 设计为 <code>while</code> 或者 <code>do-while</code>
+循环等。</p>
+<h2 id="面向块的模板文件">面向块的模板文件</h2>
+<p>有了块就可以 <strong>random
+启动</strong>了吗？当然可以！但除了单纯的随机生成，我还设计了一种模板文件（<code>.template</code>）的语法，通过模板文件将块组织起来，配合一系列定制化设计与嵌套组合，可以构造出更加丰富多彩的数据。</p>
+<p>下面是其中的一个模板文件，通过 <code>Beq</code> 块（不是
+<code>beq</code> 指令，而是用 <code>beq</code>
+实现的循环）的嵌套可以构造一个双层循环，其中还夹杂着一些随机的计算指令，<del>用短短十几条指令跑出十几万行的输出</del>。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Init</span><br><span class="line"></span><br><span class="line">Beq end=$s0 var=$s1</span><br><span class="line">    Beq end=$s2 var=$s3</span><br><span class="line">        Nop</span><br><span class="line">        Calc reg=v repeat=2</span><br><span class="line">    Calc reg=t repeat=10</span><br></pre></td></tr></table></figure>
+
+<p>每个模板文件可以有<strong>不同的侧重</strong>，重点测试某些指令的具体功能，也可以进行过程更加随机的<strong>综合测试</strong>，还可以利用专门的构造，进行<strong>极限测试</strong>。</p>
+<h2 id="此种设计方式的优劣">此种设计方式的优劣</h2>
+<p>优势在于<strong>拓展方便</strong>快捷，<strong>可定制化强</strong>，能够很轻易地构造出一些复杂结构。</p>
+<p>劣势则在于，使用规定的范式<strong>取代了部分随机性</strong>，数据的强度很依赖于块的设计与模板文件的编写。</p>
+<h1 id="数据合法性与强度保障">数据合法性与强度保障</h1>
+<h2 id="跳转指令">跳转指令</h2>
+<p>设定好一个
+“跳转块”，采用<strong>构造循环</strong>的方式，可以尽可能地覆盖全部测试情况，比如<strong>正跳</strong>与<strong>反跳</strong>、<strong>比较结果</strong>偏大或偏小。</p>
+<p>在目前的程序实现中，只包含了 <code>while</code> 型的循环，循环体在 PC
+较小的位置，如能再增添 <code>do-while</code>
+型的循环，则可以进一步提高覆盖率。</p>
+<p>为了弥补上述缺漏，在当前的实现中，循环终值、循环初值均随机生成，这意味着循环变量是<strong>自增</strong>还是<strong>自减</strong>也是随机的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">ori <span class="subst">&#123;loop_var_r&#125;</span>, $zero, <span class="subst">&#123;loop_var&#125;</span></span></span><br><span class="line"><span class="string">ori <span class="subst">&#123;loop_end_r&#125;</span>, $zero, <span class="subst">&#123;loop_end&#125;</span></span></span><br><span class="line"><span class="string"><span class="subst">&#123;loop_label&#125;</span>:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">beq <span class="subst">&#123;loop_var_r&#125;</span>, <span class="subst">&#123;loop_end_r&#125;</span>, <span class="subst">&#123;end_label&#125;</span></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"><span class="subst">&#123;insert&#125;</span></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">ori $at, $zero, 1</span></span><br><span class="line"><span class="string"><span class="subst">&#123;loop_inc&#125;</span> <span class="subst">&#123;loop_var_r&#125;</span>, <span class="subst">&#123;loop_var_r&#125;</span>, $at</span></span><br><span class="line"><span class="string">beq $0, $0, <span class="subst">&#123;loop_label&#125;</span></span></span><br><span class="line"><span class="string"><span class="subst">&#123;end_label&#125;</span>:</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>为了使情况更加复杂，我还为其设计了一个 “子块” 的概念，即上述代码第 8
+行，可以很轻松地向其中插入其他代码块，甚至构造双层循环。上面的例子便是如此。</p>
+<h2 id="内存读写指令">内存读写指令</h2>
+<p>内存读写测试最大的难点在于，保证<strong>地址合法</strong>以及测到<strong>立即数、基地址的各种情况</strong>。</p>
+<p>前者，我通过随机生成要读写的<strong>字地址</strong>，只要确保生成的立即数与基地址之和为其的四倍即可。</p>
+<p>后者，我通过随机生成一个立即数的偏移量，再通过计算得到基地址的方式，能够覆盖到基地址为正、为负的情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">addr = <span class="built_in">int</span>(self.imm(low=low_addr, high=hgh_addr)) * <span class="number">4</span></span><br><span class="line">addr_imm = <span class="built_in">int</span>(self.imm(low=low_addr, high=hgh_addr))</span><br><span class="line">addr_reg = <span class="built_in">hex</span>(<span class="number">0xffffffff</span> &amp; (addr - addr_imm))[<span class="number">2</span>:].zfill(<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="过程调用">过程调用</h2>
+<p>可以定义出一个 “函数体”，通过前置的跳转保护，通过 <code>jal</code> 和
+<code>jr</code>
+进行调用。如能随机生成函数体的位置，可以进一步提高覆盖率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">beq $0, $0, <span class="subst">&#123;end_label&#125;</span></span></span><br><span class="line"><span class="string"><span class="subst">&#123;procedure_label&#125;</span>:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"><span class="subst">&#123;insert&#125;</span></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">jr $ra</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"><span class="subst">&#123;end_label&#125;</span>:</span></span><br><span class="line"><span class="string">jal <span class="subst">&#123;procedure_label&#125;</span></span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="代码设计分析">代码设计分析</h1>
+<h2 id="抽象基类与代码块">抽象基类与代码块</h2>
+<p>在这里我简单介绍一下我的代码层面的设计思路。</p>
+<p>首先是基类，考虑到 Python
+语言的一些特性与限制，我采用的是<strong>抽象类</strong>，而非接口。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BlockBase</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        The abstract base class for all blocks</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"><span class="meta">    @abc.abstractmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">spawn</span>(<span class="params">self, *args, **kwargs</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>抽象类中唯一的抽象方法为
+<code>spawn</code>，接收一系列参数（这是为了后续进行代码块的定制化），并返回一个字符串，代表当前产生的指令。</p>
+<p>此外，抽象类中也定义了一系列静态方法，以随机量的生成为主。<strong>部分列举</strong>如下，可能会方便我后续的阐述：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">imm</span>(<span class="params">*, low, high</span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(random.randint(low, high))</span><br><span class="line"></span><br><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">shamt</span>() -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="keyword">return</span> BlockBase.imm(low=<span class="number">0</span>, high=<span class="number">31</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">imm16</span>() -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="keyword">return</span> BlockBase.imm(low=<span class="number">0</span>, high=<span class="number">65535</span>)</span><br></pre></td></tr></table></figure>
+
+<p>下面，以计算类指令代码块为例，看一看具体的操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">__Calculation</span>(<span class="title class_ inherited__">BlockBase</span>):</span><br><span class="line"></span><br><span class="line">    choice = [</span><br><span class="line">        <span class="string">&quot;add #r, #r, #r&quot;</span>,</span><br><span class="line">        <span class="string">&quot;sub #r, #r, #r&quot;</span>,</span><br><span class="line">        <span class="string">&quot;lui #r, #i&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ori #r, #r, #i&quot;</span>,</span><br><span class="line">        <span class="comment"># &quot;sll #r, #r, #s&quot;</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">spawn</span>(<span class="params">self, *args, **kwargs</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Spawn a random instruction that is about calculation</span></span><br><span class="line"><span class="string">        :keyword pick: pick some specified instructions, splitted by `|`</span></span><br><span class="line"><span class="string">        :keyword reg: choose the registers which are allowed to use</span></span><br><span class="line"><span class="string">        :keyword repeat: repeat(random) `repeat` times, 1 by default</span></span><br><span class="line"><span class="string">        :return: multi-line instructions(`repeat` lines)</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 定制化参数：指定生成的指令列表</span></span><br><span class="line">        pick_list = kwargs.get(<span class="string">&quot;pick&quot;</span>, <span class="string">&quot;|&quot;</span>.join([choice.split()[<span class="number">0</span>] <span class="keyword">for</span> choice <span class="keyword">in</span> self.choice])).split(<span class="string">&quot;|&quot;</span>)</span><br><span class="line">        choice_list = [choice <span class="keyword">for</span> choice <span class="keyword">in</span> self.choice <span class="keyword">if</span> choice.split()[<span class="number">0</span>] <span class="keyword">in</span> pick_list]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 定制化参数：指定随机生成的指令数</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            repeat = <span class="built_in">int</span>(kwargs.get(<span class="string">&quot;repeat&quot;</span>, <span class="string">&quot;1&quot;</span>))</span><br><span class="line">        <span class="keyword">except</span> ValueError <span class="keyword">as</span> e:</span><br><span class="line">            repeat = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        instr = <span class="string">&quot;\n&quot;</span>.join(random.choices(choice_list, k=repeat))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 定制化参数：指定允许选用的寄存器种类</span></span><br><span class="line">        reg = kwargs.get(<span class="string">&quot;reg&quot;</span>, <span class="string">&quot;vats&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 对指令中的操作数进行随机替换</span></span><br><span class="line">        <span class="keyword">while</span> instr.find(<span class="string">&quot;#r&quot;</span>) != -<span class="number">1</span>:</span><br><span class="line">            instr = instr.replace(<span class="string">&quot;#r&quot;</span>, self.reg(reg), <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">while</span> instr.find(<span class="string">&quot;#i&quot;</span>) != -<span class="number">1</span>:</span><br><span class="line">            instr = instr.replace(<span class="string">&quot;#i&quot;</span>, self.imm16(), <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">while</span> instr.find(<span class="string">&quot;#s&quot;</span>) != -<span class="number">1</span>:</span><br><span class="line">            instr = instr.replace(<span class="string">&quot;#s&quot;</span>, self.shamt(), <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> instr + <span class="string">&quot;\n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="软件包与模块">软件包与模块</h2>
+<p>为了简化编写块的步骤，我将全部块放在了一个软件包中，通过
+<code>__init__.py</code>
+用一种似乎不太规范的方法自动导入其中的模块。</p>
+<p>同时，在每个具体模块中，我都要求提供一个全局的方法来提供类的实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">instance</span>():</span><br><span class="line">    <span class="keyword">return</span> __Calculation()</span><br></pre></td></tr></table></figure>
+
+<h2 id="模板文件与参数定制化">模板文件与参数定制化</h2>
+<p>通过上面的例子，同学们也可以看到一些参数，它们会被解析为<strong>键值对</strong>，传递给
+<code>kwargs</code> 参数。</p>
+<p>例如下面的例子：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Beq end=$s0 var=$s1</span><br></pre></td></tr></table></figure>
+
+<p>解析到的参数为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;end&quot;</span>: <span class="string">&quot;$s0&quot;</span>, <span class="string">&quot;var&quot;</span>: <span class="string">&quot;$s1&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此外，上面的例子中也出现了<strong>嵌套层次</strong>，可以利用 Python
+缩进的思路来理解它，下一层缩进中的内容会被<strong>优先解析生成</strong>，并将生成的内容作为
+<code>args</code> 列表参数的第一项传递给 <code>spawn</code> 方法。</p>
+<h2 id="完整代码获取">完整代码获取</h2>
+<p><a target="_blank" rel="noopener" href="https://swkfk.top/assets/DataSpawner.zip">压缩包链接</a></p>
+<p>没有入口函数，也没有入口类，需要调用的方法是
+<code>DataSpawner.gen_data</code>，俩参数含义见代码注释。</p>
+<p>这个函数会返回一个生成器，使用方法见同文件最后被注释掉的语句。</p>
+<p>生成的全部数据均在 <code>temporary/test.asm</code>
+中，这意味着后生成的会覆盖先生成的，可以自行修改写入文件名（<code>DataSpawner.py</code>
+39 行），或者在循环中进行处理（<code>Dataspawner.py</code> 第 50
+行）。其他的可以看一看 README
+中的表格，也可以看看模板文件都是怎样写的。</p>
+<p>利用我已经提供的模板，可以测试到全部指令，也可以测试 DM
+中全部位置的读取与写入，如果有同学有兴趣编写一些更强或者更有趣的块或者模板，欢迎分享交流！</p>
+<p>欢迎同学们提出批评意见，或者进行补充！</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-08T09:31:13.86816+08:00"><time datetime="2023-11-08T09:31:13.86816+08:00">2023-11-08 09:31:13</time></abbr>
+|
+<span>CC BY-NC 4.0</span>
+<span class="reply-vote">❤️ 4</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4358" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-08T20:39:07.739075+08:00"><time datetime="2023-11-08T20:39:07.739075+08:00">2023-11-08 20:39:07</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4361" class="reply">
+<div class="reply-header">
+<span>沈锎</span>
+</div>
+<div class="reply-text">
+
+<p>这个可以使用 Toby 学长定制过的 Mars，开启忽略溢出的功能 ~</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-08T23:20:10.569564+08:00"><time datetime="2023-11-08T23:20:10.569564+08:00">2023-11-08 23:20:10</time></abbr>
+|
+<span>CC BY-NC 4.0</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E9%87%87%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84"><span class="nav-number"></span> <span class="nav-text">生成器采用的程序架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E6%8E%A5%E5%8F%A3%E4%B8%8E%E7%BB%A7%E6%89%BF%E7%9A%84%E6%8C%87%E4%BB%A4%E8%AE%BE%E8%AE%A1"><span class="nav-number"></span> <span class="nav-text">面向接口与继承的指令设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%9D%97%E7%9A%84%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6"><span class="nav-number"></span> <span class="nav-text">面向块的模板文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A4%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%96%B9%E5%BC%8F%E7%9A%84%E4%BC%98%E5%8A%A3"><span class="nav-number"></span> <span class="nav-text">此种设计方式的优劣</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%90%88%E6%B3%95%E6%80%A7%E4%B8%8E%E5%BC%BA%E5%BA%A6%E4%BF%9D%E9%9A%9C"><span class="nav-number"></span> <span class="nav-text">数据合法性与强度保障</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="nav-number"></span> <span class="nav-text">跳转指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E8%AF%BB%E5%86%99%E6%8C%87%E4%BB%A4"><span class="nav-number"></span> <span class="nav-text">内存读写指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B%E8%B0%83%E7%94%A8"><span class="nav-number"></span> <span class="nav-text">过程调用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1%E5%88%86%E6%9E%90"><span class="nav-number"></span> <span class="nav-text">代码设计分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="nav-number"></span> <span class="nav-text">抽象基类与代码块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%8C%85%E4%B8%8E%E6%A8%A1%E5%9D%97"><span class="nav-number"></span> <span class="nav-text">软件包与模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E4%B8%8E%E5%8F%82%E6%95%B0%E5%AE%9A%E5%88%B6%E5%8C%96"><span class="nav-number"></span> <span class="nav-text">模板文件与参数定制化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%E8%8E%B7%E5%8F%96"><span class="nav-number"></span> <span class="nav-text">完整代码获取</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : '85c128c0b43aa453fee79ec432570118',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

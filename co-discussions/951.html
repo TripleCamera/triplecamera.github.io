@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="lhz | 2023-09-26 13:45:47 | ⭐️ 2 | 💬️ 2  分享、Logisim、Verilog、MIPS     李昊哲     侥幸通过Pre的一点记录和心得，希望对大家有些微的帮助  1.supaltitude 思路：题目所求即为数组最大前缀和，维护一个变量保存当前前缀和，并维护最大值即可，没有开辟数组空间的必要 注：保存最高海拔的前提是数组的下标连续，而不能像买卖">
+<meta property="og:type" content="website">
+<meta property="og:title" content="「BUAA-CO」2023Pre">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/951.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="lhz | 2023-09-26 13:45:47 | ⭐️ 2 | 💬️ 2  分享、Logisim、Verilog、MIPS     李昊哲     侥幸通过Pre的一点记录和心得，希望对大家有些微的帮助  1.supaltitude 思路：题目所求即为数组最大前缀和，维护一个变量保存当前前缀和，并维护最大值即可，没有开辟数组空间的必要 注：保存最高海拔的前提是数组的下标连续，而不能像买卖">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.075Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/951">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>「BUAA-CO」2023Pre | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">「BUAA-CO」2023Pre
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>lhz</span>
+|
+<abbr title="2023-09-26T13:45:47.586666+08:00"><time datetime="2023-09-26T13:45:47.586666+08:00">2023-09-26 13:45:47</time></abbr>
+|
+<span>⭐️ 2</span>
+|
+<span>💬️ 2</span>
+<br>
+<span>分享、Logisim、Verilog、MIPS</span>
+</div>
+
+<div id="reply-3604" class="reply">
+<div class="reply-header">
+<span>李昊哲</span>
+</div>
+<div class="reply-text">
+
+<blockquote>
+<p>侥幸通过Pre的一点记录和心得，希望对大家有些微的帮助</p>
+</blockquote>
+<h2 id="1supaltitude">1.supaltitude</h2>
+<p>思路：题目所求即为数组最大前缀和，维护一个变量保存当前前缀和，并维护最大值即可，没有开辟数组空间的必要</p>
+<p><strong>注</strong>：保存最高海拔的前提是数组的下标连续，而不能像买卖理财产品，只在有收益的时候售出。也即如下的代码思路是错误的（虽然我相信聪明的大家都想到了）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (data &gt; <span class="number">0</span>) &#123; <span class="comment">// data is the input value</span></span><br><span class="line">    max += data;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码挖空：</p>
+<figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">.text</span></span><br><span class="line"><span class="symbol">main:</span></span><br><span class="line">    <span class="comment"># get n</span></span><br><span class="line">    <span class="comment"># set prefix sum, maximum value and loop var</span></span><br><span class="line"><span class="symbol"></span></span><br><span class="line"><span class="symbol">for_loop:</span></span><br><span class="line">    <span class="comment"># get data</span></span><br><span class="line">    <span class="keyword">add </span> $<span class="built_in">s1</span>, $<span class="built_in">s1</span>, $<span class="built_in">t1</span></span><br><span class="line"><span class="symbol">if:</span></span><br><span class="line">    <span class="comment"># no need to update, jump to &#x27;else&#x27; label </span></span><br><span class="line">    <span class="keyword">move </span>$<span class="built_in">s2</span>, $<span class="built_in">s1</span> <span class="comment">#update</span></span><br><span class="line"><span class="symbol">else:</span></span><br><span class="line">    <span class="keyword">addi </span>$<span class="built_in">t0</span>, $<span class="built_in">t0</span>, <span class="number">1</span> <span class="comment"># DONT FORGET TO INCREMENT LOOP VAR</span></span><br><span class="line">    <span class="keyword">bne </span> $<span class="built_in">t0</span>, $<span class="built_in">s0</span>, for_loop</span><br><span class="line"><span class="symbol"></span></span><br><span class="line"><span class="symbol">loop_end:</span></span><br><span class="line">    <span class="comment"># DONT FORGET TO PRINT</span></span><br></pre></td></tr></table></figure>
+
+<p>此外建议大家在编写汇编代码时多用伪指令，能显著加快编程速度（毕竟这就是伪指令的使命）</p>
+<p>如 <code>blt</code> 省去了 <code>slt</code> 和 <code>beq</code>
+的使用，将两条指令合为一条；<code>move</code> 比 <code>add</code>
+指令少一个操作数；<code>li</code> 比 <code>addi</code>
+少两个操作数等等</p>
+<h2 id="2nodescendsequence">2.noDescendSequence</h2>
+<p>思路：本题<strong>不涉及时序逻辑</strong>，直接取 <code>data</code>
+的对应位进行比较即可。一行代码我就不贴出来了（</p>
+<h2 id="3tetris">3.tetris</h2>
+<h3 id="思路">思路</h3>
+<p><strong>第一步也是最重要的一步，确定状态机类型。一时不慎，满盘皆输！！！</strong></p>
+<p>方块的摆放情况数为 8 位二进制数的数量 <span
+class="math inline">\(2^8\)</span>，再考虑每次独热码输入有 8
+种，<strong>有效的</strong>状态转移真值表共约 <span
+class="math inline">\(8 \times 2^8\)</span>
+行，再考虑到无效的状态转移行，故采用真值表刻画状态转移的方式应该不是题目意图
+<del>（当然如果你毅力超群，我致以崇高敬意）</del>。我采取的方案是用当前的方块摆放情况表示状态，在
+Mealy 状态机的输出模块再转换成 <code>output[1:0]</code></p>
+<p>放置方块的行为让我联想到二进制的按位运算。判断某位是否已有方块，只需将输入和当前方块<strong>按位与</strong>，结果非
+0
+即为无效放置。而更新状态，只需将输入和当前方块放置状态<strong>按位或</strong>，注意<strong>特判</strong>放满后清空即可。</p>
+<h3 id="tips">Tips</h3>
+<p>注意到 logisim 中寄存器初值为 0，所以不用进行寄存器的初始化。</p>
+<p>注意判断<strong>复位方式</strong>是同步复位还是异步复位。异步复位在
+logisim 中的实现较为简单。</p>
+<p>此外，注意判断<strong>时钟</strong>是输入还是自带信号。</p>
+<p><strong>还有一件事</strong>
+<del>（成龙历险记老爹音）</del>，题目要求的电路外观<strong>不同于</strong>三输入一输出的<strong>默认外观</strong>，只需将左边三输入向下移动一格即可，外观的线不是很重要。<del>如果你跟我一样强迫症，那挪一下也不是不行</del>
+<img
+src="/assets/cscore-image/21373212/9d76ec38-6e12-4e8a-8076-a63661992e0f/appearance.png"
+alt="appearance.png" /></p>
+<p>电路外观如图（已隐去部分内容） <img
+src="/assets/cscore-image/21373212/d1e805ca-08fd-4f78-894a-2b93a024d6dd/circuit-eliminated.png"
+alt="circuiteliminated.png" /></p>
+<p>状态转移如图（已隐去部分内容） <img
+src="/assets/cscore-image/21373212/bbfe90b6-f3b8-460d-8ce7-d27e98765ec1/statetrans-eliminated.png"
+alt="statetranseliminated.png" /></p>
+<p>输出模块如图（已隐去部分内容） <img
+src="/assets/cscore-image/21373212/16206660-8c4b-43c4-bb23-c577159cc143/output-eliminated.png"
+alt="outputeliminated.png" /></p>
+<p>最后，祝大家上机顺利，学有所获！</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-09-26T13:45:47.675861+08:00"><time datetime="2023-09-26T13:45:47.675861+08:00">2023-09-26 13:45:47</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 15</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-3756" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-08T23:40:30.879966+08:00"><time datetime="2023-10-08T23:40:30.879966+08:00">2023-10-08 23:40:30</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1supaltitude"><span class="nav-number">1.</span> <span class="nav-text">1.supaltitude</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2nodescendsequence"><span class="nav-number">2.</span> <span class="nav-text">2.noDescendSequence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3tetris"><span class="nav-number">3.</span> <span class="nav-text">3.tetris</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">3.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tips"><span class="nav-number">3.2.</span> <span class="nav-text">Tips</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : '8dd72d1a4fa320bffb0afbe643989744',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

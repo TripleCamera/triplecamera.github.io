@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="沈锎 | 2023-09-28 16:27:47 | ⭐️ 1 | 💬️ 3  P0、分享     沈锎    看上去是没啥用的东西，只是为了满足好奇心 @(o･ｪ･)@  目录  Sec 1：为何计算校验码需要在数据后补 0？ Sec 2：为何校验过程恰好整除？ Sec 3：如何利用校验码进行纠错？ Sec 4：校验码的并行生成 Sec 5：Logisim 中 CRC 校验码的生成与纠错 参">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CRC 校验码计算时为何要补 0 及相关内容的简单探索">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/959.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="沈锎 | 2023-09-28 16:27:47 | ⭐️ 1 | 💬️ 3  P0、分享     沈锎    看上去是没啥用的东西，只是为了满足好奇心 @(o･ｪ･)@  目录  Sec 1：为何计算校验码需要在数据后补 0？ Sec 2：为何校验过程恰好整除？ Sec 3：如何利用校验码进行纠错？ Sec 4：校验码的并行生成 Sec 5：Logisim 中 CRC 校验码的生成与纠错 参">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T02:34:51.075Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/959">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CRC 校验码计算时为何要补 0 及相关内容的简单探索 | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TripleCamera 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">CRC 校验码计算时为何要补 0 及相关内容的简单探索
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>沈锎</span>
+|
+<abbr title="2023-09-28T16:27:47.639333+08:00"><time datetime="2023-09-28T16:27:47.639333+08:00">2023-09-28 16:27:47</time></abbr>
+|
+<span>⭐️ 1</span>
+|
+<span>💬️ 3</span>
+<br>
+<span>P0、分享</span>
+</div>
+
+<div id="reply-3647" class="reply">
+<div class="reply-header">
+<span>沈锎</span>
+</div>
+<div class="reply-text">
+
+<p>看上去是没啥用的东西，只是为了满足好奇心 @(o･ｪ･)@</p>
+<hr />
+<h1 id="目录">目录</h1>
+<ul>
+<li>Sec 1：为何计算校验码需要在数据后补 0？</li>
+<li>Sec 2：为何校验过程恰好整除？</li>
+<li>Sec 3：如何利用校验码进行纠错？</li>
+<li>Sec 4：校验码的并行生成</li>
+<li>Sec 5：Logisim 中 CRC 校验码的生成与纠错</li>
+<li>参考文献</li>
+</ul>
+<hr />
+<p>在 P0 课下中有一道题目，要求我们使用 Logisim 搭建一个除数为 4
+位，原数据帧为 8 位的 <strong>CRC
+校验码计算</strong>电路，题目中有提到这样一句话：</p>
+<blockquote>
+<p>因为 B 是 4 位二进制数，我们需要在 A 的后面补上 3 个 0</p>
+</blockquote>
+<p>其中，B 是选定的除数，A 是 8
+位原数据。有同学在答疑群中询问这里的因果关系，得知是 CRC
+算法规定的的计算步骤，但为何 CRC 算法需要在原数据后面补 0
+计算呢？越想越搞不懂，我便上网找了一些资料，并结合自己的推导与概括，和大家分享一下<strong>省流版</strong>的结论。
+(o_O)</p>
+<p>约定：此帖所有计算，除非特殊说明，均为<strong>模二运算</strong>；所有除法，除特殊说明，均为<strong>模二带余除法</strong>，用
+<span class="math inline">\(r\)</span>
+表示余数；所有数字，除特殊说明，均为<strong>二进制无符号整数</strong>。</p>
+<h1 id="sec-1为何计算校验码需要在数据后补-0">Sec
+1：为何计算校验码需要在数据后补 0？</h1>
+<p>先说结论：为了方便校验以及纠错过程[1]。</p>
+<p>既然是<strong>校验码</strong>，肯定是为了防止数据在通信传输过程中出现偏差而诞生的，自然，我们生成的校验码也需要具备<strong>校验</strong>的能力。</p>
+<p>假设通信双方选定一个除数 <span
+class="math inline">\(B=1101\)</span>，传输原数据 <span
+class="math inline">\(A=1011\ 0010\)</span>。如果不补 0，则有 <span
+class="math inline">\(A \divsymbol B = 11001, r =
+111\)</span>，将余数拼接到原数据帧后，得到 11 位的输出 <span
+class="math inline">\(C=1011\ 0010\
+111\)</span>，接收方接收到数据后，需要将其拆分成 <span
+class="math inline">\(8+3\)</span>
+位，使用<strong>约定好的</strong>除数，计算前 8 位的余数，与后 3
+位进行比较，从而检验数据传输的可靠与否。</p>
+<p>但是，这个过程还是相对<strong>繁琐</strong>的，也<strong>无法判断出错的位置</strong>（比如接收到
+<span class="math inline">\(1011\ 0011\ 111\)</span>，余数算下来是 <span
+class="math inline">\(110\)</span>，你能知道是数据的最低位传输错误，还是余数的最低位传输错误吗），因此还需要改进。</p>
+<blockquote>
+<p>关于为何这样计算校验码不行，资料 [1] 中仅提到
+“过程繁琐”，但我在后续的探求中，觉得这一个观点过于单薄，遂补充了
+“无法纠错” 这一原因。</p>
+</blockquote>
+<p>于是，科学家们想出了一种解决方法，就是题目中所描述的那样，在 <span
+class="math inline">\(A\)</span> 后补 0，个数为 <span
+class="math inline">\(B\)</span> 的位数减去 1，得到 <span
+class="math inline">\(A_1=1011\ 0010\ 000\)</span>，此时有 <span
+class="math inline">\(A_1 \divsymbol B = 11001101,
+r=001\)</span>，进行拼接，得到 <span class="math inline">\(C=1011\ 0010\
+001\)</span>，接收方在接收数据后，计算 <span class="math inline">\(C
+\divsymbol B\)</span> 的余数，如果<strong>余数是
+0</strong>，则说明传输过程可靠。</p>
+<h1 id="sec-2为何校验过程恰好整除">Sec 2：为何校验过程恰好整除？</h1>
+<p>上述所说并非巧合，补 0 的逻辑也在这里呈现[2]。</p>
+<p>不过首先，得引入一个叫做 <strong>生成多项式</strong>
+的东西，对于一个二进制数 <span
+class="math inline">\(\overline{d_{n-1}d_{n-2}\cdots
+d_1d_0}\)</span>，其中 <span class="math inline">\(d_i=0|1\)</span> 且
+<span class="math inline">\(d_{n-1} \neq 0\)</span>，有唯一的 <span
+class="math inline">\(n-1\)</span> 次多项式与之对应：</p>
+<p><span class="math display">\[D(x) = d_{n-1}x^{n-1} + d_{n-2}x^{n-2} +
+\cdots + d_1x + d_0\]</span></p>
+<p>反之亦然。</p>
+<p>对于 <span class="math inline">\(n\)</span> 位的原始数据 <span
+class="math inline">\(A=\overline{d_{n-1}d_{n-2}\cdots
+d_1d_0}\)</span>，以及 <span class="math inline">\(k\)</span> 位的除数
+<span class="math inline">\(B=\overline{g_{k-1}g_{k-2}\cdots
+g_1g_0}\)</span>，它们的生成多项式分别为：</p>
+<p><span class="math display">\[D(x) = d_{n-1}x^{n-1} + d_{n-2}x^{n-2} +
+\cdots + d_1x + d_0 \qquad G(x) = g_{k-1}x^{k-1} + g_{k-2}x^{k-2} +
+\cdots + g_1x + g_0\]</span></p>
+<p>将 <span class="math inline">\(D(x)\)</span> 两边同时乘以 <span
+class="math inline">\(x^{k-1}\)</span>，即<strong>添了 <span
+class="math inline">\(k-1\)</span> 个 0</strong>：</p>
+<p><span class="math display">\[x^{k-1} \cdot D(x) = d_{n-1}x^{n+k-2} +
+d_{n-2}x^{n+k-3} + \cdots + d_1x^k + d_0x^{k-1}\]</span></p>
+<p>对其作多项式的带余除法，得到次数最高为 <span
+class="math inline">\(k-2\)</span> 次的余数多项式 <span
+class="math inline">\(R(x)\)</span> 与商多项式 <span
+class="math inline">\(Q(x)\)</span>：</p>
+<p><span class="math display">\[x^{k-1} \cdot D(x) = Q(x)G(x) +
+R(x)\]</span></p>
+<p>两边同时加上 <span
+class="math inline">\(R(x)\)</span>，因为是模二运算，有 <span
+class="math inline">\(R(x) + R(x) = 0\)</span>：</p>
+<p><span class="math display">\[x^{k-1} \cdot D(x) + R(x) =
+Q(x)G(x)\]</span></p>
+<p>因为二进制数与生成多项式的<strong>一一对应</strong>关系，有 <span
+class="math inline">\(R(x) = r_{k-2}x^{k-2} + \cdots + r_1x +
+r_0\)</span>，于是：</p>
+<p><span class="math display">\[Q(x)G(x) = d_{n-1}x^{n+k-2} + \cdots +
+d_1x^k + d_0x^{k-1} + r_{k-2}x^{k-2} + \cdots + r_1x + r_0\]</span></p>
+<p>其对应的二进制数为：</p>
+<p><span class="math display">\[C = \overline{d_{n-1}d_{n-2}\cdots
+d_1d_0r_{k-2}r_{k-3}\cdots r_1r_0}\]</span></p>
+<p>这不是巧了不是，恰好是原数据拼上余数！而且它的生成多项式还恰好等于
+<span
+class="math inline">\(Q(x)G(x)\)</span>，这也意味着<strong>整除</strong>！(◆゜∀゜）b</p>
+<h1 id="sec-3如何利用校验码进行纠错">Sec
+3：如何利用校验码进行纠错？</h1>
+<p>通过一些科普性质的文章，我了解到，CRC
+校验码可以对一位错的情况就行纠错（也就是，不仅可以判断数据传输的可靠性，还可以把出错的那一位揪出来），其方法是，通过<strong>余数</strong>（这里的余数指接收方对接收到的数据（包含数据位与校验位）进行模二除法得到的余数）与<strong>出错位</strong>一一对应的关系<strong>查表</strong>。</p>
+<p>那其中究竟是怎样的一个对应关系呢？</p>
+<blockquote>
+<p>以下过程并不保真，请注意甄别。</p>
+</blockquote>
+<p>首先假设校验位不会出错，且在数据位中有一位错。假设 <span
+class="math inline">\(d_s\)</span> 在传输过程中出现差错，则有接收到的
+<span class="math inline">\(C&#39; = \overline{d_{n-1}\cdots d_s&#39;
+\cdots d_0r_{k-2}r_{k-3}\cdots r_1r_0}\)</span>，其中 <span
+class="math inline">\(d_s \oplus d_s&#39; = 1\)</span>.</p>
+<p>考虑它们的生成多项式与模二加法的性质，则有：</p>
+<p><span class="math display">\[C&#39;(x) = C(x) + x^{s+k-1} =
+Q&#39;(x)G(x) + R&#39;(x)\]</span></p>
+<p><span class="math inline">\(R&#39;(x)\)</span>
+是校验时得到的余数多项式。又因为 <span class="math inline">\(C(x) =
+Q(x)G(x)\)</span>，所以：</p>
+<p><span class="math display">\[x^{s+k-1} = (Q(x) + Q&#39;(x))G(x) +
+R&#39;(x)\]</span></p>
+<p>即二进制数 <span
+class="math inline">\(\overline{100\cdots0}\)</span>（<span
+class="math inline">\(s+k-1\)</span> 个 0）除以 <span
+class="math inline">\(B\)</span> 的余数，就是校验时得到的余数！</p>
+<p>拿题目的背景试一试吧！有 <span
+class="math inline">\(k=4\)</span>，数据位数为 8.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">数据位出错位数 <span
+class="math inline">\(s\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(s+k-1\)</span></th>
+<th style="text-align: center;">余数</th>
+<th style="text-align: center;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"><span
+class="math inline">\(101\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1000
+\divsymbol 1101\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><span
+class="math inline">\(111\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(10000
+\divsymbol 1101\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"><span
+class="math inline">\(011\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(100000
+\divsymbol 1101\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"><span
+class="math inline">\(110\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\cdots\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;"><span
+class="math inline">\(001\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\cdots\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><span
+class="math inline">\(010\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\cdots\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;"><span
+class="math inline">\(100\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\cdots\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>但是，第 7 位却让我心凉了半截：余数是 <span
+class="math inline">\(101\)</span>！这还怎么检错呢？</p>
+<p>正当我对上述过程产生怀疑，并准备另找出路时，我突然意识到，余数总共就
+3 位，最多 8 种状态，还要把全 0
+留给正确的情况，怎么可能完美地纠错呢？</p>
+<p>换一句话说，题目给定情况下，<strong>余数位数过少</strong>！</p>
+<p>那还是采用一种主流的位数来讨论吧，数据位数为 4，除数位数也为
+4，总数据位数为 <span class="math inline">\(4 + 3 =
+7\)</span>.假设取定除数 <span
+class="math inline">\(B=1101\)</span>，并且含校验位数据只有一位错，则出错位数与余数的对应关系如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">数据位出错位数 <span
+class="math inline">\(s\)</span></th>
+<th style="text-align: center;">余数</th>
+<th style="text-align: center;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span
+class="math inline">\(001\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1 \divsymbol
+1101\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span
+class="math inline">\(010\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(10
+\divsymbol 1101\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"><span
+class="math inline">\(100\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(100
+\divsymbol 1101\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"><span
+class="math inline">\(101\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\cdots\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><span
+class="math inline">\(111\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\cdots\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"><span
+class="math inline">\(011\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\cdots\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"><span
+class="math inline">\(110\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\cdots\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>这样，对于接收方来说，收到 7 位数据 <span
+class="math inline">\(C&#39;\)</span>，计算 <span
+class="math inline">\(C&#39; \divsymbol B\)</span> 的余数，若余数为
+0，则表示没有错误，否则，出错位可按上表查询。</p>
+<p>这是一位错的情况，对于两位错，CRC
+也同样可以判断（也许需要增加一个奇偶校验位，这里我没有深究），但是无法纠错。对于三位错，CRC
+就无能为力了，当然，这种情况极其罕见。</p>
+<h1 id="sec-4校验码的并行生成">Sec 4：校验码的并行生成</h1>
+<p>通过一些科普性质的文章，我也了解到，CRC
+校验码的生成还有一种并行的方法，就是将若干个数异或起来得到余数。</p>
+<p>假定 <span class="math inline">\(A=1011\)</span>，<span
+class="math inline">\(B=1101\)</span>，给定一个原始串 <span
+class="math inline">\(C_0=0000\ 000\)</span>，这是 CRC
+校验成功的。现在，使其逐位接近 <span
+class="math inline">\(A\)</span>，有第 6、4、3
+位的差异，那么将这些位上对应的余数异或起来，可以得到 <span
+class="math inline">\(C = 1011\ 100\)</span>，这就是生成好的 CRC
+校验码。</p>
+<p>我觉得整个过程可以理解为纠了三次错，从 <span
+class="math inline">\(0000\ 000\)</span> 纠正到了 <span
+class="math inline">\(1011\ 100\)</span>.</p>
+<p>那么，校验的过程是不是也可以并行执行呢？应该也是可以的，不赘言。</p>
+<h1 id="sec-5logisim-中-crc-校验码的生成与纠错">Sec 5：Logisim 中 CRC
+校验码的生成与纠错</h1>
+<p>总要写一点和课程相关的内容的吧 ᕕ( ᐛ )ᕗ</p>
+<p>按照上面的思路，对于 <span class="math inline">\(B=1101\)</span>
+的情况，结合余数表，可以很容易画出如下的电路：</p>
+<p><img
+src="/assets/cscore-image/22373080/efa8d8d8-9540-4b71-a584-d978c1b75962/crc-gen.png"
+alt="crcgen.png" /></p>
+<p>此外，我还弄了一个简单的测试电路，将其结果与使用模二除法得到的结果进行比较，如下分别是数据设置与比较电路：</p>
+<p><img
+src="/assets/cscore-image/22373080/0be9a0e8-43ab-4242-a678-26813bd10ae2/crc-data.png"
+alt="crcdata.png" /></p>
+<p><img
+src="/assets/cscore-image/22373080/33c8dafb-e23f-417f-a76a-43515fc14137/crc-check.png"
+alt="crccheck.png" /></p>
+<p>对 CRC
+校验码进行一位纠错也很简单，这里采用除法简化过程（好像有个类似的并行的纠错电路，但是研究不动了
+(．． )…）</p>
+<p>如下是扰动设置与余数表的生成电路：</p>
+<p><img
+src="/assets/cscore-image/22373080/783c8fba-3d1e-4cbd-b332-979b9f7b88e3/crc-r.png"
+alt="crcr.png" /></p>
+<p>并通过 7 位除法得到校验余数：</p>
+<p><img
+src="/assets/cscore-image/22373080/5a8ac081-fe9e-42e2-a3cb-ec4cb5dc4bdd/crc-correct.png"
+alt="crccorrect.png" /></p>
+<p>这里并没有真正得到纠错后的数据，但只要将得到的余数与余数表比较即可！</p>
+<hr />
+<p>什么？你在说 P0 课下那道题？拜托，那个题很不一样的好吗，算 8
+次除法得了，而且除数还不确定 ……</p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1]
+思否论坛.不要跑，CRC没这么难！（简单易懂的CRC原理阐述）[EB/OL].(2019-02-02)[2023-09-28].<a
+target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018094567">https://segmentfault.com/a/1190000018094567</a></p>
+<p>[2]
+仇晓涛.通用并行CRC计算方法及FPGA实现[J].无线互联科技,2023,19(02):115-117+168.</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-09-28T16:27:47.645055+08:00"><time datetime="2023-09-28T16:27:47.645055+08:00">2023-09-28 16:27:47</time></abbr>
+|
+<span>CC BY-NC 4.0</span>
+<span class="reply-vote">❤️ 6</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-3655" class="reply">
+<div class="reply-header">
+<span>???</span>
+</div>
+<div class="reply-text">
+
+<p>???</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-09-28T19:40:05.12966+08:00"><time datetime="2023-09-28T19:40:05.12966+08:00">2023-09-28 19:40:05</time></abbr>
+|
+<span>???</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-3656" class="reply">
+<div class="reply-header">
+<span>沈锎</span>
+</div>
+<div class="reply-text">
+
+<p>谢谢助教，已经改正 ヾ(^▽^*)))</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-09-28T19:59:14.297206+08:00"><time datetime="2023-09-28T19:59:14.297206+08:00">2023-09-28 19:59:14</time></abbr>
+|
+<span>CC BY-NC 4.0</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sec-1%E4%B8%BA%E4%BD%95%E8%AE%A1%E7%AE%97%E6%A0%A1%E9%AA%8C%E7%A0%81%E9%9C%80%E8%A6%81%E5%9C%A8%E6%95%B0%E6%8D%AE%E5%90%8E%E8%A1%A5-0"><span class="nav-number">2.</span> <span class="nav-text">Sec
+1：为何计算校验码需要在数据后补 0？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sec-2%E4%B8%BA%E4%BD%95%E6%A0%A1%E9%AA%8C%E8%BF%87%E7%A8%8B%E6%81%B0%E5%A5%BD%E6%95%B4%E9%99%A4"><span class="nav-number">3.</span> <span class="nav-text">Sec 2：为何校验过程恰好整除？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sec-3%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8%E6%A0%A1%E9%AA%8C%E7%A0%81%E8%BF%9B%E8%A1%8C%E7%BA%A0%E9%94%99"><span class="nav-number">4.</span> <span class="nav-text">Sec
+3：如何利用校验码进行纠错？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sec-4%E6%A0%A1%E9%AA%8C%E7%A0%81%E7%9A%84%E5%B9%B6%E8%A1%8C%E7%94%9F%E6%88%90"><span class="nav-number">5.</span> <span class="nav-text">Sec 4：校验码的并行生成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sec-5logisim-%E4%B8%AD-crc-%E6%A0%A1%E9%AA%8C%E7%A0%81%E7%9A%84%E7%94%9F%E6%88%90%E4%B8%8E%E7%BA%A0%E9%94%99"><span class="nav-number">6.</span> <span class="nav-text">Sec 5：Logisim 中 CRC
+校验码的生成与纠错</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">7.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8e3318b060ee959cacec',
+      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
+      repo        : 'triplecamera.github.io',
+      owner       : 'TripleCamera',
+      admin       : ['TripleCamera'],
+      id          : '1597d796e520548da3bcd828c651aaea',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
