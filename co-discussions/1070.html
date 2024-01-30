@@ -20,17 +20,21 @@
     var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Shae | 2023-10-31 14:41:00 | ⭐️ 1 | 💬️ 2  P3     林舒雅    P3-CPU自动化测试  本文主要实现了样例自动生成的程序并整理了Python一键对拍的必要步骤。在样例自动生成方面，尽可能地扩大覆盖范围并消除死循环的风险。若有建议，请不吝赐教~~  1.样例 1.1.覆盖范围 1.1.1.指令  add,sub  注意：按无符号加减法处理。因此若">
+  <meta name="description" content="Shae | 2023-10-31 14:41:00 | ⭐️ 1 | 💬️ 2  P3     Shae 助教认证    P3-CPU自动化测试  本文主要实现了样例自动生成的程序并整理了Python一键对拍的必要步骤。在样例自动生成方面，尽可能地扩大覆盖范围并消除死循环的风险。若有建议，请不吝赐教~~  1.样例 1.1.覆盖范围 1.1.1.指令  add,sub  注意：按无符号加减法">
 <meta property="og:type" content="website">
 <meta property="og:title" content="P3-CPU自动化测试">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/1070.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="Shae | 2023-10-31 14:41:00 | ⭐️ 1 | 💬️ 2  P3     林舒雅    P3-CPU自动化测试  本文主要实现了样例自动生成的程序并整理了Python一键对拍的必要步骤。在样例自动生成方面，尽可能地扩大覆盖范围并消除死循环的风险。若有建议，请不吝赐教~~  1.样例 1.1.覆盖范围 1.1.1.指令  add,sub  注意：按无符号加减法处理。因此若">
+<meta property="og:description" content="Shae | 2023-10-31 14:41:00 | ⭐️ 1 | 💬️ 2  P3     Shae 助教认证    P3-CPU自动化测试  本文主要实现了样例自动生成的程序并整理了Python一键对拍的必要步骤。在样例自动生成方面，尽可能地扩大覆盖范围并消除死循环的风险。若有建议，请不吝赐教~~  1.样例 1.1.覆盖范围 1.1.1.指令  add,sub  注意：按无符号加减法">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1070/P3%E8%87%AA%E5%8A%A8%E6%B5%8B%E8%AF%95%E7%94%9F%E6%88%90%E5%99%A8-beq%E5%90%91%E5%89%8D%E8%B7%B3.jpg">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1070/halt_setting.jpg">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1070/P3-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95-%E6%AD%A3%E5%88%99.jpg">
 <meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:modified_time" content="2024-01-30T14:24:11.656Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/1070/P3%E8%87%AA%E5%8A%A8%E6%B5%8B%E8%AF%95%E7%94%9F%E6%88%90%E5%99%A8-beq%E5%90%91%E5%89%8D%E8%B7%B3.jpg">
 
 <link rel="canonical" href="https://triplecamera.github.io/co-discussions/1070">
 
@@ -183,7 +187,8 @@
 
 <div id="reply-4106" class="reply">
 <div class="reply-header">
-<span>林舒雅</span>
+<span>Shae</span>
+<div class="reply-verified">助教认证</div>
 </div>
 <div class="reply-text">
 
@@ -225,8 +230,7 @@
 <li><p>向前跳</p>
 <p>beq不参与其他指令的随机生成程序，自成一个模块，以特定的频率穿插在代码中。</p>
 <p>设置独立的跳转区，避免死循环。</p>
-<p><img
-src="/assets/cscore-image/22371132/07e10a36-4a96-43f6-bff6-d9a7350d91f8/P3自动测试生成器-beq向前跳.jpg"
+<p><img src="/images/co-discussions/1070/P3自动测试生成器-beq向前跳.jpg"
 alt="P3自动测试生成器beq向前跳.jpg" /></p></li>
 </ul>
 <h3 id="12代码结构">1.2.代码结构</h3>
@@ -270,12 +274,11 @@ alt="P3自动测试生成器beq向前跳.jpg" /></p></li>
 <p>设置halt，使程序自动停止。</p>
 <ul>
 <li><p>官方文档： <img
-src="/assets/cscore-image/22371132/3bf0e6d2-0192-4959-8d69-91a4596e5497/Logisim_halt.jpg"
+src="/images/co-discussions/1070/Logisim_halt.jpg"
 alt="Logisim_halt.jpg" /></p></li>
 <li><p>实现：第一计数器的值是灵活可变的。两个计数器都应设置为<strong>Stay
 At Value</strong></p>
-<p><img
-src="/assets/cscore-image/22371132/a4c68e9a-febd-4442-9003-271e6c5d8fea/halt_setting.jpg"
+<p><img src="/images/co-discussions/1070/halt_setting.jpg"
 alt="halt_setting.jpg" /></p></li>
 </ul>
 <h3 id="23mars命令行导出机器码">2.3.Mars命令行导出机器码</h3>
@@ -283,14 +286,13 @@ alt="halt_setting.jpg" /></p></li>
 
 <h3 id="24正则表达式匹配">2.4.正则表达式匹配</h3>
 <p>显而易见，ROM数据从<code>&lt;a name="contents"&gt;addr/data: 12 32</code>开始，只需在此处将机器码导入即可。</p>
-<p><img
-src="/assets/cscore-image/22371132/e0770606-2470-4459-8f1e-14fd720a593b/P3-自动化测试-正则.jpg"
+<p><img src="/images/co-discussions/1070/P3-自动化测试-正则.jpg"
 alt="P3自动化测试正则.jpg" /></p>
 <h2 id="3集成">3.集成</h2>
 <p>利用Python的系统调用命令，实现一键样例对拍。</p>
 <h2 id="4致谢">4.致谢</h2>
-<p>我的工作主要集中在样例生成部分，<strong>感谢助教马瑀阔学长的指点</strong>✧<em>｡
-(ˊᗜˋ</em>) ✧*｡</p>
+<p>我的工作主要集中在样例生成部分，<strong>感谢助教马瑀阔学长的指点</strong>✧*｡
+(ˊᗜˋ*) ✧*｡</p>
 <p>update：感谢杨荣津同学的提醒。已对代码中边界值部分做出修改。</p>
 </div>
 <div class="reply-footer">

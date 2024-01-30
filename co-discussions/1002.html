@@ -28,7 +28,7 @@
 <meta property="og:description" content="陈子祥 | 2023-10-14 21:18:02 | ⭐️ 1 | 💬️ 3  P1、分享、Verilog     陈子祥    前言 我在写P1之前,已经好久都没写过verilog代码了,这导致我在写P1的时候频繁出错,都是些非常小的错误,难受😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞😞,关键是这些小错还要一段时间检查">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:modified_time" content="2024-01-30T14:24:11.656Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
 
@@ -234,19 +234,19 @@ data-emoji="rofl">🤣</span>​​
 <p>这是一类非常典型的问题,我在P1.Q2题目中,为了图方便,将功能选择信号ALUOp赋值给了o变量,我是直接这么写的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">assign o = ALUOp;</span><br></pre></td></tr></table></figure>
 
-<p>这里的问题是未定义变量o便直接对其进行赋值,==<strong>ise不会报错</strong>==,所以一开始我没有注意这个问题.在verilog语言中,若是对未定义的变量进行连续赋值,会将其默认认定为<strong>wire型1位变量</strong>,在这道题中这么写很显然会出现错误.</p>
+<p>这里的问题是未定义变量o便直接对其进行赋值,<mark><strong>ise不会报错</strong></mark>,所以一开始我没有注意这个问题.在verilog语言中,若是对未定义的变量进行连续赋值,会将其默认认定为<strong>wire型1位变量</strong>,在这道题中这么写很显然会出现错误.</p>
 <h3 id="可用的解决方案">可用的解决方案</h3>
 <p>使用如下代码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`default_nettype none</span><br></pre></td></tr></table></figure>
 
-<p>若对未定义的变量赋值,会直接进行报错.(一般我不会写这行代码,因为嫌麻烦,而且没必要,(<del>总觉得自己不会犯这种==低级失误==</del>)如果跟我有一样想法的,那你就要注意这个问题了)</p>
+<p>若对未定义的变量赋值,会直接进行报错.(一般我不会写这行代码,因为嫌麻烦,而且没必要,(<del>总觉得自己不会犯这种<mark>低级失误</mark></del>)如果跟我有一样想法的,那你就要注意这个问题了)</p>
 <h2
 id="定义变量忘记限制位宽直接进行赋值操作">定义变量忘记限制位宽,直接进行赋值操作</h2>
 <p>说来惭愧,还是P1.Q2,当我发现了第一个问题的时候,我是如下改的,又错了<span
 class="emoji" data-emoji="rofl">🤣</span>​​</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wire o;</span><br><span class="line">assign o = ALUOp;</span><br></pre></td></tr></table></figure>
 
-<p>这里的问题是,不定义位宽,,位宽默认为1.在将位宽较大的变量赋给位宽较小的变量时,会将高位截断,只取低位,==<strong>ise不会报错</strong>==,所以一开始我又没有注意到这个问题.<strong>一般来讲,除非故意利用这一机制,否则最好是位宽相同的赋值</strong>.正确的代码应是:</p>
+<p>这里的问题是,不定义位宽,,位宽默认为1.在将位宽较大的变量赋给位宽较小的变量时,会将高位截断,只取低位,<mark><strong>ise不会报错</strong></mark>,所以一开始我又没有注意到这个问题.<strong>一般来讲,除非故意利用这一机制,否则最好是位宽相同的赋值</strong>.正确的代码应是:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wire [2:0] o;</span><br><span class="line">assign o = ALUOp;</span><br></pre></td></tr></table></figure>
 
 <p>解决这一问题的最好方法,就是养成定义变量时,先想类型,再想位宽,再想标识符的思维习惯.</p>
@@ -259,7 +259,7 @@ i,但是发现会报错.下面用一个简单的例子说明问题(这个例子�
 <p>这段代码会报错,报错原因是</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Declarations not allowed in unnamed block</span><br></pre></td></tr></table></figure>
 
-<p>==<strong>声明语句是不允许在非命名块出现的</strong>==</p>
+<p><mark><strong>声明语句是不允许在非命名块出现的</strong></mark></p>
 <p>这里有一个叫做<strong>命名块</strong>的概念</p>
 <p>命名块,顾名思义,就是一个具有名字的块.那么如何给一个语句块赋值呢,要用如下格式</p>
 <p>顺序块</p>
@@ -269,7 +269,7 @@ i,但是发现会报错.下面用一个简单的例子说明问题(这个例子�
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fork : block_name</span><br><span class="line">	statements</span><br><span class="line">join</span><br></pre></td></tr></table></figure>
 
 <p>为什么需要一个命名块呢?</p>
-<p>==<strong>因为命名块是设计层次的一部分.</strong>==
+<p><mark><strong>因为命名块是设计层次的一部分.</strong></mark>
 这一点非常重要,这意味着我们可以通过<strong>层次名引用</strong>进行访问,这也是为什么局部变量只能在命名块声明的原因之一.</p>
 <p>回到testpart代码,我们只需要如此改动,就可以通过编译</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module testpart(</span><br><span class="line">    input clk,</span><br><span class="line">    output reg out</span><br><span class="line">    );</span><br><span class="line">	always @(clk)</span><br><span class="line">	begin : block</span><br><span class="line">		integer i;</span><br><span class="line">		i=0;</span><br><span class="line">		if(clk)</span><br><span class="line">			out = i + 1; </span><br><span class="line">		else </span><br><span class="line">			out = i + 2;</span><br><span class="line">	end</span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
@@ -287,7 +287,7 @@ i,但是发现会报错.下面用一个简单的例子说明问题(这个例子�
 <p>我发现仿真时,ext
 一直是0.后来我注意到了ise报的警告,才意识到了问题.</p>
 <p><strong>位拼接运算符当中不允许有未指明位数的量</strong>,在上述代码,0的位数未指明,但ise不会报错,因为
-==<strong>常数未指明位数默认32位</strong>== ,
+<mark><strong>常数未指明位数默认32位</strong></mark> ,
 这也解释了上述代码ext一直是0的原因,可以算出,等号右边的量总位数为16 + 16
 * 32 = 528位, 赋值需要截取低位16位, 故ext始终为0. 正确的代码如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">assign ext = &#123;imm,&#123;16&#123;1&#x27;b0&#125;&#125;&#125;;</span><br></pre></td></tr></table></figure>

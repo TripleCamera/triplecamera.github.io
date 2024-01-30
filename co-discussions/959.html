@@ -27,10 +27,16 @@
 <meta property="og:site_name" content="TripleCamera 的博客">
 <meta property="og:description" content="沈锎 | 2023-09-28 16:27:47 | ⭐️ 1 | 💬️ 3  P0、分享     沈锎    看上去是没啥用的东西，只是为了满足好奇心 @(o･ｪ･)@  目录  Sec 1：为何计算校验码需要在数据后补 0？ Sec 2：为何校验过程恰好整除？ Sec 3：如何利用校验码进行纠错？ Sec 4：校验码的并行生成 Sec 5：Logisim 中 CRC 校验码的生成与纠错 参">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-gen.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-data.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-check.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-r.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-correct.png">
 <meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-28T02:34:51.075Z">
+<meta property="article:modified_time" content="2024-01-30T14:24:11.656Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-gen.png">
 
 <link rel="canonical" href="https://triplecamera.github.io/co-discussions/959">
 
@@ -485,26 +491,20 @@ class="math inline">\(1011\ 100\)</span>.</p>
 <p>总要写一点和课程相关的内容的吧 ᕕ( ᐛ )ᕗ</p>
 <p>按照上面的思路，对于 <span class="math inline">\(B=1101\)</span>
 的情况，结合余数表，可以很容易画出如下的电路：</p>
-<p><img
-src="/assets/cscore-image/22373080/efa8d8d8-9540-4b71-a584-d978c1b75962/crc-gen.png"
+<p><img src="/images/co-discussions/959/crc-gen.png"
 alt="crcgen.png" /></p>
 <p>此外，我还弄了一个简单的测试电路，将其结果与使用模二除法得到的结果进行比较，如下分别是数据设置与比较电路：</p>
-<p><img
-src="/assets/cscore-image/22373080/0be9a0e8-43ab-4242-a678-26813bd10ae2/crc-data.png"
+<p><img src="/images/co-discussions/959/crc-data.png"
 alt="crcdata.png" /></p>
-<p><img
-src="/assets/cscore-image/22373080/33c8dafb-e23f-417f-a76a-43515fc14137/crc-check.png"
+<p><img src="/images/co-discussions/959/crc-check.png"
 alt="crccheck.png" /></p>
 <p>对 CRC
 校验码进行一位纠错也很简单，这里采用除法简化过程（好像有个类似的并行的纠错电路，但是研究不动了
 (．． )…）</p>
 <p>如下是扰动设置与余数表的生成电路：</p>
-<p><img
-src="/assets/cscore-image/22373080/783c8fba-3d1e-4cbd-b332-979b9f7b88e3/crc-r.png"
-alt="crcr.png" /></p>
+<p><img src="/images/co-discussions/959/crc-r.png" alt="crcr.png" /></p>
 <p>并通过 7 位除法得到校验余数：</p>
-<p><img
-src="/assets/cscore-image/22373080/5a8ac081-fe9e-42e2-a3cb-ec4cb5dc4bdd/crc-correct.png"
+<p><img src="/images/co-discussions/959/crc-correct.png"
 alt="crccorrect.png" /></p>
 <p>这里并没有真正得到纠错后的数据，但只要将得到的余数与余数表比较即可！</p>
 <hr />

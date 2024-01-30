@@ -27,10 +27,21 @@
 <meta property="og:site_name" content="TripleCamera 的博客">
 <meta property="og:description" content="沈锎 | 2023-08-30 16:56:33 | ⭐️ 5 | 💬️ 4  分享、Verilog     沈锎    此文探究了 Windows 与 Ubuntu(WSL2) 下使用 VScode 作为 ISE 的外部编辑器的相关方法，以实现 Verilog 代码的语法检查与格式化等功能。如有疏漏或者更好的解决方案，还望及时提出、指正。(,,•́ . •̀,,) 当然，这些内容除了部分遇到">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/886/image--1.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/886/image--2.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/886/image--3.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/886/image--4.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/886/image--5.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/886/image--6.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/886/image--7.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/886/image--8.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/886/image--9.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/886/image--10.png">
 <meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-28T02:34:51.075Z">
+<meta property="article:modified_time" content="2024-01-30T14:24:11.656Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/886/image--1.png">
 
 <link rel="canonical" href="https://triplecamera.github.io/co-discussions/886">
 
@@ -207,8 +218,7 @@
 打开设置，进入 <code>ISE General -&gt; Editors</code> 标签，将
 <code>Editor</code> 选择为
 <code>Custom</code>，后面的命令行是需要有针对性地进行配置的。</p>
-<p><img
-src="/assets/cscore-image/22373080/fce648c0-6d95-463b-a614-795c939ed3a5/image.png"
+<p><img src="/images/co-discussions/886/image--1.png"
 alt="image.png" /></p>
 <h2 id="windows-系统">Windows 系统</h2>
 <p>对于 <strong>Windows 系统</strong>来说，我没有遇到很多坑点，找到
@@ -230,8 +240,7 @@ target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39750496/artic
 <h2 id="使用-wsl">使用 WSL</h2>
 <p>对于 <strong>Ubuntu(WSL2)
 系统</strong>来说，我试图如法炮制，却遇到了如下报错：</p>
-<p><img
-src="/assets/cscore-image/22373080/09a4038f-ae77-4115-a196-9c9ced773eed/image.png"
+<p><img src="/images/co-discussions/886/image--2.png"
 alt="image.png" /></p>
 <p>大概就是在启动 VSCode 时，<strong>所调用的</strong> libstdc++.so.6
 的版本太低，在这里可以注意到，这个链接库的位置为 ISE
@@ -247,8 +256,7 @@ alt="image.png" /></p>
 <code>/usr/lib/x86_64-linux-gnu/libstdc++.so.6</code>）中包含上面报错中所需要的东西：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep &#x27;GLIBCXX&#x27;</span><br></pre></td></tr></table></figure>
 
-<p><img
-src="/assets/cscore-image/22373080/50451728-204a-4eca-9ed7-203487f8d8e2/image.png"
+<p><img src="/images/co-discussions/886/image--3.png"
 alt="image.png" /></p>
 <p>接着，在家目录中（或其他位置）写一个脚本，姑且叫做
 <code>code_from_ise.sh</code>，内容如下：</p>
@@ -266,8 +274,7 @@ alt="image.png" /></p>
 中的报错，可以参考我的解决方法。</p>
 <h1 id="代码格式化">代码格式化</h1>
 <p>正如上面整体思路中所写，需要在 VSCode 中装一个插件：</p>
-<p><img
-src="/assets/cscore-image/22373080/5b85cf03-b53f-4766-81ce-0895d149609d/image.png"
+<p><img src="/images/co-discussions/886/image--4.png"
 alt="image.png" /></p>
 <p>然后从 Github 仓库中下载 verible-verilog 工具：<a
 target="_blank" rel="noopener" href="https://github.com/chipsalliance/verible/releases/tag/v0.0-3410-g398a8505">https://github.com/chipsalliance/verible/releases/tag/v0.0-3410-g398a8505</a>
@@ -279,16 +286,14 @@ target="_blank" rel="noopener" href="https://github.com/chipsalliance/verible/re
 <code>verible-verilog-format.exe</code>
 的地址，比如：<code>E:\verible-v0.0-3410-g398a8505-win64\verible-verilog-format.exe</code>，填入
 VSCode 的设置中：</p>
-<p><img
-src="/assets/cscore-image/22373080/c4ccb9fb-2021-4160-af98-dd333273a7c5/image.png"
+<p><img src="/images/co-discussions/886/image--5.png"
 alt="image.png" /></p>
 <p>该设置的 id 为
 <code>verilog.formatting.veribleVerilogFormatter.path</code>，可以<strong>直接搜索</strong>。注意路径不要有空格之类的字符，把引号去掉。</p>
 <p>并在设置中（id 为
 <code>verilog.formatting.verilogHDL.formatter</code>）将选择
 verible-verilog-format 进行格式化。</p>
-<p><img
-src="/assets/cscore-image/22373080/4c027722-5d38-4d50-a3fa-6f5dde6b01ca/image.png"
+<p><img src="/images/co-discussions/886/image--6.png"
 alt="image.png" /></p>
 <h2 id="linux">Linux</h2>
 <p>将下载的文件解压，只要里面的
@@ -298,8 +303,7 @@ alt="image.png" /></p>
 <h2 id="格式化选项">格式化选项</h2>
 <p>在这个设置中（id 为
 <code>verilog.formatting.veribleVerilogFormatter.arguments</code>）可以配置自己喜欢的格式化参数：</p>
-<p><img
-src="/assets/cscore-image/22373080/d6ab666e-94c2-4f1e-bc17-788da4258396/image.png"
+<p><img src="/images/co-discussions/886/image--7.png"
 alt="image.png" /></p>
 <p>详细的文档可以参考：<a
 target="_blank" rel="noopener" href="https://chipsalliance.github.io/verible/verilog_format.html">https://chipsalliance.github.io/verible/verilog_format.html</a></p>
@@ -313,22 +317,19 @@ target="_blank" rel="noopener" href="https://chipsalliance.github.io/verible/ver
 <p>我是用 iverilog 进行语法检查，其安装并不困难，然后在设置中将 Linter
 选为 iverilog （该设置 id 为 <code>verilog.linting.linter</code>
 ）。</p>
-<p><img
-src="/assets/cscore-image/22373080/32faae10-22d9-447e-879a-53556e7c75a7/image.png"
+<p><img src="/images/co-discussions/886/image--8.png"
 alt="image.png" /></p>
 <p>下面，是我在使用中遇到的一个问题及解决方法。</p>
 <p>在写 test bench 时需要对模块进行例化，但是 iverilog
 并不能将其识别，而会显示模块未知。</p>
-<p><img
-src="/assets/cscore-image/22373080/135dcbaa-ad8e-48cf-acfd-9e7c1811b58a/image.png"
+<p><img src="/images/co-discussions/886/image--9.png"
 alt="image.png" /></p>
 <p>而莫名其妙的报错是让人很不爽的 &lt;(｀^′)&gt;</p>
 <p>其解决方案是，在设置中给 iverilog 添加一个参数 <code>-y .</code>
 并勾选 Run As File Location，这两个设置的 id 分别为
 <code>verilog.linting.iverilog.arguments</code> 和
 <code>verilog.linting.iverilog.runAtFileLocation</code>。</p>
-<p><img
-src="/assets/cscore-image/22373080/a6a9601d-9d2a-4b60-8bfe-0342e50d8967/image.png"
+<p><img src="/images/co-discussions/886/image--10.png"
 alt="image.png" /></p>
 <p>但是注意，待例化模块的模块名应与文件名一致，否则仍然无法识别。</p>
 </div>

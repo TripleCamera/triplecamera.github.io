@@ -20,17 +20,19 @@
     var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="lhz | 2023-09-26 13:45:47 | ⭐️ 2 | 💬️ 2  分享、Logisim、Verilog、MIPS     李昊哲     侥幸通过Pre的一点记录和心得，希望对大家有些微的帮助  1.supaltitude 思路：题目所求即为数组最大前缀和，维护一个变量保存当前前缀和，并维护最大值即可，没有开辟数组空间的必要 注：保存最高海拔的前提是数组的下标连续，而不能像买卖">
+  <meta name="description" content="lhz | 2023-09-26 13:45:47 | ⭐️ 2 | 💬️ 2  分享、Logisim、Verilog、MIPS     lhz     侥幸通过Pre的一点记录和心得，希望对大家有些微的帮助  1.supaltitude 思路：题目所求即为数组最大前缀和，维护一个变量保存当前前缀和，并维护最大值即可，没有开辟数组空间的必要 注：保存最高海拔的前提是数组的下标连续，而不能像买卖">
 <meta property="og:type" content="website">
 <meta property="og:title" content="「BUAA-CO」2023Pre">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/951.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="lhz | 2023-09-26 13:45:47 | ⭐️ 2 | 💬️ 2  分享、Logisim、Verilog、MIPS     李昊哲     侥幸通过Pre的一点记录和心得，希望对大家有些微的帮助  1.supaltitude 思路：题目所求即为数组最大前缀和，维护一个变量保存当前前缀和，并维护最大值即可，没有开辟数组空间的必要 注：保存最高海拔的前提是数组的下标连续，而不能像买卖">
+<meta property="og:description" content="lhz | 2023-09-26 13:45:47 | ⭐️ 2 | 💬️ 2  分享、Logisim、Verilog、MIPS     lhz     侥幸通过Pre的一点记录和心得，希望对大家有些微的帮助  1.supaltitude 思路：题目所求即为数组最大前缀和，维护一个变量保存当前前缀和，并维护最大值即可，没有开辟数组空间的必要 注：保存最高海拔的前提是数组的下标连续，而不能像买卖">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/951/appearance.png">
 <meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-28T02:34:51.075Z">
+<meta property="article:modified_time" content="2024-01-30T14:24:11.656Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/951/appearance.png">
 
 <link rel="canonical" href="https://triplecamera.github.io/co-discussions/951">
 
@@ -183,7 +185,7 @@
 
 <div id="reply-3604" class="reply">
 <div class="reply-header">
-<span>李昊哲</span>
+<span>lhz</span>
 </div>
 <div class="reply-text">
 
@@ -226,17 +228,16 @@ logisim 中的实现较为简单。</p>
 <p>此外，注意判断<strong>时钟</strong>是输入还是自带信号。</p>
 <p><strong>还有一件事</strong>
 <del>（成龙历险记老爹音）</del>，题目要求的电路外观<strong>不同于</strong>三输入一输出的<strong>默认外观</strong>，只需将左边三输入向下移动一格即可，外观的线不是很重要。<del>如果你跟我一样强迫症，那挪一下也不是不行</del>
-<img
-src="/assets/cscore-image/21373212/9d76ec38-6e12-4e8a-8076-a63661992e0f/appearance.png"
+<img src="/images/co-discussions/951/appearance.png"
 alt="appearance.png" /></p>
 <p>电路外观如图（已隐去部分内容） <img
-src="/assets/cscore-image/21373212/d1e805ca-08fd-4f78-894a-2b93a024d6dd/circuit-eliminated.png"
+src="/images/co-discussions/951/circuit-eliminated.png"
 alt="circuiteliminated.png" /></p>
 <p>状态转移如图（已隐去部分内容） <img
-src="/assets/cscore-image/21373212/bbfe90b6-f3b8-460d-8ce7-d27e98765ec1/statetrans-eliminated.png"
+src="/images/co-discussions/951/statetrans-eliminated.png"
 alt="statetranseliminated.png" /></p>
 <p>输出模块如图（已隐去部分内容） <img
-src="/assets/cscore-image/21373212/16206660-8c4b-43c4-bb23-c577159cc143/output-eliminated.png"
+src="/images/co-discussions/951/output-eliminated.png"
 alt="outputeliminated.png" /></p>
 <p>最后，祝大家上机顺利，学有所获！</p>
 </div>

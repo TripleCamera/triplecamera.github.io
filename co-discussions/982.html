@@ -20,17 +20,24 @@
     var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="pigKiller | 2023-10-10 08:24:02 | ⭐️ 1 | 💬️ 3  P0、分享、Logisim     卞卓航    本次的三道题目主要考查了组合逻辑、melay状态机、和奇奇怪怪的moore状态机。 分享一下自己的做法，欢迎大家批评指正。 最小正整数 这道题乍一看可能会觉得比较复杂，但是仔细思考一下，输入总共只有5个，考虑的输出只有1,2,3,4,5,6，找到最小的">
+  <meta name="description" content="pigKiller | 2023-10-10 08:24:02 | ⭐️ 1 | 💬️ 3  P0、分享、Logisim     pigKiller    本次的三道题目主要考查了组合逻辑、melay状态机、和奇奇怪怪的moore状态机。 分享一下自己的做法，欢迎大家批评指正。 最小正整数 这道题乍一看可能会觉得比较复杂，但是仔细思考一下，输入总共只有5个，考虑的输出只有1,2,3,4,5,6">
 <meta property="og:type" content="website">
 <meta property="og:title" content="P0做题记录">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/982.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="pigKiller | 2023-10-10 08:24:02 | ⭐️ 1 | 💬️ 3  P0、分享、Logisim     卞卓航    本次的三道题目主要考查了组合逻辑、melay状态机、和奇奇怪怪的moore状态机。 分享一下自己的做法，欢迎大家批评指正。 最小正整数 这道题乍一看可能会觉得比较复杂，但是仔细思考一下，输入总共只有5个，考虑的输出只有1,2,3,4,5,6，找到最小的">
+<meta property="og:description" content="pigKiller | 2023-10-10 08:24:02 | ⭐️ 1 | 💬️ 3  P0、分享、Logisim     pigKiller    本次的三道题目主要考查了组合逻辑、melay状态机、和奇奇怪怪的moore状态机。 分享一下自己的做法，欢迎大家批评指正。 最小正整数 这道题乍一看可能会觉得比较复杂，但是仔细思考一下，输入总共只有5个，考虑的输出只有1,2,3,4,5,6">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/982/202310092230202.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/982/202310092229063.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/982/202310092237007.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/982/202310092241460.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/982/202310092250863.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/982/202310092244518.png">
 <meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-28T02:34:51.075Z">
+<meta property="article:modified_time" content="2024-01-30T14:24:11.656Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/982/202310092230202.png">
 
 <link rel="canonical" href="https://triplecamera.github.io/co-discussions/982">
 
@@ -183,7 +190,7 @@
 
 <div id="reply-3758" class="reply">
 <div class="reply-header">
-<span>卞卓航</span>
+<span>pigKiller</span>
 </div>
 <div class="reply-text">
 
@@ -198,8 +205,7 @@
 <p>比较的部分十分简单，可以直接利用<code>comparator</code>进行数据间的比较。</p>
 <p>我的思路是设计了一个6输入1输出模块，6个输入分别是<code>iuput1-5</code>，和常数<code>n</code>，用于检测6个输入中是否至少有一个<code>input</code>和<code>n</code>相等。同时为了方便后续的操作，对输出进行了取反操作。</p>
 <p>最后的效果为：<strong>若5个输入没有一个和n相等，则输出1，否则输出0</strong></p>
-<p><img
-src="https://pigkiller-011955-1319328397.cos.ap-beijing.myqcloud.com/img/202310092230202.png"
+<p><img src="/images/co-discussions/982/202310092230202.png"
 alt="image-20231009223052163" /></p>
 <h3 id="优先编码器mux">优先编码器+MUX</h3>
 <p>回顾一下专门输出，可以发现这符合一个优先队列：</p>
@@ -211,31 +217,26 @@ alt="image-20231009223052163" /></p>
 <p>可以看出这是一个<strong>优先问题</strong>，小的数字具有更高的优先级，可以利用优先编码器实现此功能。但是优先编码器是输出最高位的1的位置，故此处需要将对1-5的判断反序。</p>
 <p>随后，为了输出没出现的最小的正整数，可以利用MUX：优先编码器输出了位置，MUX接受此位置，按照该位置对应的情况输出对应的正整数，用常量作为MUX的输入即可。</p>
 <p>此外，还有一个注意事项：一组可能的输入是<code>1,2,3,4,5</code>，这时候需要输出6，这个需要特殊考虑</p>
-<p><img
-src="https://pigkiller-011955-1319328397.cos.ap-beijing.myqcloud.com/img/202310092229063.png"
+<p><img src="/images/co-discussions/982/202310092229063.png"
 alt="image-20231009222902013" /></p>
 <h2 id="状态转移问题">状态转移问题</h2>
 <p>这道题是一道基本的状态机转移问题，<strong>从原状态（位置），接受行进方向（输入），进行状态转移（移动到新位置），输出就是当前状态（位置）</strong>。状态数很明确就是1-8，输入操作码进行状态转移。</p>
 <p>可以看作是P0课下<code>hit</code>那道题的翻版，个人觉得还降低了难度。利用<code>logisim</code>的组合逻辑分析可以很容易得到状态转移电路。</p>
 <p>最后的电路也很符合melay状态机的标准形式：</p>
-<p><img
-src="https://pigkiller-011955-1319328397.cos.ap-beijing.myqcloud.com/img/202310092237007.png"
+<p><img src="/images/co-discussions/982/202310092237007.png"
 alt="image-20231009223731958" /></p>
 <h2 id="输入序列匹配">输入序列匹配</h2>
 <p>这道题题目要求是moore状态机，但是总感觉怪怪的，不太像心中的传统的状态机，但细细一想，确实也符合输入，状态转移的范式，只不过处于状态转移不是那么明显。</p>
 <p>匹配前三个周期的输入，可以用串联的寄存器依次将输入存下来：</p>
-<p><img
-src="https://pigkiller-011955-1319328397.cos.ap-beijing.myqcloud.com/img/202310092241460.png"
+<p><img src="/images/co-discussions/982/202310092241460.png"
 alt="image-20231009224119420" /></p>
 <p>对三个寄存器的储存值和题目给出的进行比较，对于数的比较，可以直接利用comparator进行比较，如果相等则输出</p>
-<p><img
-src="https://pigkiller-011955-1319328397.cos.ap-beijing.myqcloud.com/img/202310092250863.png"
+<p><img src="/images/co-discussions/982/202310092250863.png"
 alt="image-20231009225019828" /></p>
 <h3 id="基于独热编码的mux输出">基于独热编码的MUX输出</h3>
 <p>总共有三种可能情况需要输出非0值，我的方案是设计电路一次进行了比较，如果满足<code>EEE</code>,<code>0A0</code>,<code>A0E</code>中的一个则对应输出1，其他两个输出0，可以看出这符合独热编码的形式。如果一个都不符合则输出0。</p>
 <p>设计电路部分如下：</p>
-<p><img
-src="https://pigkiller-011955-1319328397.cos.ap-beijing.myqcloud.com/img/202310092244518.png"
+<p><img src="/images/co-discussions/982/202310092244518.png"
 alt="image-20231009224456484" /></p>
 <h3 id="一个大坑点">一个大坑点</h3>
 <p><code>logisim</code>中的寄存器在默认状态下是0，也就是说对于<code>0A0</code>，如果第一周期（或<code>reset</code>之后的第一个周期）输入A，第二周期输入0，此时三个寄存器值分别是0、A、0（默认值，并不是输入值），这种情况可能非造成误认为是符合要求的输入。</p>
@@ -268,6 +269,7 @@ alt="image-20231009224456484" /></p>
 <div id="reply-3765" class="reply">
 <div class="reply-header">
 <span>???</span>
+<div class="reply-verified">助教认证</div>
 </div>
 <div class="reply-text">
 

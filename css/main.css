@@ -1172,7 +1172,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #06c9eb;
+  background: #a3b12f;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2592,15 +2592,17 @@ mjx-container + br {
   height: 0;
   margin: 10px 0;
 }
-.reply .reply-header {
-  font-size: smaller;
+.reply .reply-header .reply-verified {
+/* cscore 原版助教认证 */
+  float: right;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 0 0.75em;
+  border-radius: 1em;
 }
 .reply .reply-text {
   clear: both;
-  padding: 10px;
-}
-.reply .reply-footer {
-  font-size: smaller;
+  padding: 0 20px;
 }
 .reply .reply-footer .reply-vote {
   float: right;

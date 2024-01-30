@@ -20,29 +20,31 @@
     var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="fysszlr（张同学） | 2023-10-10 12:00:23 | ⭐️ 1 | 💬️ 2  P0、分享、Logisim     张栗瑞    十分侥幸地通过了P0，但也暴露了许多问题，于是和几位同学讨论反思后做一些记录，希望对自己对大家能够有所裨益，为接下来的P3做一点准备~ 本文中展示的方法仅为我和一些同学的做法，无法代表大多数人的思路。如大家发现错误或不严谨处，请务必不吝加以斧正！">
+  <meta name="description" content="fysszlr | 2023-10-10 12:00:23 | ⭐️ 1 | 💬️ 2  P0、分享、Logisim     fysszlr    十分侥幸地通过了P0，但也暴露了许多问题，于是和几位同学讨论反思后做一些记录，希望对自己对大家能够有所裨益，为接下来的P3做一点准备~ 本文中展示的方法仅为我和一些同学的做法，无法代表大多数人的思路。如大家发现错误或不严谨处，请务必不吝加以斧正！">
 <meta property="og:type" content="website">
 <meta property="og:title" content="P0上机分析与记录">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/983.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="fysszlr（张同学） | 2023-10-10 12:00:23 | ⭐️ 1 | 💬️ 2  P0、分享、Logisim     张栗瑞    十分侥幸地通过了P0，但也暴露了许多问题，于是和几位同学讨论反思后做一些记录，希望对自己对大家能够有所裨益，为接下来的P3做一点准备~ 本文中展示的方法仅为我和一些同学的做法，无法代表大多数人的思路。如大家发现错误或不严谨处，请务必不吝加以斧正！">
+<meta property="og:description" content="fysszlr | 2023-10-10 12:00:23 | ⭐️ 1 | 💬️ 2  P0、分享、Logisim     fysszlr    十分侥幸地通过了P0，但也暴露了许多问题，于是和几位同学讨论反思后做一些记录，希望对自己对大家能够有所裨益，为接下来的P3做一点准备~ 本文中展示的方法仅为我和一些同学的做法，无法代表大多数人的思路。如大家发现错误或不严谨处，请务必不吝加以斧正！">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/f85d193c-de2d-424a-8d5f-d4f769f38233/1.png">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/bfd923ef-506b-447c-a45f-ba4c3ddf82d7/2.png">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/434a0bc2-4602-4528-9628-fa64270d77ab/3.png">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/0505d0fb-585a-42cb-b359-f99d38932681/4.png">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/e3a1425d-01c9-455f-afbb-a2780396acd8/5.png">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/93fc8989-262e-4fad-8848-b57e42d5bc40/6.jpg">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/af3928c1-475b-4064-8756-0558a7b52c52/7.png">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/97b00610-0e09-450b-9ef3-4d30324775f3/9.png">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/cd5ef8f9-ebbe-4150-b715-9285a2264aad/10.png">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/75733ce6-1227-4a41-b125-4ae30d2b96c5/11.png">
-<meta property="og:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/4f2676a7-f15f-4499-8898-71817171f992/12.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/1.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/2.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/3.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/4.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/5.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/6.jpg">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/7.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/9.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/10.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/11.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/12.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/13.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/983/14.png">
 <meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-28T02:34:51.075Z">
+<meta property="article:modified_time" content="2024-01-30T14:24:11.656Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://triplecamera.github.io/assets/cscore-image/22373425/f85d193c-de2d-424a-8d5f-d4f769f38233/1.png">
+<meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/983/1.png">
 
 <link rel="canonical" href="https://triplecamera.github.io/co-discussions/983">
 
@@ -182,7 +184,7 @@
       
       <div class="post-body">
           <div class="post-info">
-<span>fysszlr（张同学）</span>
+<span>fysszlr</span>
 |
 <abbr title="2023-10-10T12:00:23.827385+08:00"><time datetime="2023-10-10T12:00:23.827385+08:00">2023-10-10 12:00:23</time></abbr>
 |
@@ -195,7 +197,7 @@
 
 <div id="reply-3761" class="reply">
 <div class="reply-header">
-<span>张栗瑞</span>
+<span>fysszlr</span>
 </div>
 <div class="reply-text">
 
@@ -221,7 +223,7 @@ target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/problem?Problem
 <p>这部分可以使用<strong>比较器</strong>和<strong>门电路</strong>等器件方便地得出结果</p>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/f85d193c-de2d-424a-8d5f-d4f769f38233/1.png"
+    <img src="/images/co-discussions/983/1.png"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     判断电路(1/5)(已隐去部分电路细节)    <!--标题-->
@@ -231,7 +233,7 @@ target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/problem?Problem
 <p>2.通过组合逻辑分析或位运算等方式求出最小未出现的正整数</p>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/bfd923ef-506b-447c-a45f-ba4c3ddf82d7/2.png"
+    <img src="/images/co-discussions/983/2.png"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     输出电路(已隐去部分电路细节) <!--标题-->
@@ -254,7 +256,7 @@ target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/problem?Problem
 <p>在之前的学习中，大家学习了多个数进行排序输出的方法，本题也可以如此操作：先抽象出一个两个数间排序的模块，再按照冒泡排序的方法对5个数排序</p>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/434a0bc2-4602-4528-9628-fa64270d77ab/3.png"
+    <img src="/images/co-discussions/983/3.png"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     排序电路——我愿称之为五线谱  <!--标题-->
@@ -265,7 +267,7 @@ target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/problem?Problem
 <p>将排序好的五个数两两间做差（第一个数和0做差），若某个差大于1，则说明在这两个数之间有没有出现的正整数</p>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/0505d0fb-585a-42cb-b359-f99d38932681/4.png"
+    <img src="/images/co-discussions/983/4.png"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     判断电路(已隐去部分电路细节) <!--标题-->
@@ -276,7 +278,7 @@ target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/problem?Problem
 <p>通过组合逻辑得到差值大于1的两个数中最小的一对，答案即为较小数+1，可以使用MUX来简化电路</p>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/e3a1425d-01c9-455f-afbb-a2780396acd8/5.png"
+    <img src="/images/co-discussions/983/5.png"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     输出电路(已隐去部分电路细节) <!--标题-->
@@ -298,7 +300,7 @@ target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/problem?Problem
 </ol>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/93fc8989-262e-4fad-8848-b57e42d5bc40/6.jpg"
+    <img src="/images/co-discussions/983/6.jpg"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     考试中所画状态机    <!--标题-->
@@ -306,7 +308,7 @@ target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/problem?Problem
 </div>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/af3928c1-475b-4064-8756-0558a7b52c52/7.png"
+    <img src="/images/co-discussions/983/7.png"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     主电路 <!--标题-->
@@ -338,7 +340,7 @@ in\rightarrow reg1\rightarrow reg2\rightarrow reg3
 </ol>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/97b00610-0e09-450b-9ef3-4d30324775f3/9.png"
+    <img src="/images/co-discussions/983/9.png"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     状态转移电路  <!--标题-->
@@ -351,7 +353,7 @@ in\rightarrow reg1\rightarrow reg2\rightarrow reg3
 </ol>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/cd5ef8f9-ebbe-4150-b715-9285a2264aad/10.png"
+    <img src="/images/co-discussions/983/10.png"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     输出电路(ver 1.0)   <!--标题-->
@@ -365,7 +367,7 @@ in\rightarrow reg1\rightarrow reg2\rightarrow reg3
 value，只有当计数到3时，电路才会有输出（这部分可以使用MUX或组合逻辑）</p>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/75733ce6-1227-4a41-b125-4ae30d2b96c5/11.png"
+    <img src="/images/co-discussions/983/11.png"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     输出电路(ver 2.0)   <!--标题-->
@@ -382,7 +384,7 @@ value，只有当计数到3时，电路才会有输出（这部分可以使用MU
 <p>解决方法：让reset清零时会将输出也清零</p>
 <div>           <!--块级封装-->
     <center>    <!--将图片和文字居中-->
-    <img src="/assets/cscore-image/22373425/4f2676a7-f15f-4499-8898-71817171f992/12.png"
+    <img src="/images/co-discussions/983/12.png"
          alt="image-20231010082233943"/>
     <br>        <!--换行-->
     输出电路(ver 3.0)   <!--标题-->
@@ -474,13 +476,9 @@ value，只有当计数到3时，电路才会有输出（这部分可以使用MU
 <p>2.模拟出所有state0情况下，面对不同输入的new state</p>
 <p>右上的小选择器需要10个，每个对应一种state0（这里只画了state0=0000的情况），
 4路对应4种In</p>
-<p><img
-src="/assets/cscore-image/22373425/0a24b63a-eeb0-4b9f-9d2e-54dff7b765f2/13.png"
-alt="13.png" /></p>
+<p><img src="/images/co-discussions/983/13.png" alt="13.png" /></p>
 <p>3.根据state打表得到输出</p>
-<p><img
-src="/assets/cscore-image/22373425/c71c86e3-29ad-4e6d-96c5-07a5afc12ba5/14.png"
-alt="14.png" /></p></li>
+<p><img src="/images/co-discussions/983/14.png" alt="14.png" /></p></li>
 </ul>
 <hr />
 </div>

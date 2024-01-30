@@ -20,17 +20,23 @@
     var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="离.nvme0n1p2 | 2023-10-27 23:11:35 | ⭐️ 1 | 💬️ 2       石伊聪    TL;DR(或许也没有那么长) 食用方法  下载Python脚本replace.py （或者也许你愿意从文末复制？）   https:&#x2F;&#x2F;bhpan.buaa.edu.cn&#x2F;link&#x2F;AA142FF068D230494AB6CF02281EEFE6FF Name: repl">
+  <meta name="description" content="离.nvme0n1p2 | 2023-10-27 23:11:35 | ⭐️ 1 | 💬️ 2       离.nvme0n1p2    TL;DR(或许也没有那么长) 食用方法  下载Python脚本replace.py （或者也许你愿意从文末复制？）   https:&#x2F;&#x2F;bhpan.buaa.edu.cn&#x2F;link&#x2F;AA142FF068D230494AB6CF02281EEFE6FF Na">
 <meta property="og:type" content="website">
 <meta property="og:title" content="一个向ROM导入机器码的Python脚本">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/1061.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="离.nvme0n1p2 | 2023-10-27 23:11:35 | ⭐️ 1 | 💬️ 2       石伊聪    TL;DR(或许也没有那么长) 食用方法  下载Python脚本replace.py （或者也许你愿意从文末复制？）   https:&#x2F;&#x2F;bhpan.buaa.edu.cn&#x2F;link&#x2F;AA142FF068D230494AB6CF02281EEFE6FF Name: repl">
+<meta property="og:description" content="离.nvme0n1p2 | 2023-10-27 23:11:35 | ⭐️ 1 | 💬️ 2       离.nvme0n1p2    TL;DR(或许也没有那么长) 食用方法  下载Python脚本replace.py （或者也许你愿意从文末复制？）   https:&#x2F;&#x2F;bhpan.buaa.edu.cn&#x2F;link&#x2F;AA142FF068D230494AB6CF02281EEFE6FF Na">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1061/image--1.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1061/image--2.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1061/image--3.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1061/image--4.png">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1061/image--5.png">
 <meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-28T02:34:51.071Z">
+<meta property="article:modified_time" content="2024-01-30T14:24:11.656Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/1061/image--1.png">
 
 <link rel="canonical" href="https://triplecamera.github.io/co-discussions/1061">
 
@@ -183,7 +189,7 @@
 
 <div id="reply-4075" class="reply">
 <div class="reply-header">
-<span>石伊聪</span>
+<span>离.nvme0n1p2</span>
 </div>
 <div class="reply-text">
 
@@ -205,8 +211,7 @@ Name: replace.py Expires: 2023-11-26 21:59 Pickup Code:
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python replace.py &lt;.circ文件名&gt; &lt;机器码文本文件名&gt;</span><br></pre></td></tr></table></figure>
 
 <p>大功告成！修改后的.circ文件将保存在当前目录中，文件名为原文件名后加上当前的时间，格式为<code>原文件名_机器码文本文件名_hhmmss.circ</code></p>
-<p>使用例： <img
-src="/assets/cscore-image/22371207/6d2f1ef9-1929-4db9-9ec0-915871db36d4/image.png"
+<p>使用例： <img src="/images/co-discussions/1061/image--1.png"
 alt="image.png" /></p>
 <h2 id="值得注意的事">值得注意的事</h2>
 <h3 id="支持什么机器码文本文件">支持什么机器码文本文件？</h3>
@@ -222,24 +227,20 @@ alt="image.png" /></p>
 <p>瞪眼法发现，Logisim
 以<code>.circ</code>文件格式保存电路，这些文件本质上是 XML
 文档，允许以文本形式进行读取和编辑,样式如下图：</p>
-<p><img
-src="/assets/cscore-image/22371207/3cbc9e24-f22c-4c7f-85c5-43ec162f5f2f/image.png"
+<p><img src="/images/co-discussions/1061/image--2.png"
 alt="image.png" /></p>
 <p>以文本格式打开某含有ROM组件的<code>.circ</code>文件，搜索<code>ROM</code>关键词得：</p>
-<p><img
-src="/assets/cscore-image/22371207/617b71ad-aa00-4905-b15b-96fcbdba8620/image.png"
+<p><img src="/images/co-discussions/1061/image--3.png"
 alt="image.png" /></p>
 <p>我们先看第一个：</p>
-<p><img
-src="/assets/cscore-image/22371207/f23c9619-e826-4260-af84-8fda24d2af50/image.png"
+<p><img src="/images/co-discussions/1061/image--4.png"
 alt="image.png" /></p>
 <p>这个显然不是，略过（逃</p>
 <blockquote>
 <p>在此部分实际上存储的是从左侧工具栏选择组件时的默认设置。你可能注意到，当从侧边栏选择一个组件并在将其放置到画布上之前修改了左下角的组件属性，那么下一次选择该组件时，其默认属性就会变为之前修改过的设置，这些设置重启Logisim后仍会保留。这些个默认设置就存储在这里。</p>
 </blockquote>
 <p>再看第二个:</p>
-<p><img
-src="/assets/cscore-image/22371207/4fc76d5f-d272-4d6c-a853-39fe690919df/image.png"
+<p><img src="/images/co-discussions/1061/image--5.png"
 alt="image.png" /></p>
 <p>直觉告诉我们它就是我们想要的，我们观察它的几个标签：</p>
 <ul>
