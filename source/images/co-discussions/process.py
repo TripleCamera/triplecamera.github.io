@@ -2,16 +2,19 @@
 将讨论区帖子转换为 Hexo 页面。
 作者：TripleCamera（https://triplecamera.github.io/）
 协议：MIT
-版本：20240128
+版本：20240130
 
 原始数据：从网站获得的 JSON 文件。为防止操作失误，我们只修改文件名，不修改内容。
- -  所有 discussion-info 放置在 info 下，并重命名为 discussion-info-{id}.json。
+ -  所有 discussion-info 放置在 info 下，并重命名为 discussion-info-{id}.json。（未使用）
  -  所有 response-list 放置在 post 下，并重命名为 response-list-{id}.json。
  -  所有 get-tag-details 放置在 tag 下，并重命名为 get-tag-details-{id}.json。
  -  discussion-search-by-tag.html 放置在 . 下，并重命名为 discussion-search-by-tag.json。
 
 补充数据：人工撰写的 JSON 文件。
  -  license.json：根对象以真名为键，信息对象为值。信息对象包含包含协议（"license"）和署名（"attribution"）。
+                  如果未找到某位作者，则该作者的所有文章都不会导出，该作者的所有评论都会被隐藏。
+ -  replace.json：根对象以 id 为键，查找替换对象为值。查找替换对象以查找内容（正则表达式）为键，替换内容（支持 match group）为值。
+                  注意如果未找到某篇文章，程序会直接报错，请确保所有文章都已写入文件（无需查找替换的文章请将 id 映射到空对象）。
 """
 
 import json
@@ -45,7 +48,7 @@ mathjax: true
 REPLY_FORMAT = """
 <div id="reply-{id}" class="reply">
 <div class="reply-header">
-<span>{author}</span>
+<span>{author}</span>{verified}
 </div>
 <div class="reply-text">
 
@@ -83,6 +86,10 @@ license_file = open('license.json', 'r', encoding='utf-8')
 license = json.load(license_file)
 license_file.close()
 
+replace_file = open('replace.json', 'r', encoding='utf-8')
+replace = json.load(replace_file)
+replace_file.close()
+
 converted_posts_count = 0
 total_posts_count = len(discussions)
 
@@ -92,11 +99,11 @@ for discussion in reversed(discussions):
     post['title'] = discussion['Title']
     post['reply'] = discussion['Response_num']
     post['create'] = discussion['Created_at']
+    post['create_date'] = date(post['create'])
+    post['create_datetime'] = datetime(post['create'])
     post['update'] = discussion['Updated_at']
     post['follow'] = discussion['Follow_num']
     post['author'] = discussion['First_name']
-    post['create_date'] = date(post['create'])
-    post['create_datetime'] = datetime(post['create'])
 
     # 是否取得了原作者许可
     post_flag = (
@@ -133,15 +140,23 @@ for discussion in reversed(discussions):
         for response in responses:
             reply = {}
             reply['id'] = response['Id']
+            reply['verified'] = '\n<div class="reply-verified">助教认证</div>' if response['Authority'] else ''
             reply['create'] = response['Created_at']
-            reply['vote'] = response['Vote_num']
             reply['create_datetime'] = datetime(reply['create'])
+            reply['vote'] = response['Vote_num']
 
             reply_flag = response['First_name'] in license
 
-            reply['text'] = response['Content'] if reply_flag else '???'
-            reply['author'] = response['First_name'] if reply_flag else '???'
-            reply['license'] = license[reply['author']]['license'] if reply_flag else '???'
+            if reply_flag:
+                reply['text'] = response['Content']
+                for pattern, repl in replace[str(post['id'])].items():
+                    reply['text'] = re.sub(pattern, repl, reply['text'])
+                reply['author'] = license[response['First_name']]['attribution']
+                reply['license'] = license[response['First_name']]['license']
+            else:
+                reply['text'] = '???'
+                reply['author'] = '???'
+                reply['license'] = '???'
 
             reply_content = REPLY_FORMAT.format(**reply)
             reply_content_list.append(reply_content)
