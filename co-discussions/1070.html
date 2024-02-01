@@ -2,9 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -13,14 +13,13 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"triplecamera.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-  <meta name="description" content="Shae | 2023-10-31 14:41:00 | ⭐️ 1 | 💬️ 2  P3     Shae 助教认证    P3-CPU自动化测试  本文主要实现了样例自动生成的程序并整理了Python一键对拍的必要步骤。在样例自动生成方面，尽可能地扩大覆盖范围并消除死循环的风险。若有建议，请不吝赐教~~  1.样例 1.1.覆盖范围 1.1.1.指令  add,sub  注意：按无符号加减法">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"triplecamera.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Shae | 2023-10-31 14:41:00 | ⭐️ 1 | 💬️ 2  P3     Shae 助教认证    P3-CPU自动化测试  本文主要实现了样例自动生成的程序并整理了Python一键对拍的必要步骤。在样例自动生成方面，尽可能地扩大覆盖范围并消除死循环的风险。若有建议，请不吝赐教~~  1.样例 1.1.覆盖范围 1.1.1.指令  add,sub  注意：按无符号加减法">
 <meta property="og:type" content="website">
 <meta property="og:title" content="P3-CPU自动化测试">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/1070.html">
@@ -31,25 +30,20 @@
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1070/halt_setting.jpg">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1070/P3-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95-%E6%AD%A3%E5%88%99.jpg">
 <meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-30T14:45:19.254Z">
+<meta property="article:modified_time" content="2024-02-01T07:53:21.817Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/1070/P3%E8%87%AA%E5%8A%A8%E6%B5%8B%E8%AF%95%E7%94%9F%E6%88%90%E5%99%A8-beq%E5%90%91%E5%89%8D%E8%B7%B3.jpg">
 
+
 <link rel="canonical" href="https://triplecamera.github.io/co-discussions/1070">
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : false,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>P3-CPU自动化测试 | TripleCamera 的博客
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://triplecamera.github.io/co-discussions/1070.html","path":"co-discussions/1070.html","title":"P3-CPU自动化测试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>P3-CPU自动化测试 | TripleCamera 的博客
 </title>
   
 
@@ -58,56 +52,35 @@
 
 
 
+
+
   <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">TripleCamera 的博客</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
+      <p class="site-title">TripleCamera 的博客</p>
+      <i class="logo-line"></i>
     </a>
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
     </div>
   </div>
 </div>
@@ -115,61 +88,77 @@
 
 
 
-<nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
-
-  </li>
-  </ul>
-</nav>
 
 
 
+</header>
+        
+  
+  <aside class="sidebar">
 
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#p3-cpu%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">P3-CPU自动化测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E6%A0%B7%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.样例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11%E8%A6%86%E7%9B%96%E8%8C%83%E5%9B%B4"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.覆盖范围</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#111%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1.指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#112%E5%8F%96%E5%80%BC"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.2.取值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#113%E8%B7%B3%E8%BD%AC%E6%96%B9%E5%90%91"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.3.跳转方向</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2.代码结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3.源代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E5%AF%B9%E6%8B%8D"><span class="nav-number">1.2.</span> <span class="nav-text">2.对拍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#21python%E8%B0%83%E7%94%A8%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1.Python调用系统命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22logisim%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2.Logisim自动化测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#221%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1.命令行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#222cpu%E6%B5%8B%E8%AF%95%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2.CPU测试设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23mars%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%AF%BC%E5%87%BA%E6%9C%BA%E5%99%A8%E7%A0%81"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3.Mars命令行导出机器码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4.正则表达式匹配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E9%9B%86%E6%88%90"><span class="nav-number">1.3.</span> <span class="nav-text">3.集成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E8%87%B4%E8%B0%A2"><span class="nav-number">1.4.</span> <span class="nav-text">4.致谢</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
 </div>
-    </header>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-  
-  
+    </div>
 
-          <div class="content page posts-expand">
-            
+    <div class="main-inner page posts-expand">
+
 
     
     
     
-    <div class="post-block" lang="zh-CN">
-      <header class="post-header">
+    <div class="post-block" lang="zh-CN"><header class="post-header">
 
 <h1 class="post-title" itemprop="name headline">P3-CPU自动化测试
 </h1>
 
-<div class="post-meta">
-  
-
+<div class="post-meta-container">
 </div>
 
 </header>
 
-      
       
       
       <div class="post-body">
@@ -324,144 +313,50 @@ alt="P3自动化测试正则.jpg" /></p>
       
       
     </div>
-    
 
     
     
-    
 
 
-          </div>
-          
-    <div class="comments" id="gitalk-container"></div>
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
+  <footer class="footer">
+    <div class="footer-inner">
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">TripleCamera</span>
   </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#p3-cpu%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">P3-CPU自动化测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E6%A0%B7%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.样例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11%E8%A6%86%E7%9B%96%E8%8C%83%E5%9B%B4"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.覆盖范围</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#111%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1.指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#112%E5%8F%96%E5%80%BC"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.2.取值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#113%E8%B7%B3%E8%BD%AC%E6%96%B9%E5%90%91"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.3.跳转方向</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2.代码结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3.源代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E5%AF%B9%E6%8B%8D"><span class="nav-number">1.2.</span> <span class="nav-text">2.对拍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#21python%E8%B0%83%E7%94%A8%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1.Python调用系统命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22logisim%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2.Logisim自动化测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#221%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1.命令行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#222cpu%E6%B5%8B%E8%AF%95%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2.CPU测试设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23mars%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%AF%BC%E5%87%BA%E6%9C%BA%E5%99%A8%E7%A0%81"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3.Mars命令行导出机器码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4.正则表达式匹配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E9%9B%86%E6%88%90"><span class="nav-number">1.3.</span> <span class="nav-text">3.集成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E8%87%B4%E8%B0%A2"><span class="nav-number">1.4.</span> <span class="nav-text">4.致谢</span></a></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">TripleCamera</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">7</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">分类</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
 
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
+  </footer>
 
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2024</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">TripleCamera</span>
-</div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
   </div>
 
-        
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
+  
 
 
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
 
 
 
@@ -471,95 +366,16 @@ alt="P3自动化测试正则.jpg" /></p>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
   
 
-  
-      
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
 
-    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-  
-
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
-
-<script>
-NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID    : '8e3318b060ee959cacec',
-      clientSecret: '3a6c863d9640cee4d16dc8e59c8053fa56d7591b',
-      repo        : 'triplecamera.github.io',
-      owner       : 'TripleCamera',
-      admin       : ['TripleCamera'],
-      id          : 'ee1a640bdaa37c36c9b69869f9153ed3',
-        language: 'zh-CN',
-      distractionFreeMode: true
-    });
-    gitalk.render('gitalk-container');
-  }, window.Gitalk);
-});
-</script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"TripleCamera","repo":"triplecamera.github.io","client_id":"8e3318b060ee959cacec","client_secret":"3a6c863d9640cee4d16dc8e59c8053fa56d7591b","admin_user":"TripleCamera","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"ee1a640bdaa37c36c9b69869f9153ed3"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
 
 </body>
 </html>
