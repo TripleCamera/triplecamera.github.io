@@ -2,7 +2,7 @@
 将讨论区帖子转换为 Hexo 页面。
 作者：TripleCamera（https://triplecamera.github.io/）
 协议：MIT
-版本：20240130
+版本：20240203
 
 原始数据：从网站获得的 JSON 文件。为防止操作失误，我们只修改文件名，不修改内容。
  -  所有 discussion-info 放置在 info 下，并重命名为 discussion-info-{id}.json。（未使用）
@@ -25,7 +25,7 @@ import re
 OUTPUT_FORMAT = """
 ---
 title: {title}
-date: 2024-01-27
+date: 2024-02-03
 mathjax: true
 ---
 <div class="post-info">
@@ -37,7 +37,7 @@ mathjax: true
 |
 <span>\U0001F4AC\uFE0F {reply}</span>
 <br>
-<span>{tags}</span>
+<div>{tags}</div>
 </div>
 
 {content}
@@ -46,9 +46,9 @@ mathjax: true
 # 回复格式，数据来自 reply 字典
 # 注意 HTML 块必须以行首的标签开始，以空行结束
 REPLY_FORMAT = """
-<div id="reply-{id}" class="reply">
+<div id="reply-{id}" class="reply reply-l{level}">
 <div class="reply-header">
-<span>{author}</span>{verified}
+<span>{header}</span>{verified}
 </div>
 <div class="reply-text">
 
@@ -76,6 +76,48 @@ def date(iso: str) -> str:
 # ISO 格式转年月日时分秒格式
 def datetime(iso: str) -> str:
     return iso[0:10] + ' ' + iso[11:19]
+
+def process_responses(reply_content_list: list, responses: dict, cite_id: int, level: int) -> None:
+    for response in responses:
+        if response['Citing_id']['Int32'] == cite_id:
+            reply = {}
+            reply['id'] = response['Id']
+            reply['verified'] = '\n<div class="reply-verified">助教认证</div>' if response['Authority'] else ''
+            reply['create'] = response['Created_at']
+            reply['create_datetime'] = datetime(reply['create'])
+            reply['vote'] = response['Vote_num']
+            reply['cite_id'] = response['Citing_id']['Int32']
+            reply['cite_author'] = response['Citing_first_name']
+            reply['level'] = level
+
+            reply_flag = response['First_name'] in license
+            reply_cite = response['Citing_id']['Valid']
+
+            if reply_flag:
+                reply_text = response['Content']
+                for pattern, repl in replace[str(post['id'])].items():
+                    reply_text = re.sub(pattern, repl, reply_text)
+
+                reply['text'] = reply_text
+                reply['author'] = license[response['First_name']]['attribution']
+                reply['cite_author'] = license[response['Citing_first_name']]['attribution'] if response['Citing_first_name'] in license else '???'
+                reply['license'] = license[response['First_name']]['license']
+
+                reply['header'] = (
+                    f"{reply['author']} <a href=\"#reply-{reply['cite_id']}\">回复</a> {reply['cite_author']}"
+                    if reply_cite
+                    else reply['author']
+                )
+            else:
+                reply['text'] = '???'
+                reply['author'] = '???'
+                reply['cite_author'] = '???'
+                reply['license'] = '???'
+                reply['header'] = '???'
+
+            reply_content = REPLY_FORMAT.format(**reply)
+            reply_content_list.append(reply_content)
+            process_responses(reply_content_list, responses, reply['id'], level + 1)
 
 
 discussions_file = open('discussion-search-by-tags.json', 'r', encoding='utf-8')
@@ -130,36 +172,16 @@ for discussion in reversed(discussions):
         tags = json.load(tags_file)
         tags_file.close()
 
+        # inline-block 元素间换行会产生额外空格，因此必须保持在一行内
+        # TODO 使用 flex 代替 inline-block
         tags_list = []
         for tag in tags['tagDataArray']:
             if tag['owned']:
-                tags_list.append(tag['tagName'])
-        post['tags'] = '、'.join(tags_list)
+                tags_list.append(f"<div class=\"post-tag\">{tag['tagName']}</div>")
+        post['tags'] = ''.join(tags_list)
 
         reply_content_list = []
-        for response in responses:
-            reply = {}
-            reply['id'] = response['Id']
-            reply['verified'] = '\n<div class="reply-verified">助教认证</div>' if response['Authority'] else ''
-            reply['create'] = response['Created_at']
-            reply['create_datetime'] = datetime(reply['create'])
-            reply['vote'] = response['Vote_num']
-
-            reply_flag = response['First_name'] in license
-
-            if reply_flag:
-                reply['text'] = response['Content']
-                for pattern, repl in replace[str(post['id'])].items():
-                    reply['text'] = re.sub(pattern, repl, reply['text'])
-                reply['author'] = license[response['First_name']]['attribution']
-                reply['license'] = license[response['First_name']]['license']
-            else:
-                reply['text'] = '???'
-                reply['author'] = '???'
-                reply['license'] = '???'
-
-            reply_content = REPLY_FORMAT.format(**reply)
-            reply_content_list.append(reply_content)
+        process_responses(reply_content_list, responses, 0, 0)
 
         post['content'] = '\n<hr class="reply-separator">\n'.join(reply_content_list)
         output = OUTPUT_FORMAT.format(**post)
