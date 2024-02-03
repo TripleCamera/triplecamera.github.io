@@ -19,20 +19,20 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"triplecamera.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="沈锎 | 2023-09-28 16:27:47 | ⭐️ 1 | 💬️ 3  P0、分享     沈锎    看上去是没啥用的东西，只是为了满足好奇心 @(o･ｪ･)@  目录  Sec 1：为何计算校验码需要在数据后补 0？ Sec 2：为何校验过程恰好整除？ Sec 3：如何利用校验码进行纠错？ Sec 4：校验码的并行生成 Sec 5：Logisim 中 CRC 校验码的生成与纠错 参">
+    <meta name="description" content="沈锎 | 2023-09-28 16:27:47 | ⭐️ 1 | 💬️ 3  P0分享     沈锎    看上去是没啥用的东西，只是为了满足好奇心 @(o･ｪ･)@  目录  Sec 1：为何计算校验码需要在数据后补 0？ Sec 2：为何校验过程恰好整除？ Sec 3：如何利用校验码进行纠错？ Sec 4：校验码的并行生成 Sec 5：Logisim 中 CRC 校验码的生成与纠错 参考">
 <meta property="og:type" content="website">
 <meta property="og:title" content="CRC 校验码计算时为何要补 0 及相关内容的简单探索">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/959.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="沈锎 | 2023-09-28 16:27:47 | ⭐️ 1 | 💬️ 3  P0、分享     沈锎    看上去是没啥用的东西，只是为了满足好奇心 @(o･ｪ･)@  目录  Sec 1：为何计算校验码需要在数据后补 0？ Sec 2：为何校验过程恰好整除？ Sec 3：如何利用校验码进行纠错？ Sec 4：校验码的并行生成 Sec 5：Logisim 中 CRC 校验码的生成与纠错 参">
+<meta property="og:description" content="沈锎 | 2023-09-28 16:27:47 | ⭐️ 1 | 💬️ 3  P0分享     沈锎    看上去是没啥用的东西，只是为了满足好奇心 @(o･ｪ･)@  目录  Sec 1：为何计算校验码需要在数据后补 0？ Sec 2：为何校验过程恰好整除？ Sec 3：如何利用校验码进行纠错？ Sec 4：校验码的并行生成 Sec 5：Logisim 中 CRC 校验码的生成与纠错 参考">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-gen.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-data.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-check.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-r.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-correct.png">
-<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-02T03:48:37.629Z">
+<meta property="article:published_time" content="2024-02-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-03T10:50:31.729Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/959/crc-gen.png">
@@ -183,10 +183,10 @@
 |
 <span>💬️ 3</span>
 <br>
-<span>P0、分享</span>
+<div><div class="post-tag">P0</div><div class="post-tag">分享</div></div>
 </div>
 
-<div id="reply-3647" class="reply">
+<div id="reply-3647" class="reply reply-l0">
 <div class="reply-header">
 <span>沈锎</span>
 </div>
@@ -524,7 +524,7 @@ target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018094567
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-3655" class="reply">
+<div id="reply-3655" class="reply reply-l0">
 <div class="reply-header">
 <span>???</span>
 </div>
@@ -540,9 +540,9 @@ target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018094567
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-3656" class="reply">
+<div id="reply-3656" class="reply reply-l1">
 <div class="reply-header">
-<span>沈锎</span>
+<span>沈锎 <a href="#reply-3655">回复</a> ???</span>
 </div>
 <div class="reply-text">
 

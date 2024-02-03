@@ -19,19 +19,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"triplecamera.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="FyVoid | 2023-11-02 11:44:54 | ⭐️ 4 | 💬️ 12  P4、分享、测试、Verilog、MIPS     FyVoid    CO_tester  repo: https:&#x2F;&#x2F;github.com&#x2F;FyVoid&#x2F;BUAA_CO_tester 北航云盘提供的下载存在严重的bug，且难以随后续开发更新，现只提供github repo地址  本项目包括  pyth">
+    <meta name="description" content="FyVoid | 2023-11-02 11:44:54 | ⭐️ 4 | 💬️ 12  P4分享测试VerilogMIPS     FyVoid    CO_tester  repo: https:&#x2F;&#x2F;github.com&#x2F;FyVoid&#x2F;BUAA_CO_tester 北航云盘提供的下载存在严重的bug，且难以随后续开发更新，现只提供github repo地址  本项目包括  python实现">
 <meta property="og:type" content="website">
 <meta property="og:title" content="包含指令生成，verilog编译的可自定义的自动化测试流程脚本">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/1075.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="FyVoid | 2023-11-02 11:44:54 | ⭐️ 4 | 💬️ 12  P4、分享、测试、Verilog、MIPS     FyVoid    CO_tester  repo: https:&#x2F;&#x2F;github.com&#x2F;FyVoid&#x2F;BUAA_CO_tester 北航云盘提供的下载存在严重的bug，且难以随后续开发更新，现只提供github repo地址  本项目包括  pyth">
+<meta property="og:description" content="FyVoid | 2023-11-02 11:44:54 | ⭐️ 4 | 💬️ 12  P4分享测试VerilogMIPS     FyVoid    CO_tester  repo: https:&#x2F;&#x2F;github.com&#x2F;FyVoid&#x2F;BUAA_CO_tester 北航云盘提供的下载存在严重的bug，且难以随后续开发更新，现只提供github repo地址  本项目包括  python实现">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://triplecamera.github.io/co-discussions/1075.html???">
-<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-02T03:48:37.629Z">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1075/tester.drawio.png">
+<meta property="article:published_time" content="2024-02-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-03T10:50:31.729Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://triplecamera.github.io/co-discussions/1075.html???">
+<meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/1075/tester.drawio.png">
 
 
 <link rel="canonical" href="https://triplecamera.github.io/co-discussions/1075">
@@ -176,10 +176,10 @@
 |
 <span>💬️ 12</span>
 <br>
-<span>P4、分享、测试、Verilog、MIPS</span>
+<div><div class="post-tag">P4</div><div class="post-tag">分享</div><div class="post-tag">测试</div><div class="post-tag">Verilog</div><div class="post-tag">MIPS</div></div>
 </div>
 
-<div id="reply-4124" class="reply">
+<div id="reply-4124" class="reply reply-l0">
 <div class="reply-header">
 <span>FyVoid</span>
 </div>
@@ -220,7 +220,8 @@ repo地址</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">@00003000: $18 &lt;= 29a30000        &lt;=&gt;    @00003000: $18 &lt;= 29a30000</span><br><span class="line">@00003004: $ 3 &lt;= 0000a435        &lt;=&gt;    @00003004: $ 3 &lt;= 0000a435</span><br><span class="line">@00003008: $ 8 &lt;= 0000009c        &lt;=&gt;    @00003008: $ 8 &lt;= 0000009c</span><br><span class="line">@0000300c: *00000dd0 &lt;= 0000a435  &lt;=&gt;    @0000300c: *00000dd0 &lt;= 0000a435</span><br><span class="line">@00003010: $ 6 &lt;= 54b80000        &lt;=&gt;    @00003010: $ 6 &lt;= 54b80000</span><br><span class="line">@00003014: $ 2 &lt;= 0000d7a6        &lt;=&gt;    @00003014: $ 2 &lt;= 0000d7a6</span><br><span class="line">@00003018: $ 3 &lt;= 00000000        &lt;=&gt;    @00003018: $ 3 &lt;= 00000000</span><br><span class="line">@00003020: $22 &lt;= b16e0000        &lt;=&gt;    @00003020: $22 &lt;= b16e0000</span><br><span class="line">@00003028: $31 &lt;= 0000302c        &lt;=&gt;    @00003028: $31 &lt;= 0000302c</span><br><span class="line">@000030d8: $20 &lt;= 0000a3a3        &lt;=&gt;    @000030d8: $20 &lt;= 0000a3a3</span><br><span class="line">@000030dc: $ 4 &lt;= ffff285a        &lt;=&gt;    @000030dc: $ 4 &lt;= ffff285a</span><br><span class="line">@000030e0: $23 &lt;= 00000000        &lt;=&gt;    @000030e0: $23 &lt;= 00000000</span><br><span class="line">@000030e4: $ 6 &lt;= 00000000        &lt;=&gt;    @000030e4: $ 6 &lt;= 00000000</span><br><span class="line">@000030e8: $ 7 &lt;= 00000000        &lt;=&gt;    @000030e8: $ 7 &lt;= 00000000</span><br><span class="line">@000030ec: $ 8 &lt;= 00000dd0        &lt;=&gt;    @000030ec: $ 8 &lt;= 00000dd0</span><br><span class="line">@000030f0: *00000dd0 &lt;= 00000000  &lt;=&gt;    @000030f0: *00000dd0 &lt;= 00000000</span><br><span class="line">@000030f4: $20 &lt;= 00000000        &lt;=&gt;    @000030f4: $20 &lt;= 00000000</span><br><span class="line">@000030f8: $19 &lt;= 0000b631        &lt;=&gt;    @000030f8: $19 &lt;= 0000b631</span><br><span class="line">@000030fc: $11 &lt;= ffff2d7f        &lt;=&gt;    @000030fc: $11 &lt;= ffff2d7f</span><br><span class="line">@00003100: $ 8 &lt;= 00000898        &lt;=&gt;    @00003100: $ 8 &lt;= 00000898</span><br><span class="line">@00003104: *000008e8 &lt;= 00000000  &lt;=&gt;    @00003104: *000008e8 &lt;= 00000000</span><br><span class="line">@00003108: $ 8 &lt;= 00000394        &lt;=&gt;    @00003108: $ 8 &lt;= 00000394</span><br><span class="line">@0000310c: $23 &lt;= 00000000        &lt;=&gt;    @0000310c: $23 &lt;= 00000000</span><br><span class="line">@00003110: $31 &lt;= 00003114        &lt;=&gt;    @00003110: $31 &lt;= 00003114</span><br><span class="line">@000031c8: *000007f4 &lt;= 29a30000  &lt;=&gt;    @000031c8: *000007f4 &lt;= 29a30000</span><br><span class="line">@000031cc: $ 2 &lt;= 0000142a        &lt;=&gt;    @000031cc: $ 2 &lt;= 0000142a</span><br><span class="line">@000031d0: $20 &lt;= 0000b631        &lt;=&gt;    @000031d0: $20 &lt;= 0000b631</span><br><span class="line">END</span><br><span class="line">All Correct Nya!</span><br></pre></td></tr></table></figure>
 
 <p>整个测试逻辑图如下，各个组件可以分开使用</p>
-<p><img src="???" alt="tester.drawio" /></p>
+<p><img src="/images/co-discussions/1075/tester.drawio.png"
+alt="tester.drawio" /></p>
 <h2 id="批量测试">批量测试</h2>
 <blockquote>
 <p>愿意折腾的学生能学到更多</p>
@@ -323,88 +324,7 @@ target="_blank" rel="noopener" href="https://github.com/Toby-Shi-cloud/Mars-with
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-4127" class="reply">
-<div class="reply-header">
-<span>???</span>
-</div>
-<div class="reply-text">
-
-<p>???</p>
-</div>
-<div class="reply-footer">
-<abbr title="2023-11-02T13:27:54.748272+08:00"><time datetime="2023-11-02T13:27:54.748272+08:00">2023-11-02 13:27:54</time></abbr>
-|
-<span>???</span>
-<span class="reply-vote">❤️ 0</span>
-</div>
-</div>
-<hr class="reply-separator">
-<div id="reply-4132" class="reply">
-<div class="reply-header">
-<span>FyVoid</span>
-</div>
-<div class="reply-text">
-
-<p>很好的建议，现在已经支持</p>
-</div>
-<div class="reply-footer">
-<abbr title="2023-11-02T17:03:41.884005+08:00"><time datetime="2023-11-02T17:03:41.884005+08:00">2023-11-02 17:03:41</time></abbr>
-|
-<span>保留所有权利</span>
-<span class="reply-vote">❤️ 0</span>
-</div>
-</div>
-<hr class="reply-separator">
-<div id="reply-4135" class="reply">
-<div class="reply-header">
-<span>???</span>
-</div>
-<div class="reply-text">
-
-<p>???</p>
-</div>
-<div class="reply-footer">
-<abbr title="2023-11-02T17:59:42.420156+08:00"><time datetime="2023-11-02T17:59:42.420156+08:00">2023-11-02 17:59:42</time></abbr>
-|
-<span>???</span>
-<span class="reply-vote">❤️ 1</span>
-</div>
-</div>
-<hr class="reply-separator">
-<div id="reply-4137" class="reply">
-<div class="reply-header">
-<span>???</span>
-</div>
-<div class="reply-text">
-
-<p>???</p>
-</div>
-<div class="reply-footer">
-<abbr title="2023-11-02T18:04:53.889854+08:00"><time datetime="2023-11-02T18:04:53.889854+08:00">2023-11-02 18:04:53</time></abbr>
-|
-<span>???</span>
-<span class="reply-vote">❤️ 0</span>
-</div>
-</div>
-<hr class="reply-separator">
-<div id="reply-4141" class="reply">
-<div class="reply-header">
-<span>FyVoid</span>
-</div>
-<div class="reply-text">
-
-<p>如果用的是早上发布的版本会有这个问题，下午发布的版本应该已经修复了这个问题
-如果用的已经是新版本，能不能提供一下报错的指令内容</p>
-</div>
-<div class="reply-footer">
-<abbr title="2023-11-02T18:23:49.964859+08:00"><time datetime="2023-11-02T18:23:49.964859+08:00">2023-11-02 18:23:49</time></abbr>
-|
-<span>保留所有权利</span>
-<span class="reply-vote">❤️ 0</span>
-</div>
-</div>
-<hr class="reply-separator">
-<div id="reply-4142" class="reply">
+<div id="reply-4142" class="reply reply-l1">
 <div class="reply-header">
 <span>???</span>
 <div class="reply-verified">助教认证</div>
@@ -421,9 +341,9 @@ target="_blank" rel="noopener" href="https://github.com/Toby-Shi-cloud/Mars-with
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-4143" class="reply">
+<div id="reply-4143" class="reply reply-l2">
 <div class="reply-header">
-<span>FyVoid</span>
+<span>FyVoid <a href="#reply-4142">回复</a> ???</span>
 </div>
 <div class="reply-text">
 
@@ -448,41 +368,131 @@ target="_blank" rel="noopener" href="https://github.com/Toby-Shi-cloud/Mars-with
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-4154" class="reply">
+<div id="reply-4127" class="reply reply-l0">
 <div class="reply-header">
-<span>???</span>
+<span>fickle</span>
 </div>
 <div class="reply-text">
 
-<p>???</p>
+<p>学长有写过一个魔改版mars，可以拿来当std用https://github.com/Toby-Shi-cloud/Mars-with-BUAA-CO-extension</p>
 </div>
 <div class="reply-footer">
-<abbr title="2023-11-02T21:19:57.32927+08:00"><time datetime="2023-11-02T21:19:57.32927+08:00">2023-11-02 21:19:57</time></abbr>
+<abbr title="2023-11-02T13:27:54.748272+08:00"><time datetime="2023-11-02T13:27:54.748272+08:00">2023-11-02 13:27:54</time></abbr>
 |
-<span>???</span>
+<span>CC BY-NC 4.0</span>
 <span class="reply-vote">❤️ 0</span>
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-4155" class="reply">
+<div id="reply-4132" class="reply reply-l1">
 <div class="reply-header">
-<span>???</span>
+<span>FyVoid <a href="#reply-4127">回复</a> fickle</span>
 </div>
 <div class="reply-text">
 
-<p>???</p>
+<p>很好的建议，现在已经支持</p>
 </div>
 <div class="reply-footer">
-<abbr title="2023-11-02T21:23:45.932853+08:00"><time datetime="2023-11-02T21:23:45.932853+08:00">2023-11-02 21:23:45</time></abbr>
+<abbr title="2023-11-02T17:03:41.884005+08:00"><time datetime="2023-11-02T17:03:41.884005+08:00">2023-11-02 17:03:41</time></abbr>
 |
-<span>???</span>
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4135" class="reply reply-l0">
+<div class="reply-header">
+<span>fickle</span>
+</div>
+<div class="reply-text">
+
+<p>如果有人在.v文件中写了`include，需要在compile.sh中将</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find ../src -name &quot;*.v&quot; | xargs iverilog -o wave</span><br></pre></td></tr></table></figure>
+
+<p>改为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find ../src -name &quot;*.v&quot; | xargs iverilog -o wave -I &lt;include files path&gt;</span><br></pre></td></tr></table></figure>
+
+<p>以支持.v文件中的`include。</p>
+<p>例如include都在同一层文件夹下，<code>include files path</code>就为<code>../src</code>。</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T17:59:42.420156+08:00"><time datetime="2023-11-02T17:59:42.420156+08:00">2023-11-02 17:59:42</time></abbr>
+|
+<span>CC BY-NC 4.0</span>
 <span class="reply-vote">❤️ 1</span>
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-4157" class="reply">
+<div id="reply-4137" class="reply reply-l0">
 <div class="reply-header">
-<span>FyVoid</span>
+<span>fickle</span>
+</div>
+<div class="reply-text">
+
+<p>gen似乎是有一点问题，可能在存取数据的时候没判范围之类的，跑mars的时候有个报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">line 17: Runtime exception at 0x00003038: address out of range 0xffffff44</span><br></pre></td></tr></table></figure>
+
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T18:04:53.889854+08:00"><time datetime="2023-11-02T18:04:53.889854+08:00">2023-11-02 18:04:53</time></abbr>
+|
+<span>CC BY-NC 4.0</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4141" class="reply reply-l1">
+<div class="reply-header">
+<span>FyVoid <a href="#reply-4137">回复</a> fickle</span>
+</div>
+<div class="reply-text">
+
+<p>如果用的是早上发布的版本会有这个问题，下午发布的版本应该已经修复了这个问题
+如果用的已经是新版本，能不能提供一下报错的指令内容</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T18:23:49.964859+08:00"><time datetime="2023-11-02T18:23:49.964859+08:00">2023-11-02 18:23:49</time></abbr>
+|
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4155" class="reply reply-l2">
+<div class="reply-header">
+<span>fickle <a href="#reply-4141">回复</a> FyVoid</span>
+</div>
+<div class="reply-text">
+
+<p>给你github上发issue了</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T21:23:45.932853+08:00"><time datetime="2023-11-02T21:23:45.932853+08:00">2023-11-02 21:23:45</time></abbr>
+|
+<span>CC BY-NC 4.0</span>
+<span class="reply-vote">❤️ 1</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4154" class="reply reply-l0">
+<div class="reply-header">
+<span>fickle</span>
+</div>
+<div class="reply-text">
+
+<p>vvp运行的时候似乎不能停止？我跑的时候有这个问题，所以给前面加上了一个<code>timeout 1</code>。不知道楼主有没有这个问题。</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-11-02T21:19:57.32927+08:00"><time datetime="2023-11-02T21:19:57.32927+08:00">2023-11-02 21:19:57</time></abbr>
+|
+<span>CC BY-NC 4.0</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-4157" class="reply reply-l1">
+<div class="reply-header">
+<span>FyVoid <a href="#reply-4154">回复</a> fickle</span>
 </div>
 <div class="reply-text">
 
@@ -497,18 +507,18 @@ target="_blank" rel="noopener" href="https://github.com/Toby-Shi-cloud/Mars-with
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-4159" class="reply">
+<div id="reply-4159" class="reply reply-l2">
 <div class="reply-header">
-<span>???</span>
+<span>fickle <a href="#reply-4157">回复</a> FyVoid</span>
 </div>
 <div class="reply-text">
 
-<p>???</p>
+<p>哦，合理</p>
 </div>
 <div class="reply-footer">
 <abbr title="2023-11-02T22:22:15.707151+08:00"><time datetime="2023-11-02T22:22:15.707151+08:00">2023-11-02 22:22:15</time></abbr>
 |
-<span>???</span>
+<span>CC BY-NC 4.0</span>
 <span class="reply-vote">❤️ 0</span>
 </div>
 </div>

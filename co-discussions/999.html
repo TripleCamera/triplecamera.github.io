@@ -19,20 +19,20 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"triplecamera.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Ap0stader（贾同学） | 2023-10-14 16:12:09 | ⭐️ 2 | 💬️ 4  P1、分享、Verilog     Ap0stader（贾同学）    P1课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！ P1.Q1 P1_L0_splitter 题目编号 1120-30 一道基础复习题。复习创建工">
+    <meta name="description" content="Ap0stader（贾同学） | 2023-10-14 16:12:09 | ⭐️ 2 | 💬️ 4  P1分享Verilog     Ap0stader（贾同学）    P1课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！ P1.Q1 P1_L0_splitter 题目编号 1120-30 一道基础复习题。复习创建工程，">
 <meta property="og:type" content="website">
 <meta property="og:title" content="P1课下做题记录分享">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/999.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="Ap0stader（贾同学） | 2023-10-14 16:12:09 | ⭐️ 2 | 💬️ 4  P1、分享、Verilog     Ap0stader（贾同学）    P1课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！ P1.Q1 P1_L0_splitter 题目编号 1120-30 一道基础复习题。复习创建工">
+<meta property="og:description" content="Ap0stader（贾同学） | 2023-10-14 16:12:09 | ⭐️ 2 | 💬️ 4  P1分享Verilog     Ap0stader（贾同学）    P1课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！ P1.Q1 P1_L0_splitter 题目编号 1120-30 一道基础复习题。复习创建工程，">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/999/001.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/999/002.jpg">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/999/003.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/999/004.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/999/005.jpg">
-<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-02T03:48:37.629Z">
+<meta property="article:published_time" content="2024-02-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-03T10:50:31.729Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/999/001.png">
@@ -186,10 +186,10 @@ P1_L1_BlockChecker 题目编号 1120-406</span></a><ol class="nav-child"><li cla
 |
 <span>💬️ 4</span>
 <br>
-<span>P1、分享、Verilog</span>
+<div><div class="post-tag">P1</div><div class="post-tag">分享</div><div class="post-tag">Verilog</div></div>
 </div>
 
-<div id="reply-3836" class="reply">
+<div id="reply-3836" class="reply reply-l0">
 <div class="reply-header">
 <span>Ap0stader（贾同学）</span>
 </div>
@@ -298,41 +298,27 @@ P1_L1_BlockChecker 题目编号 1120-406</h2>
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-3839" class="reply">
+<div id="reply-3839" class="reply reply-l1">
 <div class="reply-header">
-<span>???</span>
+<span>吴旭飞 <a href="#reply-3836">回复</a> Ap0stader（贾同学）</span>
 </div>
 <div class="reply-text">
 
-<p>???</p>
+<p>其实 BlockChecker 这题还是可以直接用 7 个寄存器存状态的。</p>
+<p>感觉对于这类以字符串处理为代表的自动机的题目用多个寄存器可以很好地降低处理难度。</p>
+<p>另：可以谈一谈二进制转换格雷码的问题？</p>
 </div>
 <div class="reply-footer">
 <abbr title="2023-10-14T17:33:16.821375+08:00"><time datetime="2023-10-14T17:33:16.821375+08:00">2023-10-14 17:33:16</time></abbr>
 |
-<span>???</span>
+<span>保留所有权利</span>
 <span class="reply-vote">❤️ 0</span>
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-3866" class="reply">
+<div id="reply-3874" class="reply reply-l2">
 <div class="reply-header">
-<span>???</span>
-</div>
-<div class="reply-text">
-
-<p>???</p>
-</div>
-<div class="reply-footer">
-<abbr title="2023-10-15T11:28:56.793122+08:00"><time datetime="2023-10-15T11:28:56.793122+08:00">2023-10-15 11:28:56</time></abbr>
-|
-<span>???</span>
-<span class="reply-vote">❤️ 0</span>
-</div>
-</div>
-<hr class="reply-separator">
-<div id="reply-3874" class="reply">
-<div class="reply-header">
-<span>Ap0stader（贾同学）</span>
+<span>Ap0stader（贾同学） <a href="#reply-3839">回复</a> 吴旭飞</span>
 </div>
 <div class="reply-text">
 
@@ -343,6 +329,23 @@ P1_L1_BlockChecker 题目编号 1120-406</h2>
 <abbr title="2023-10-15T16:38:02.625111+08:00"><time datetime="2023-10-15T16:38:02.625111+08:00">2023-10-15 16:38:02</time></abbr>
 |
 <span>CC BY-NC 4.0</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-3866" class="reply reply-l1">
+<div class="reply-header">
+<span>何宬熠 <a href="#reply-3836">回复</a> Ap0stader（贾同学）</span>
+</div>
+<div class="reply-text">
+
+<p>感谢你的分享！我尝试了一段、二段、三段式状态机后，认为“异步复位”都应该采用你在
+P1_状态机习题 -&gt; 异步复位 -&gt; 2. 中举出的方式来实现。</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-15T11:28:56.793122+08:00"><time datetime="2023-10-15T11:28:56.793122+08:00">2023-10-15 11:28:56</time></abbr>
+|
+<span>保留所有权利</span>
 <span class="reply-vote">❤️ 0</span>
 </div>
 </div>

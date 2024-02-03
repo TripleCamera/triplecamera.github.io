@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"triplecamera.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Ap0stader（贾同学） | 2023-10-08 11:14:28 | ⭐️ 1 | 💬️ 3  P0、分享、Logisim、Verilog     Ap0stader（贾同学）    P0课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！ P0.Q1 P0_L0_CRC 题目编号 1119-13 思考 根据题目要求，">
+    <meta name="description" content="Ap0stader（贾同学） | 2023-10-08 11:14:28 | ⭐️ 1 | 💬️ 3  P0分享LogisimVerilog     Ap0stader（贾同学）    P0课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！ P0.Q1 P0_L0_CRC 题目编号 1119-13 思考 根据题目要求，先搭建">
 <meta property="og:type" content="website">
 <meta property="og:title" content="P0课下做题记录分享">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/977.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="Ap0stader（贾同学） | 2023-10-08 11:14:28 | ⭐️ 1 | 💬️ 3  P0、分享、Logisim、Verilog     Ap0stader（贾同学）    P0课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！ P0.Q1 P0_L0_CRC 题目编号 1119-13 思考 根据题目要求，">
+<meta property="og:description" content="Ap0stader（贾同学） | 2023-10-08 11:14:28 | ⭐️ 1 | 💬️ 3  P0分享LogisimVerilog     Ap0stader（贾同学）    P0课下做题时做了一些记录，整理出来与大家分享和讨论，思考的结果不一定是最佳答案，完成的方法不一定是最佳实践，敬请大家斧正！ P0.Q1 P0_L0_CRC 题目编号 1119-13 思考 根据题目要求，先搭建">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/977/001.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/977/002.png">
@@ -34,8 +34,8 @@
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/977/007.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/977/008.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/977/009.jpg">
-<meta property="article:published_time" content="2024-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-02T03:48:37.629Z">
+<meta property="article:published_time" content="2024-02-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-03T10:50:31.729Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/977/001.png">
@@ -189,10 +189,10 @@ P1_L2_intcheck 题目编号 1109-336</span></a><ol class="nav-child"><li class="
 |
 <span>💬️ 3</span>
 <br>
-<span>P0、分享、Logisim、Verilog</span>
+<div><div class="post-tag">P0</div><div class="post-tag">分享</div><div class="post-tag">Logisim</div><div class="post-tag">Verilog</div></div>
 </div>
 
-<div id="reply-3735" class="reply">
+<div id="reply-3735" class="reply reply-l0">
 <div class="reply-header">
 <span>Ap0stader（贾同学）</span>
 </div>
@@ -225,12 +225,12 @@ target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area
 </ul></li>
 <li>对于写入指定的寄存器。重点是要满足有一个输入可以对是否写入进行控制。
 <ul>
-<li><p>每个Register的Enable端口接常数1（或不接Constant保持浮空），输入端口接上一个专属的Tunnel，Tunnel到一个DMX上。输入的数据也接到DMX上，**并且将DMX的Three-state属性设置为Yes，Disabled
-Output属性设置为Floating。**这样，DMX不使能时，全部的输出都为浮空值；DMX使能时，选中的输出为输入值，其他的输出仍然是浮空值。<strong>Logisim的Register在输入值是浮空值时不更新</strong>，若Three-state属性为No，则其他的输出为全0，会被其他Register更新（参见<a
+<li><p>每个Register的Enable端口接常数1（或不接Constant保持浮空），输入端口接上一个专属的Tunnel，Tunnel到一个DMX上。输入的数据也接到DMX上，<strong>并且将DMX的Three-state属性设置为Yes，Disabled
+Output属性设置为Floating。</strong>这样，DMX不使能时，全部的输出都为浮空值；DMX使能时，选中的输出为输入值，其他的输出仍然是浮空值。<strong>Logisim的Register在输入值是浮空值时不更新</strong>，若Three-state属性为No，则其他的输出为全0，会被其他Register更新（参见<a
 target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/961/1375/posts">http://cscore.buaa.edu.cn/#/discussion_area/961/1375/posts</a>）。<br />
 <img src="/images/co-discussions/977/002.png" alt="002.png" /></p></li>
-<li><p>每个Register的输入端口都接上输入的数据，Enable端口接上一个专属的Tunnel，Tunnel到一个Deco上。***并且将Deco的Three-state属性设置为No，Disabled
-Output属性设置为Zero。**这样，Deco不使能时，全部的输出都为0，所有的Register不使能。<strong>Logisim的Register在Enable端口为浮空值时依然可以存储数据</strong>，若Disable
+<li><p>每个Register的输入端口都接上输入的数据，Enable端口接上一个专属的Tunnel，Tunnel到一个Deco上。<strong>并且将Deco的Three-state属性设置为No，Disabled
+Output属性设置为Zero。</strong>这样，Deco不使能时，全部的输出都为0，所有的Register不使能。<strong>Logisim的Register在Enable端口为浮空值时依然可以存储数据</strong>，若Disable
 Output属性为Floating，Deco的输出全为浮空值，会使所有的Register使能。Deco使能时，Deco产生的独热编码让特定的Register使能。<br />
 <img src="/images/co-discussions/977/003.png" alt="003.png" /></p></li>
 </ul></li>
@@ -353,34 +353,34 @@ target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area
 </div>
 </div>
 <hr class="reply-separator">
-<div id="reply-3736" class="reply">
+<div id="reply-3750" class="reply reply-l1">
 <div class="reply-header">
-<span>???</span>
+<span>Charley <a href="#reply-3735">回复</a> Ap0stader（贾同学）</span>
 </div>
 <div class="reply-text">
 
-<p>???</p>
-</div>
-<div class="reply-footer">
-<abbr title="2023-10-08T12:26:20.831962+08:00"><time datetime="2023-10-08T12:26:20.831962+08:00">2023-10-08 12:26:20</time></abbr>
-|
-<span>???</span>
-<span class="reply-vote">❤️ 0</span>
-</div>
-</div>
-<hr class="reply-separator">
-<div id="reply-3750" class="reply">
-<div class="reply-header">
-<span>???</span>
-</div>
-<div class="reply-text">
-
-<p>???</p>
+<p>感谢，开始做ftoi的时候以为是向下取整，最后只过了三个点</p>
 </div>
 <div class="reply-footer">
 <abbr title="2023-10-08T20:03:15.985674+08:00"><time datetime="2023-10-08T20:03:15.985674+08:00">2023-10-08 20:03:15</time></abbr>
 |
-<span>???</span>
+<span>保留所有权利</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-3736" class="reply reply-l0">
+<div class="reply-header">
+<span>王嘉宁</span>
+</div>
+<div class="reply-text">
+
+<p>grf写入寄存器的使能端也可以用译码器，译码器的使能端接WE，WE为0时译码器全部输出0</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-08T12:26:20.831962+08:00"><time datetime="2023-10-08T12:26:20.831962+08:00">2023-10-08 12:26:20</time></abbr>
+|
+<span>保留所有权利</span>
 <span class="reply-vote">❤️ 0</span>
 </div>
 </div>

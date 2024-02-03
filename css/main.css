@@ -2528,12 +2528,30 @@ header.header {
 }
 .post-info {
   margin-top: -50px;
+  margin-bottom: 20px;
   text-align: center;
+}
+.post-info .post-tag {
+  display: inline-block;
+  background-color: #c5cae9;
+  color: #000;
+  margin: 0 0.25em;
+  padding: 0 0.75em;
+  border-radius: 1em;
 }
 .reply-separator {
   border: 1px solid #ddd;
   height: 0;
   margin: 10px 0;
+}
+.reply.reply-l1 {
+  margin-left: 40px;
+}
+.reply.reply-l2 {
+  margin-left: 80px;
+}
+.reply.reply-l3 {
+  margin-left: 120px;
 }
 .reply .reply-header .reply-verified {
 /* cscore 原版助教认证 */
@@ -2546,6 +2564,12 @@ header.header {
 .reply .reply-text {
   clear: both;
   padding: 0 20px;
+}
+.reply .reply-text pre {
+  tab-size: 4;
+}
+.reply .reply-text img {
+  margin-bottom: 0;
 }
 .reply .reply-footer .reply-vote {
   float: right;
