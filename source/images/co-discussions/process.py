@@ -2,13 +2,13 @@
 将讨论区帖子转换为 Hexo 页面。
 作者：TripleCamera（https://triplecamera.github.io/）
 协议：MIT
-版本：20240203
+版本：20240216
 
 原始数据：从网站获得的 JSON 文件。为防止操作失误，我们只修改文件名，不修改内容。
- -  所有 discussion-info 放置在 info 下，并重命名为 discussion-info-{id}.json。（未使用）
+ -  所有 discussion-info 放置在 info 下，并重命名为 discussion-info-{id}.json。
+    程序会扫描此文件夹，并提取出所有帖子的 id。
  -  所有 response-list 放置在 post 下，并重命名为 response-list-{id}.json。
  -  所有 get-tag-details 放置在 tag 下，并重命名为 get-tag-details-{id}.json。
- -  discussion-search-by-tag.html 放置在 . 下，并重命名为 discussion-search-by-tag.json。
 
 补充数据：人工撰写的 JSON 文件。
  -  license.json：根对象以真名为键，信息对象为值。信息对象包含包含协议（"license"）和署名（"attribution"）。
@@ -17,7 +17,7 @@
                   注意如果未找到某篇文章，程序会直接报错，请确保所有文章都已写入文件（无需查找替换的文章请将 id 映射到空对象）。
 """
 
-import json
+import json5
 import os
 import re
 
@@ -25,7 +25,7 @@ import re
 OUTPUT_FORMAT = """
 ---
 title: {title}
-date: 2024-02-03
+date: 2024-02-16
 mathjax: true
 ---
 <div class="post-info">
@@ -39,7 +39,7 @@ mathjax: true
 <br>
 <div>{tags}</div>
 </div>
-
+{note}
 {content}
 """.strip()
 
@@ -66,7 +66,7 @@ REPLY_FORMAT = """
 
 # 表格格式，数据来自 post 字典
 TABLE_FORMAT = """
-| {link} | {attribution} | {create_date} | {license} |
+| {link} | {attribution} | {create_date} |
 """.strip()
 
 # ISO 格式转年月日格式
@@ -120,58 +120,66 @@ def process_responses(reply_content_list: list, responses: dict, cite_id: int, l
             process_responses(reply_content_list, responses, reply['id'], level + 1)
 
 
-discussions_file = open('discussion-search-by-tags.json', 'r', encoding='utf-8')
-discussions = json.load(discussions_file)
-discussions_file.close()
+
+id_list = []
+for f in os.listdir('info'):
+    result = re.match(r'discussion-info-(\d+).json$', f)
+    if result:
+        id_list.append(int(result.group(1)))
+id_list.sort()
 
 license_file = open('license.json', 'r', encoding='utf-8')
-license = json.load(license_file)
+license = json5.load(license_file)
 license_file.close()
 
 replace_file = open('replace.json', 'r', encoding='utf-8')
-replace = json.load(replace_file)
+replace = json5.load(replace_file)
 replace_file.close()
 
-converted_posts_count = 0
-total_posts_count = len(discussions)
+note_file = open('note.json', 'r', encoding='utf-8')
+note = json5.load(note_file)
+note_file.close()
 
-for discussion in reversed(discussions):
+converted_posts_count = 0
+total_posts_count = len(id_list)
+
+for id in id_list:
+    info_file = open(f'info/discussion-info-{id}.json', 'r', encoding='utf-8')
+    info = json5.load(info_file)
+    info_file.close()
+
+    responses_file = open(f'post/response-list-{id}.json', 'r', encoding='utf-8')
+    responses = json5.load(responses_file)
+    responses_file.close()
+
+    tags_file = open(f'tag/get-tag-details-{id}.json', 'r', encoding='utf-8')
+    tags = json5.load(tags_file)
+    tags_file.close()
+
+    # 从 discussion-search-by-tags.json 迁移到 discussion-info-{id}.json 的注意事项：
+    # 1.  info['First_name'] 的值恒为 ''，改用 responses[0]['First_name']
+    # 2.  info['Response_num'] 的值恒为 0，改用 len(responses)
     post = {}
-    post['id'] = discussion['Id']
-    post['title'] = discussion['Title']
-    post['reply'] = discussion['Response_num']
-    post['create'] = discussion['Created_at']
+    post['author'] = responses[0]['First_name']
+    post['create'] = info['Created_at'] # info['Created_at'] 与 info['Updated_at'] 之间可能会相差 0.00001s
     post['create_date'] = date(post['create'])
     post['create_datetime'] = datetime(post['create'])
-    post['update'] = discussion['Updated_at']
-    post['follow'] = discussion['Follow_num']
-    post['author'] = discussion['First_name']
+    post['follow'] = info['Follow_num']
+    post['id'] = info['Id']
+    post['note'] = f"\n> **提示**：{note[str(post['id'])]}\n" if str(post['id']) in note else ''
+    post['reply'] = len(responses)
+    post['title'] = info['Title']
 
     # 是否取得了原作者许可
-    post_flag = (
-        os.path.isfile(f"post/response-list-{post['id']}.json") and
-        os.path.isfile(f"tag/get-tag-details-{post['id']}.json") and
-        post['author'] in license
-    )
+    post_flag = post['author'] in license
 
-    post['license'] = license[post['author']]['license'] if post_flag else '???'
     post['attribution'] = license[post['author']]['attribution'] if post_flag else '???'
     post['link'] = '[{}]({})'.format(post['title'], post['id']) if post_flag else post['title']
+    post['license'] = license[post['author']]['license'] if post_flag else '???'
 
-    # discussion['Created_at'] 与 discussion['Updated_at'] 之间可能会相差 0.00001s
-    # if discussion['Created_at'] != discussion['Updated_at']:
-    #     print('ERROR! Created_at({}) != Updated_at({})'.format(discussion['Created_at'], discussion['Updated_at']))
     print(TABLE_FORMAT.format(**post))
 
     if post_flag:
-        responses_file = open(f"post/response-list-{post['id']}.json", 'r', encoding='utf-8')
-        responses = json.load(responses_file)
-        responses_file.close()
-
-        tags_file = open(f"tag/get-tag-details-{post['id']}.json", 'r', encoding='utf-8')
-        tags = json.load(tags_file)
-        tags_file.close()
-
         # inline-block 元素间换行会产生额外空格，因此必须保持在一行内
         # TODO 使用 flex 代替 inline-block
         tags_list = []
