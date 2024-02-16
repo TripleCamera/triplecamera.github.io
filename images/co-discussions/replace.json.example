@@ -1,0 +1,162 @@
+{
+    "854": {
+        // 图片换源
+        "/assets/cscore-image/22371041/[\\w-]+/([\\w.-]+)": "/images/co-discussions/854/\\1"
+    },
+    "886": {
+        // 图片换源
+        "/assets/cscore-image/22373080/fce648c0-6d95-463b-a614-795c939ed3a5/image\\.png": "/images/co-discussions/886/image--1.png",
+        "/assets/cscore-image/22373080/09a4038f-ae77-4115-a196-9c9ced773eed/image\\.png": "/images/co-discussions/886/image--2.png",
+        "/assets/cscore-image/22373080/50451728-204a-4eca-9ed7-203487f8d8e2/image\\.png": "/images/co-discussions/886/image--3.png",
+        "/assets/cscore-image/22373080/5b85cf03-b53f-4766-81ce-0895d149609d/image\\.png": "/images/co-discussions/886/image--4.png",
+        "/assets/cscore-image/22373080/c4ccb9fb-2021-4160-af98-dd333273a7c5/image\\.png": "/images/co-discussions/886/image--5.png",
+        "/assets/cscore-image/22373080/4c027722-5d38-4d50-a3fa-6f5dde6b01ca/image\\.png": "/images/co-discussions/886/image--6.png",
+        "/assets/cscore-image/22373080/d6ab666e-94c2-4f1e-bc17-788da4258396/image\\.png": "/images/co-discussions/886/image--7.png",
+        "/assets/cscore-image/22373080/32faae10-22d9-447e-879a-53556e7c75a7/image\\.png": "/images/co-discussions/886/image--8.png",
+        "/assets/cscore-image/22373080/135dcbaa-ad8e-48cf-acfd-9e7c1811b58a/image\\.png": "/images/co-discussions/886/image--9.png",
+        "/assets/cscore-image/22373080/a6a9601d-9d2a-4b60-8bfe-0342e50d8967/image\\.png": "/images/co-discussions/886/image--10.png",
+        // 资料存档
+        "https://blog\\.csdn\\.net/weixin_39750496/article/details/104520683": "https://blog.csdn.net/weixin_39750496/article/details/104520683<small>（[存档](http://archive.today/7dRGo )）</small>", // TODO archive.today 链接后面有个空格，这是为了防止解析出现问题。Pandoc 会在下一个版本修复这个 bug，到那时即可删除这个空格。
+        // 排版错误
+        "ヾ\\(\\*′▽‘\\*\\)ﾉ": "ヾ(\\*′▽‘\\*)ﾉ"
+    },
+    "905": {
+        // 图片换源
+        "/assets/cscore-image/21231042/[\\w-]+/([\\w.-]+)": "/images/co-discussions/905/\\1",
+        // 资料存档
+        "https://zhuanlan\\.zhihu\\.com/p/146001246": "https://zhuanlan.zhihu.com/p/146001246<small>（需要存档）</small>", // TODO 存档
+        // 排版错误
+        "# 在src目录下进行尝试": "# 在src目录下进行尝试\n```"
+    },
+    "951": {
+        // 图片换源
+        "/assets/cscore-image/21373212/[\\w-]+/([\\w.-]+)": "/images/co-discussions/951/\\1"
+    },
+    "959": {
+        // 图片换源
+        "/assets/cscore-image/22373080/[\\w-]+/([\\w.-]+)": "/images/co-discussions/959/\\1",
+        // 资料存档
+        "https://segmentfault\\.com/a/1190000018094567": "https://segmentfault.com/a/1190000018094567<small>（[存档](https://web.archive.org/web/20240216025819/https://segmentfault.com/a/1190000018094567 )）</small>" // TODO web.archive.org 链接后面有个空格，这是为了防止解析出现问题。Pandoc 会在下一个版本修复这个 bug，到那时即可删除这个空格。
+        // TODO 代码高亮失效，换用 archive.today。
+    },
+    "977": {
+        // 图片换源
+        "/assets/cscore-image/22371345/[\\w-]+/([\\w.-]+)": "/images/co-discussions/977/\\1",
+        // 排版错误
+        "\\*\\*并且将DMX的Three-state属性设置为Yes，Disabled Output属性设置为Floating。\\*\\*": "<strong>并且将DMX的Three-state属性设置为Yes，Disabled Output属性设置为Floating。</strong>",
+        "\\*\\*\\*并且将Deco的Three-state属性设置为No，Disabled Output属性设置为Zero。\\*\\*": "<strong>并且将Deco的Three-state属性设置为No，Disabled Output属性设置为Zero。</strong>" // 已询问作者，开头应该是两个 *。
+    },
+    "982": {
+        // 图片换源
+        "https://pigkiller-011955-1319328397\\.cos\\.ap-beijing\\.myqcloud\\.com/img/([\\w.-]+)": "/images/co-discussions/982/\\1"
+    },
+    "983": {
+        // 图片换源
+        "/assets/cscore-image/22373425/[\\w-]+/([\\w.-]+)": "/images/co-discussions/983/\\1",
+        // 排版错误
+        "<br>": "<!-- br -->"
+    },
+    "999": {
+        // 图片换源
+        "/assets/cscore-image/22371345/[\\w-]+/([\\w.-]+)": "/images/co-discussions/999/\\1"
+    },
+    "1002": {
+        // 图片换源
+        "/assets/cscore-image/22373095/000b0951-bc83-46ec-9e07-a93f070da0cd/image\\.png": "/images/co-discussions/1002/image.png",
+        // 排版错误
+        "==(.*?)==": "<mark>\\1</mark>"
+    },
+    "1013": {},
+    "1016": {
+        // 排版错误
+        "\\*\\*`for`循环实现\\*\\*": "<strong>`for`循环实现</strong>"
+    },
+    "1020": {
+        // 图片换源
+        "/assets/cscore-image/22371305/be210ba0-e47d-478f-857e-fbe5016fe7ab/bc775293193d949ab80fb15a059bb36\\.jpg": "/images/co-discussions/1020/bc775293193d949ab80fb15a059bb36.jpg",
+        // 排版错误
+        "\\|颜色状态\\|编码\\|": "\n|颜色状态|编码|",
+        "\\|掌控领域\\|编码\\|check\\|": "\n|掌控领域|编码|check|",
+        "~(i|1-5|i-1|i\\+1|6)~": "<sub>\\1</sub>"
+    },
+    "1040": {
+        // 排版错误
+        "    \\| 版本 \\| 计算60!的步数 \\|": "\n    | 版本 | 计算60!的步数 |",
+        "    \\| 计算数字 \\| 结果位数 \\|  步数  \\|": "\n    | 计算数字 | 结果位数 |  步数  |"
+    },
+    "1045": {},
+    "1061": {
+        // 图片换源
+        "/assets/cscore-image/22371207/6d2f1ef9-1929-4db9-9ec0-915871db36d4/image\\.png": "/images/co-discussions/1061/image--1.png",
+        "/assets/cscore-image/22371207/3cbc9e24-f22c-4c7f-85c5-43ec162f5f2f/image\\.png": "/images/co-discussions/1061/image--2.png",
+        "/assets/cscore-image/22371207/617b71ad-aa00-4905-b15b-96fcbdba8620/image\\.png": "/images/co-discussions/1061/image--3.png",
+        "/assets/cscore-image/22371207/f23c9619-e826-4260-af84-8fda24d2af50/image\\.png": "/images/co-discussions/1061/image--4.png",
+        "/assets/cscore-image/22371207/4fc76d5f-d272-4d6c-a853-39fe690919df/image\\.png": "/images/co-discussions/1061/image--5.png",
+        // 资料存档
+        "https://bhpan\\.buaa\\.edu\\.cn/link/AA142FF068D230494AB6CF02281EEFE6FF": "https://bhpan.buaa.edu.cn/link/AA142FF068D230494AB6CF02281EEFE6FF<small>（无需存档）</small>"
+    },
+    "1064": {
+        // 资料存档
+        "https://bhpan\\.buaa\\.edu\\.cn/link/AA142FF068D230494AB6CF02281EEFE6FF": "https://bhpan.buaa.edu.cn/link/AA2B7CEECAD915432EA982A2509B60A861<small>（[存档](/images/co-discussions/1064/Mars_with_record_headless.jar)）</small>"
+    },
+    "1066": {
+        // 资料存档
+        "\\[文件名：mips ans hexCode generator\\.py<br/>有效期限：2023-11-28 17:46\\]\\(https://bhpan\\.buaa\\.edu\\.cn/link/AA2D754D512F284FC4A349A0D4101EC880\\)": "[文件名：mips ans hexCode generator.py<br/>有效期限：2023-11-28 17:46](https://bhpan.buaa.edu.cn/link/AA2D754D512F284FC4A349A0D4101EC880)<small>（无需存档）</small>"
+    },
+    "1070": {
+        // 图片换源
+        "/assets/cscore-image/22371132/[\\w-]+/([\\w.-]+)": "/images/co-discussions/1070/\\1",
+        // 排版错误
+        "✧\\*｡ \\(ˊᗜˋ\\*\\) ✧\\*": "✧\\*｡ (ˊᗜˋ\\*) ✧\\*"
+    },
+    "1075": {
+        // 图片换源
+        "\\./asset/tester\\.drawio\\.png": "/images/co-discussions/1075/tester.drawio.png",
+        // 排版错误
+        "COMMENT!!!!!\\\\?\\$(t|s|a|v)": "&#36;\\1" // TODO 修复 $ 无法转义的问题
+    },
+    "1098": {},
+    "1102": {
+        // 资料存档
+        "\\[压缩包链接\\]\\(https://swkfk\\.top/assets/DataSpawner\\.zip\\)": "[压缩包链接](https://swkfk.top/assets/DataSpawner.zip)<small>（[存档](/images/co-discussions/1102/DataSpawner.zip)）</small>"
+    },
+    "1145": {
+        // 图片换源
+        "/assets/cscore-image/21375212/fb527905-9e1d-49cc-911c-5e30c6aeb4ef/image\\.png": "/images/co-discussions/1145/image--1.png",
+        "/assets/cscore-image/21375212/d616d58a-5474-42eb-807d-9c211971e074/image\\.png": "/images/co-discussions/1145/image--2.png",
+        "/assets/cscore-image/21375212/f107bcfd-26dc-48f1-a84c-fd3979b4df6c/image\\.png": "/images/co-discussions/1145/image--3.png",
+        "/assets/cscore-image/21375212/e7ca1435-f39a-42d3-aa62-3d272f1dbe8f/image\\.png": "/images/co-discussions/1145/image--4.png",
+        "/assets/cscore-image/22371011/1fdbb9a1-e729-48a6-8a6e-0b1ac804bd95/微信图片_20231126182256\\.jpg": "/images/co-discussions/1145/微信图片_20231126182256.jpg",
+        "/assets/cscore-image/22371355/98b2595a-9a03-4f46-95a3-f3823bc1f504/套六年\\.jpg": "/images/co-discussions/1145/套六年.jpg",
+        "https://pigkiller-011955-1319328397\\.cos\\.ap-beijing\\.myqcloud\\.com/img/202311181426121\\.png": "/images/co-discussions/1145/202311181426121.png",
+        "/assets/cscore-image/21375212/7bf86a4e-d49f-4c4c-b058-2d3140e4ec91/image\\.png": "/images/co-discussions/1145/image--5.png",
+        "/assets/cscore-image/22371213/0e966649-8f4f-4274-a685-6e7f415dcf22/image\\.png": "/images/co-discussions/1145/image--6.png",
+        "/assets/cscore-image/22371213/9b380339-c29b-498c-b774-58ce811ce7bc/image\\.png": "/images/co-discussions/1145/image--7.png",
+        "/assets/cscore-image/22371213/a248a691-949b-4a0c-96e0-3c8764b8bb3b/image\\.png": "/images/co-discussions/1145/image--8.png",
+        "/assets/cscore-image/22371213/c8113487-d020-48c1-8c80-5aad0ee7c68a/image\\.png": "/images/co-discussions/1145/image--9.png",
+        "/assets/cscore-image/21375212/2e877400-773f-46ef-ac01-c7c279aca249/image\\.png": "/images/co-discussions/1145/image--10.png",
+        "/assets/cscore-image/21375212/76ecc5f4-f80d-4bf6-9f96-e7d24b891611/image\\.png": "/images/co-discussions/1145/image--11.png",
+        "/assets/cscore-image/21375212/09a7e796-029c-4fcb-a468-a3b4f454abb3/image\\.png": "/images/co-discussions/1145/image--12.png"
+    },
+    "1188": {
+        // 图片换源
+        "/assets/cscore-image/22371213/85e13306-bebc-45ef-b538-80fb5875f719/image\\.png": "/images/co-discussions/1188/image--1.png",
+        "/assets/cscore-image/22371213/0220a9aa-1cc9-4417-9ce9-5cbeb2692deb/image\\.png": "/images/co-discussions/1188/image--2.png",
+        "/assets/cscore-image/22371213/b2b8ebed-af37-4048-96e0-4ed81216e94d/image\\.png": "/images/co-discussions/1188/image--3.png",
+        // 资料存档
+        "https://bhpan\\.buaa\\.edu\\.cn/link/AACFE8D33B25DF46A2A56B9C14B8064CC5": "https://bhpan.buaa.edu.cn/link/AACFE8D33B25DF46A2A56B9C14B8064CC5<small>（[存档](/images/co-discussions/1188/Mars_ContextMenu_Extension.zip)）</small>"
+    },
+    "1199": {
+        // 图片换源
+        "/assets/cscore-image/22371144/4161c2f3-e310-42ab-bdbd-7272e31e5a75/Q\\.png": "/images/co-discussions/1199/Q.png",
+        // 资料存档
+        "\\[coKiller5\\.1\\]\\(https://bhpan\\.buaa\\.edu\\.cn/link/AAC91BB51E0E5C477399C4F661F6A0AAF1\\)": "[coKiller5.1](https://bhpan.buaa.edu.cn/link/AAC91BB51E0E5C477399C4F661F6A0AAF1)<small>（[存档](/images/co-discussions/1199/coKiller5.1.zip)）</small>",
+        "\\[dataMaker\\.jar\\]\\(https://bhpan\\.buaa\\.edu\\.cn/link/AA5FA276F35BB647378A8B68043A3E6D2A\\)": "[dataMaker.jar](https://bhpan.buaa.edu.cn/link/AA5FA276F35BB647378A8B68043A3E6D2A)<small>（[存档](/images/co-discussions/1199/dataMaker.jar)）</small>",
+        "\\[评测机python源码\\]\\(https://bhpan\\.buaa\\.edu\\.cn/link/AA61F74ED70E3A4083A36EF56F21C25754\\)": "[评测机python源码](https://bhpan.buaa.edu.cn/link/AA61F74ED70E3A4083A36EF56F21C25754)<small>（[存档](/images/co-discussions/1199/评测机python源码.zip)）</small>" // TODO 还有三篇 CSDN 需要存档
+    },
+    "1205": {
+        // 图片换源
+        "/assets/cscore-image/22371101/[\\w-]+/([\\w.-]+)": "/images/co-discussions/1205/\\1"
+    },
+    "1211": {}
+}

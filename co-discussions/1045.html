@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"triplecamera.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="fysszlr | 2023-10-24 12:29:09 | ⭐️ 1 | 💬️ 2  P2分享MIPS     fysszlr    在十分紧张的情况下幸运完成了P2，于是结合考试中做的一些笔记与大家略微分享我的思路 由于大家编写MIPS代码时主要以翻译为主，且选择工具链不一（指各种语言），所以本文将只展示思路，以伪代码形式呈现，并将我遇到的MIPS难点单独列出 和《算法设计与分析》考试是">
+    <meta name="description" content="fysszlr | 2023-10-24 12:29:09 | ⭐️ 1 | 💬️ 2  P2分享MIPS    提示：这篇文章也在作者的博客上发布，协议为 CC BY-NC-ND 4.0。    fysszlr    在十分紧张的情况下幸运完成了P2，于是结合考试中做的一些笔记与大家略微分享我的思路 由于大家编写MIPS代码时主要以翻译为主，且选择工具链不一（指各种语言），所以本文将只展示思">
 <meta property="og:type" content="website">
 <meta property="og:title" content="P2上机分析与记录">
 <meta property="og:url" content="https://triplecamera.github.io/co-discussions/1045.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="fysszlr | 2023-10-24 12:29:09 | ⭐️ 1 | 💬️ 2  P2分享MIPS     fysszlr    在十分紧张的情况下幸运完成了P2，于是结合考试中做的一些笔记与大家略微分享我的思路 由于大家编写MIPS代码时主要以翻译为主，且选择工具链不一（指各种语言），所以本文将只展示思路，以伪代码形式呈现，并将我遇到的MIPS难点单独列出 和《算法设计与分析》考试是">
+<meta property="og:description" content="fysszlr | 2023-10-24 12:29:09 | ⭐️ 1 | 💬️ 2  P2分享MIPS    提示：这篇文章也在作者的博客上发布，协议为 CC BY-NC-ND 4.0。    fysszlr    在十分紧张的情况下幸运完成了P2，于是结合考试中做的一些笔记与大家略微分享我的思路 由于大家编写MIPS代码时主要以翻译为主，且选择工具链不一（指各种语言），所以本文将只展示思">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-02-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-08T14:09:11.981Z">
+<meta property="article:published_time" content="2024-02-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-16T15:21:02.291Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
 
@@ -178,6 +178,11 @@
 <div><div class="post-tag">P2</div><div class="post-tag">分享</div><div class="post-tag">MIPS</div></div>
 </div>
 
+<blockquote>
+<p><strong>提示</strong>：这篇文章也在<a
+target="_blank" rel="noopener" href="https://www.fysszlr.top/2023/10/23/CO-P2%E4%B8%8A%E6%9C%BA%E8%AE%B0%E5%BD%95/">作者的博客</a>上发布，协议为
+CC BY-NC-ND 4.0。</p>
+</blockquote>
 <div id="reply-4021" class="reply reply-l0">
 <div class="reply-header">
 <span>fysszlr</span>

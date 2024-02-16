@@ -2544,6 +2544,7 @@ header.header {
   height: 0;
   margin: 10px 0;
 }
+/* 目前为止最多只到 l4 :D */
 .reply.reply-l1 {
   margin-left: 40px;
 }
@@ -2552,6 +2553,9 @@ header.header {
 }
 .reply.reply-l3 {
   margin-left: 120px;
+}
+.reply.reply-l4 {
+  margin-left: 160px;
 }
 .reply .reply-header .reply-verified {
 /* cscore 原版助教认证 */
