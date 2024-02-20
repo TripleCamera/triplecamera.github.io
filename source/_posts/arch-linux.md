@@ -1,7 +1,7 @@
 ---
 title: Arch Linux 害了他
 date: 2024-02-06
-updated: 2024-02-08
+updated: 2024-02-20
 tags:
 ---
 我装了 Arch Linux。
@@ -70,16 +70,18 @@ LANGUAGE=zh_CN:en_US
 4.  `PLASMA_USE_QT_SCALING=1` 也可以让其他桌面部件自动缩放。
 5.  使用 Wayland 可以解决自动缩放问题。但是在修改全局缩放率后需要注销才能生效。
 
-## Vivado & VCS（2.6、2.17 &ndash; 2.18）
+## Vivado&ndash;VCS 联合仿真（2.6、2.17 &ndash; 2.19）
+本来是打算安装在虚拟机上的，因为给我们培训的学长大都用的是 Ubuntu 虚拟机。但当我用 Debian 虚拟机安装的时候出现了空间不足的情况，扩容后虚拟机无法登录。于是我只好在群里求助，这时群里的学长纷纷推荐我用实体机 Linux 或者 WSL。想到我之前装的 Arch Linux 还不知道拿来干什么好，我决定试着装在 Arch 上。
+
 学长结合自身经验与网上教程撰写了一篇《vivado-vcs联合仿真环境配置》，它将会带领我们披荆斩棘、乘风破浪。
 
 ### Vivado
 先安装，再除错。《联合仿真》给了一篇 [Vivado 安装教程](https://blog.csdn.net/lishan_13/article/details/108889234)以供参考。
 
 #### 安装
-有同学告诉我，[vivado](https://aur.archlinux.org/packages/vivado) 在 AUR 上就有包。但是经过研究，我发现 AUR 上的包用起来比较麻烦——由于下载需要经过登录墙，所以必须手动下载完整版压缩包，然后放置在 `PKGBUILD` 所在的目录下。考虑到完整版压缩包大小约 100G，我不认为这是个好主意。但我的同学更愿意用 AUR 上的脚本，因为这样可以让 Vivado 归 pacman 管。他说，在 Linux 下安装软件就得严格使用包管理器，否则就会把系统搞乱，和 Windows 没有区别了。
+有同学告诉我，[<samp>vivado</samp>](https://aur.archlinux.org/packages/vivado)<sup>AUR</sup> 在 AUR 上就有包。但是经过研究，我发现 AUR 上的包用起来比较麻烦——由于下载需要经过登录墙，所以必须手动下载完整版压缩包，然后放置在 `PKGBUILD` 所在的目录下。考虑到完整版压缩包大小约 100G，我不认为这是个好主意。但我的同学更愿意用 AUR 上的脚本，因为这样可以让 Vivado 归 pacman 管。他说，在 Linux 下安装软件就得严格使用包管理器，否则就会把系统搞乱，和 Windows 没有区别了。
 
-经过一番思索，我最终还是选择用自带安装程序。下载好（约 300M）后执行命令：
+经过一番思索，我最终还是选择用自带安装程序。下载好（版本 2023.2，大小约 300M）后执行命令：
 ```
 # XINSTALLER_SCALE=2 ./FPGAs_AdaptiveSoCs_Unified_2023.2_1013_2256_Lin64.bin
 ```
@@ -110,14 +112,20 @@ LANGUAGE=zh_CN:en_US
     ```
     看来必须得处理了。
 
-    通过搜索 ArchWiki，得知安装 [libxcrypt-compat](https://archlinux.org/packages/core/x86_64/libxcrypt-compat/) 即可解决。
+    通过搜索 ArchWiki，得知安装 [<samp>libxcrypt-compat</samp>](https://archlinux.org/packages/core/x86_64/libxcrypt-compat/)<sup>包</sup> 即可解决。
 2.  我是占位符。
     ```
     application-specific initialization failed: couldn't load file "librdi_commontasks.so": libtinfo.so.5: cannot open shared object file: No such file or directory
     ```
-    《联合仿真》中说要安装 `libtinfo5`，但是 Arch Linux 中没有 `libtinfo5`，应该安装的是——[ncurses5-compat-libs](https://aur.archlinux.org/packages/ncurses5-compat-libs)！
+    《联合仿真》中说要安装 `libtinfo5`，但是 Arch Linux 中没有 `libtinfo5`，应该安装的是——[<samp>ncurses5-compat-libs</samp>](https://aur.archlinux.org/packages/ncurses5-compat-libs)<sup>AUR</sup>！
 
 于是成功启动。配置缩放参见 [ArchWiki](https://wiki.archlinuxcn.org/wiki/Xilinx_Vivado#%E5%90%AF%E7%94%A8%E5%B1%8F%E5%B9%95%E7%BC%A9%E6%94%BE%E5%8A%9F%E8%83%BD)。
+
+为了测试 Vivado 的性能，我从龙芯杯官网下载了 [MIPS 团体赛发布包](http://www.nscscc.com/?p=354)，解压后将样例 CPU 的性能测试工程导入 Vivado：
+```
+$ cd nscscc2023-group-mips/perf_test_v0.01/soc_axi_perf_demo/run_vivado/mycpu_prj1/
+$ vivado -source mycpu.xpr
+```
 
 ### VCS
 先安装，再激活，最后除错。《联合仿真》给了一篇 [CSDN 上的联合仿真教程](https://blog.csdn.net/houzi6320/article/details/126768482)，但是过于简略；又给了一篇[激活教程](https://blog.csdn.net/lum250/article/details/123755261)，这篇写得不错。
@@ -137,12 +145,12 @@ $ /usr/synopsys/scl/2018.06/linux64/bin/lmgrd -c /usr/synopsys/scl/2018.06/admin
     ```
     bash: /usr/synopsys/scl/2018.06/linux64/bin/lmgrd: 无法执行：找不到需要的文件
     ```
-    激活教程中说要安装 `lsb-core`，但是 Arch Linux 中没有 `lsb-core`，应该安装的是——[ld-lsb](https://archlinux.org/packages/extra/x86_64/ld-lsb/)！
+    激活教程中说要安装 `lsb-core`，但是 Arch Linux 中没有 `lsb-core`，应该安装的是——[<samp>ld-lsb</samp>](https://archlinux.org/packages/extra/x86_64/ld-lsb/)<sup>包</sup>！
 2.  我是占位符。
     ```
     (lmgrd) Invalid License File
     ```
-    这使我百思不得其解。我一度以为自己的密钥有问题。经过上网查询，发现原来是因为 `Synopsys.dat` 的权限是 755，而 `lmgrd` 执意要把它改成 644。（[参考链接](http://www.artwork.com/support/flexlm/linux/license_file_error.htm)）
+    这使我百思不得其解。我一度以为自己的密钥有问题。经过上网查询，发现原来是因为 `Synopsys.dat` 的权限是 755，而 `lmgrd` 执意要把它改成 644。解决方法如下：（[参考链接](http://www.artwork.com/support/flexlm/linux/license_file_error.htm)）
     ```
     # chmod 644 /usr/synopsys/scl/2018.06/admin/license/Synopsys.dat
     ```
@@ -166,4 +174,20 @@ $ ./simv
 ```
 undefined reference to `pthread_yield'
 ```
-参照激活教程中的参考链接即可解决。
+参照激活教程中的[参考链接](https://blog.csdn.net/qianniuwei321/article/details/127303086)即可解决。
+
+### 联合仿真
+联合仿真需要先用 VCS 编译 Vivado 的库，我在编译时就遇到了如下报错：
+```
+[Vivado 12-23673] compile_simlib failed to compile for vcs_mx with error in 28 libraries (cxl_error.log, Number of error(s) = 122)
+```
+
+仿真的时候卡住了，点击取消无用，向控制台发送 <kbd>Ctrl</kbd> + <kbd>C</kbd> 后仿真中止，并弹出如下报错：
+```
+[SIM-utils-79] Incompatible GCC compiled simulation library found! Library '/home/triplecamera/Documents/Vivado_lib_VCS' is compiled with GCC version '13.2.1', expected version is '9.2.0'. Please recompile the simulation library or set the correct compiled library path for '9.2.0'.
+```
+
+唯一的解决方法是安装旧版 gcc，我之后会尝试一下。
+
+## 声音（2.19）
+自从装上 KDE 开始右下角的声音图标一直是静音的，今天想把这个问题修好。按照 ArchWiki [ALSA](https://wiki.archlinuxcn.org/wiki/ALSA) 页面中的提示安装了 [<samp>alsa-utils</samp>](https://archlinux.org/packages/extra/x86_64/alsa-utils/)<sup>包</sup>，但是在解除静音时失败了。搜了论坛才发现那个页面后面提到了需要安装 [<samp>sof-firmware<samp>](https://archlinux.org/packages/extra/x86_64/sof-firmware/)<sup>包</sup>，安装并重启后问题解决。
