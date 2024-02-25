@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"triplecamera.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="我装了 Arch Linux。 我之前上初中学网安的时候用过 Kali Linux，当时不懂事，用着玩的；上高中学 OI 的时候用过 NOI Linux，是基于 Ubuntu 的；还用过计组的虚拟机，是基于 Debian 的。今年寒假，我得到了升级硬盘、重装系统的机会，这也是一次安装双系统的机会。 那么，装什么呢？虽然 Ubuntu 开箱即用、易于上手，但是我想挑战一下自己。之前看到、听到身边有些">
+    <meta name="description" content="既然选择了 Arch，便只顾风雨兼程。——周国平没说过这句话  我装了 Arch Linux。 我之前上初中学网安的时候用过 Kali Linux，当时不懂事，用着玩的；上高中学 OI 的时候用过 NOI Linux，是基于 Ubuntu 的；还用过计组的虚拟机，是基于 Debian 的。今年寒假，我得到了升级硬盘、重装系统的机会，这也是一次安装双系统的机会。 那么，装什么呢？虽然 Ubuntu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Arch Linux 害了他">
 <meta property="og:url" content="https://triplecamera.github.io/2024/02/05/arch-linux/index.html">
 <meta property="og:site_name" content="TripleCamera 的博客">
-<meta property="og:description" content="我装了 Arch Linux。 我之前上初中学网安的时候用过 Kali Linux，当时不懂事，用着玩的；上高中学 OI 的时候用过 NOI Linux，是基于 Ubuntu 的；还用过计组的虚拟机，是基于 Debian 的。今年寒假，我得到了升级硬盘、重装系统的机会，这也是一次安装双系统的机会。 那么，装什么呢？虽然 Ubuntu 开箱即用、易于上手，但是我想挑战一下自己。之前看到、听到身边有些">
+<meta property="og:description" content="既然选择了 Arch，便只顾风雨兼程。——周国平没说过这句话  我装了 Arch Linux。 我之前上初中学网安的时候用过 Kali Linux，当时不懂事，用着玩的；上高中学 OI 的时候用过 NOI Linux，是基于 Ubuntu 的；还用过计组的虚拟机，是基于 Debian 的。今年寒假，我得到了升级硬盘、重装系统的机会，这也是一次安装双系统的机会。 那么，装什么呢？虽然 Ubuntu">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-05T16:00:00.000Z">
 <meta property="article:modified_time" content="2024-02-19T16:00:00.000Z">
@@ -112,7 +112,7 @@
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
             <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%88%86%E5%B1%8F%E9%80%82%E9%85%8D123--124"><span class="nav-number">1.</span> <span class="nav-text">高分屏适配（1.23 – 1.24）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%AD%E6%96%87125"><span class="nav-number">2.</span> <span class="nav-text">设置中文（1.25）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-firefox26"><span class="nav-number">3.</span> <span class="nav-text">安装 Firefox（2.6）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%88%86%E5%B1%8F%E9%80%82%E9%85%8D%E5%90%8E%E7%BB%AD26--212"><span class="nav-number">4.</span> <span class="nav-text">高分屏适配后续（2.6 – 2.12）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vivadovcs-%E8%81%94%E5%90%88%E4%BB%BF%E7%9C%9F26217--219"><span class="nav-number">5.</span> <span class="nav-text">Vivado–VCS 联合仿真（2.6、2.17 –
-2.19）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vivado"><span class="nav-number">5.1.</span> <span class="nav-text">Vivado</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">5.1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%A4%E9%94%99"><span class="nav-number">5.1.2.</span> <span class="nav-text">除错</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vcs"><span class="nav-number">5.2.</span> <span class="nav-text">VCS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB"><span class="nav-number">5.2.2.</span> <span class="nav-text">激活</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%A4%E9%94%99-1"><span class="nav-number">5.2.3.</span> <span class="nav-text">除错</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%94%E5%90%88%E4%BB%BF%E7%9C%9F"><span class="nav-number">5.3.</span> <span class="nav-text">联合仿真</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E9%9F%B3219"><span class="nav-number">6.</span> <span class="nav-text">声音（2.19）</span></a></li></ol></div>
+2.19）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vivado"><span class="nav-number">5.1.</span> <span class="nav-text">Vivado</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">5.1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%A4%E9%94%99"><span class="nav-number">5.1.2.</span> <span class="nav-text">除错</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vcs"><span class="nav-number">5.2.</span> <span class="nav-text">VCS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB"><span class="nav-number">5.2.2.</span> <span class="nav-text">激活</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%A4%E9%94%99-1"><span class="nav-number">5.2.3.</span> <span class="nav-text">除错</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%94%E5%90%88%E4%BB%BF%E7%9C%9F"><span class="nav-number">5.3.</span> <span class="nav-text">联合仿真</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E9%9F%B3219"><span class="nav-number">6.</span> <span class="nav-text">声音（2.19）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%B3%95223225"><span class="nav-number">7.</span> <span class="nav-text">输入法（2.23、2.25）</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -205,7 +205,10 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>我装了 Arch Linux。</p>
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>既然选择了 Arch，便只顾风雨兼程。——周国平没说过这句话</p>
+</blockquote>
+<p>我装了 Arch Linux。</p>
 <p>我之前上初中学网安的时候用过 Kali
 Linux，当时不懂事，用着玩的；上高中学 OI 的时候用过 NOI Linux，是基于
 Ubuntu 的；还用过计组的虚拟机，是基于 Debian
@@ -236,7 +239,7 @@ target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/HiDPI#KDE_
 <code>set PLASMA_USE_QT_SCALING=1</code>
 并重启系统之后，我被卡在了登录页面——输入密码之后会黑屏，然后回到登录页面。</p>
 <p>当时我怕极了，以为新装的系统就这样被自己毁了。后来不知道在哪里查到，按
-<code>Ctrl+Alt+F3</code>
+<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>F3</kbd>
 可以开启一个新的终端，我就用这个终端删掉了那行致命的代码，让电脑恢复了正常。</p>
 <p>我把这件事告诉了湖人，湖人建议我装
 Wayland。我装了以后，发现面板高度可以跟随整体缩放了。但是窗口中的内容都会变糊，于是放弃了
@@ -247,35 +250,34 @@ Wayland。</p>
 <p><a
 target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96">简体中文本地化</a>一文给出了设置中文的详尽步骤，照做即可。</p>
 <p>在修改 <code>/etc/locale.gen</code>、运行 <code>locale-gen</code>
-并安装 <code>noto-fonts-cjk</code>
+并安装 <a
+target="_blank" rel="noopener" href="https://archlinux.org/packages/extra/any/noto-fonts-cjk/"><samp>noto-fonts-cjk</samp></a><sup>包</sup>
 之后，我在系统设置的语言选项中添加了简体中文，但是只有系统设置中的文本成功变为中文，其他软件仍是英文。经过查询，发现上述页面中已经提到了
 <a
 target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/KDE#Plasma_%E6%A1%8C%E9%9D%A2%E4%B8%8D%E5%B0%8A%E9%87%8D%E5%8C%BA%E5%9F%9F%E8%AE%BE%E7%BD%AE/%E8%AF%AD%E8%A8%80%E8%AE%BE%E7%BD%AE">KDE
 可能会生成错误的语言配置文件</a>，最后的解决方法是按教程修改
 `~/.config/plasma-localerc` 文件：</p>
-<p>修改前：</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Formats]</span></span><br><span class="line"><span class="attr">LANG</span>=zh_CN</span><br><span class="line"></span><br><span class="line"><span class="section">[Translations]</span></span><br><span class="line"><span class="attr">LANGUAGE</span>=zh_CN</span><br></pre></td></tr></table></figure>
-
-<p>修改后（与教程完全相同）：</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Formats]</span></span><br><span class="line"><span class="attr">LANG</span>=zh_CN.UTF-<span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Translations]</span></span><br><span class="line"><span class="attr">LANGUAGE</span>=zh_CN:en_US</span><br></pre></td></tr></table></figure>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> [Formats]</span><br><span class="line"><span class="deletion">-LANG=zh_CN</span></span><br><span class="line"><span class="addition">+LANG=zh_CN.UTF-8</span></span><br><span class="line"></span><br><span class="line"> [Translations]</span><br><span class="line"><span class="deletion">-LANGUAGE=zh_CN</span></span><br><span class="line"><span class="addition">+LANGUAGE=zh_CN:en_US</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="安装-firefox26">安装 Firefox（2.6）</h2>
 <p>室友在 Arch Linux 上装了 Chrome，而我选择
-Firefox。摆在我面前的有两个选择——用 pacman 安装和用 Discover 安装。</p>
-<p>最开始我想用 pacman（其实这里用到了 yay）。<a
+Firefox。摆在我面前的有两个选择——用包管理器安装和用 Discover 安装。</p>
+<p>最开始我想用包管理器（这里用到了 yay）。<a
 target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/%E7%81%AB%E7%8B%90">ArchWiki</a>
-上说有一个“具有更好的 KDE
-集成”的版本：<code>firefox-kde-opensuse</code>。但是我在编译的时候遇到了错误，于是转而用
+上说有一个“具有更好的 KDE 集成”的版本：<a
+target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/firefox-kde-opensuse"><samp>firefox-kde-opensuse</samp></a><sup>AUR</sup>。但是我在编译的时候遇到了错误，于是转而用
 Discover 安装。Discover
 装东西真方便，现代的应用商店，点一下就装好了。</p>
 <p>正巧那天我和一位同学聊天，聊到了这个问题。他说不建议我用 Flatpak
-软件包，因为 pacman
-安装的软件运行更快、配置更方便。于是我去网上查了一下，看到<a
+软件包，因为包管理器安装的软件运行更快、配置更方便。于是我去网上查了一下，看到<a
 target="_blank" rel="noopener" href="https://bbs.archlinux.org/viewtopic.php?pid=2043312#p2043312">论坛</a>上有人说与其安装
 Flatpak 软件不如用木棍戳眼睛（好吓人），那位同学阅后表示赞同。</p>
-<p>另外他告诉我不要装 <code>firefox-kde-opensuse</code>——那是给 OpenSUSE
-用的。于是我卸掉了 Flatpak 版 Firefox，改用了 pacman 安装
-<code>firefox</code> 和 <code>firefox-i18n-zh-cn</code> 这两个包。</p>
+<p>另外他告诉我不要装 <samp>firefox-kde-opensuse</samp>——那是给 OpenSUSE
+用的。于是我卸掉了 Flatpak 版 Firefox，改用了包管理器安装 <a
+target="_blank" rel="noopener" href="https://archlinux.org/packages/extra/x86_64/firefox/"><samp>firefox</samp></a><sup>包</sup>
+和 <a
+target="_blank" rel="noopener" href="https://archlinux.org/packages/extra/any/firefox-i18n-zh-cn/"><samp>firefox-i18n-zh-cn</samp></a><sup>包</sup>
+这两个包。</p>
 <h2 id="高分屏适配后续26--212">高分屏适配后续（2.6 – 2.12）</h2>
 <p>我把我的困惑发到了<a
 target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Talk:HiDPI#False_information_in_KDE_Plasma_-_Tray_icons_with_fixed_size?">讨论页</a>，随后与一位大佬展开了长时间对线，最后修正了
@@ -402,14 +404,16 @@ target="_blank" rel="noopener" href="http://www.artwork.com/support/flexlm/linux
 </li>
 </ol>
 <h4 id="除错-1">除错</h4>
-<p>服务器架设完成后，我们创建一个测试程序，然后打开另一个终端来编译运行：</p>
+<p>服务器架设完成后，我们创建一个测试程序，然后打开另一个终端来编译：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ vcs test.v</span><br><span class="line">$ ./simv</span><br></pre></td></tr></table></figure>
 
-<p>中途遇到报错：</p>
+<p>如果遇到以下报错，参照激活教程中的<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qianniuwei321/article/details/127303086">参考链接</a>即可解决。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">undefined reference to `pthread_yield&#x27;</span><br></pre></td></tr></table></figure>
 
-<p>参照激活教程中的<a
-target="_blank" rel="noopener" href="https://blog.csdn.net/qianniuwei321/article/details/127303086">参考链接</a>即可解决。</p>
+<p>如果看到以下输出，说明编译成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../simv up to date</span><br></pre></td></tr></table></figure>
+
 <h3 id="联合仿真">联合仿真</h3>
 <p>联合仿真需要先用 VCS 编译 Vivado
 的库，我在编译时就遇到了如下报错：</p>
@@ -428,6 +432,14 @@ target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/ALSA">ALS
 target="_blank" rel="noopener" href="https://archlinux.org/packages/extra/x86_64/alsa-utils/"><samp>alsa-utils</samp></a><sup>包</sup>，但是在解除静音时失败了。搜了论坛才发现那个页面后面提到了需要安装
 <a
 target="_blank" rel="noopener" href="https://archlinux.org/packages/extra/x86_64/sof-firmware/"><samp>sof-firmware<samp></a><sup>包</sup>，安装并重启后问题解决。</p>
+<h2 id="输入法223225">输入法（2.23、2.25）</h2>
+<p>参考 <a
+target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/Fcitx5">ArchWiki</a>，安装 <a
+target="_blank" rel="noopener" href="https://archlinux.org/groups/x86_64/fcitx5-im/"><samp>fcitx5-im</samp></a><sup>包组</sup>、<a
+target="_blank" rel="noopener" href="https://archlinux.org/packages/extra/x86_64/fcitx5-chinese-addons/"><samp>fcitx5-chinese-addons</samp></a><sup>包</sup>
+和词库（可选），配置 <code>/etc/environment</code>
+并重新登录，最后在系统设置中添加输入法。安装之前记得做系统更新，不然就会像我一样失败<span
+class="emoji" data-emoji="upside_down_face">🙃</span>。</p>
 
     </div>
 
