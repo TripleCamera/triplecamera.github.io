@@ -4,6 +4,8 @@ date: 2024-02-06
 updated: 2024-02-20
 tags:
 ---
+> 既然选择了 Arch，便只顾风雨兼程。——周国平没说过这句话
+
 我装了 Arch Linux。
 
 我之前上初中学网安的时候用过 Kali Linux，当时不懂事，用着玩的；上高中学 OI 的时候用过 NOI Linux，是基于 Ubuntu 的；还用过计组的虚拟机，是基于 Debian 的。今年寒假，我得到了升级硬盘、重装系统的机会，这也是一次安装双系统的机会。
@@ -24,7 +26,7 @@ tags:
 
     这里有个小插曲：根据教程，需要设置环境变量来让面板高度跟随整体缩放。经过一番恶补，我终于学会了如何设置环境变量。但是，当我向 `~/.bash_profile` 的末尾添加 `set PLASMA_USE_QT_SCALING=1` 并重启系统之后，我被卡在了登录页面——输入密码之后会黑屏，然后回到登录页面。
 
-    当时我怕极了，以为新装的系统就这样被自己毁了。后来不知道在哪里查到，按 `Ctrl+Alt+F3` 可以开启一个新的终端，我就用这个终端删掉了那行致命的代码，让电脑恢复了正常。
+    当时我怕极了，以为新装的系统就这样被自己毁了。后来不知道在哪里查到，按 <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>F3</kbd> 可以开启一个新的终端，我就用这个终端删掉了那行致命的代码，让电脑恢复了正常。
 
     我把这件事告诉了湖人，湖人建议我装 Wayland。我装了以后，发现面板高度可以跟随整体缩放了。但是窗口中的内容都会变糊，于是放弃了 Wayland。
 
@@ -33,34 +35,26 @@ tags:
 ## 设置中文（1.25）
 [简体中文本地化](https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96)一文给出了设置中文的详尽步骤，照做即可。
 
-在修改 `/etc/locale.gen`、运行 `locale-gen` 并安装 `noto-fonts-cjk` 之后，我在系统设置的语言选项中添加了简体中文，但是只有系统设置中的文本成功变为中文，其他软件仍是英文。经过查询，发现上述页面中已经提到了 [KDE 可能会生成错误的语言配置文件](https://wiki.archlinuxcn.org/wiki/KDE#Plasma_%E6%A1%8C%E9%9D%A2%E4%B8%8D%E5%B0%8A%E9%87%8D%E5%8C%BA%E5%9F%9F%E8%AE%BE%E7%BD%AE/%E8%AF%AD%E8%A8%80%E8%AE%BE%E7%BD%AE)，最后的解决方法是按教程修改 `~/.config/plasma-localerc` 文件：
+在修改 `/etc/locale.gen`、运行 `locale-gen` 并安装 [<samp>noto-fonts-cjk</samp>](https://archlinux.org/packages/extra/any/noto-fonts-cjk/)<sup>包</sup> 之后，我在系统设置的语言选项中添加了简体中文，但是只有系统设置中的文本成功变为中文，其他软件仍是英文。经过查询，发现上述页面中已经提到了 [KDE 可能会生成错误的语言配置文件](https://wiki.archlinuxcn.org/wiki/KDE#Plasma_%E6%A1%8C%E9%9D%A2%E4%B8%8D%E5%B0%8A%E9%87%8D%E5%8C%BA%E5%9F%9F%E8%AE%BE%E7%BD%AE/%E8%AF%AD%E8%A8%80%E8%AE%BE%E7%BD%AE)，最后的解决方法是按教程修改 `~/.config/plasma-localerc` 文件：
 
-修改前：
-```ini
-[Formats]
-LANG=zh_CN
+```diff
+ [Formats]
+-LANG=zh_CN
++LANG=zh_CN.UTF-8
 
-[Translations]
-LANGUAGE=zh_CN
-```
-
-修改后（与教程完全相同）：
-```ini
-[Formats]
-LANG=zh_CN.UTF-8
-
-[Translations]
-LANGUAGE=zh_CN:en_US
+ [Translations]
+-LANGUAGE=zh_CN
++LANGUAGE=zh_CN:en_US
 ```
 
 ## 安装 Firefox（2.6）
-室友在 Arch Linux 上装了 Chrome，而我选择 Firefox。摆在我面前的有两个选择——用 pacman 安装和用 Discover 安装。
+室友在 Arch Linux 上装了 Chrome，而我选择 Firefox。摆在我面前的有两个选择——用包管理器安装和用 Discover 安装。
 
-最开始我想用 pacman（其实这里用到了 yay）。[ArchWiki](https://wiki.archlinuxcn.org/wiki/%E7%81%AB%E7%8B%90) 上说有一个“具有更好的 KDE 集成”的版本：`firefox-kde-opensuse`。但是我在编译的时候遇到了错误，于是转而用 Discover 安装。Discover 装东西真方便，现代的应用商店，点一下就装好了。
+最开始我想用包管理器（这里用到了 yay）。[ArchWiki](https://wiki.archlinuxcn.org/wiki/%E7%81%AB%E7%8B%90) 上说有一个“具有更好的 KDE 集成”的版本：[<samp>firefox-kde-opensuse</samp>](https://aur.archlinux.org/packages/firefox-kde-opensuse)<sup>AUR</sup>。但是我在编译的时候遇到了错误，于是转而用 Discover 安装。Discover 装东西真方便，现代的应用商店，点一下就装好了。
 
-正巧那天我和一位同学聊天，聊到了这个问题。他说不建议我用 Flatpak 软件包，因为 pacman 安装的软件运行更快、配置更方便。于是我去网上查了一下，看到[论坛](https://bbs.archlinux.org/viewtopic.php?pid=2043312#p2043312)上有人说与其安装 Flatpak 软件不如用木棍戳眼睛（好吓人），那位同学阅后表示赞同。
+正巧那天我和一位同学聊天，聊到了这个问题。他说不建议我用 Flatpak 软件包，因为包管理器安装的软件运行更快、配置更方便。于是我去网上查了一下，看到[论坛](https://bbs.archlinux.org/viewtopic.php?pid=2043312#p2043312)上有人说与其安装 Flatpak 软件不如用木棍戳眼睛（好吓人），那位同学阅后表示赞同。
 
-另外他告诉我不要装 `firefox-kde-opensuse`——那是给 OpenSUSE 用的。于是我卸掉了 Flatpak 版 Firefox，改用了 pacman 安装 `firefox` 和 `firefox-i18n-zh-cn` 这两个包。
+另外他告诉我不要装 <samp>firefox-kde-opensuse</samp>——那是给 OpenSUSE 用的。于是我卸掉了 Flatpak 版 Firefox，改用了包管理器安装 [<samp>firefox</samp>](https://archlinux.org/packages/extra/x86_64/firefox/)<sup>包</sup> 和 [<samp>firefox-i18n-zh-cn</samp>](https://archlinux.org/packages/extra/any/firefox-i18n-zh-cn/)<sup>包</sup> 这两个包。
 
 ## 高分屏适配后续（2.6 &ndash; 2.12）
 我把我的困惑发到了[讨论页](https://wiki.archlinux.org/title/Talk:HiDPI#False_information_in_KDE_Plasma_-_Tray_icons_with_fixed_size?)，随后与一位大佬展开了长时间对线，最后修正了 ArchWiki 的相关内容。主要内容就是以下几点，感兴趣的可以去看讨论页。
@@ -164,17 +158,21 @@ $ /usr/synopsys/scl/2018.06/linux64/bin/lmgrd -c /usr/synopsys/scl/2018.06/admin
     ```
 
 #### 除错
-服务器架设完成后，我们创建一个测试程序，然后打开另一个终端来编译运行：
+服务器架设完成后，我们创建一个测试程序，然后打开另一个终端来编译：
 ```
 $ vcs test.v
 $ ./simv
 ```
 
-中途遇到报错：
+如果遇到以下报错，参照激活教程中的[参考链接](https://blog.csdn.net/qianniuwei321/article/details/127303086)即可解决。
 ```
 undefined reference to `pthread_yield'
 ```
-参照激活教程中的[参考链接](https://blog.csdn.net/qianniuwei321/article/details/127303086)即可解决。
+
+如果看到以下输出，说明编译成功。
+```
+../simv up to date
+```
 
 ### 联合仿真
 联合仿真需要先用 VCS 编译 Vivado 的库，我在编译时就遇到了如下报错：
@@ -191,3 +189,6 @@ undefined reference to `pthread_yield'
 
 ## 声音（2.19）
 自从装上 KDE 开始右下角的声音图标一直是静音的，今天想把这个问题修好。按照 ArchWiki [ALSA](https://wiki.archlinuxcn.org/wiki/ALSA) 页面中的提示安装了 [<samp>alsa-utils</samp>](https://archlinux.org/packages/extra/x86_64/alsa-utils/)<sup>包</sup>，但是在解除静音时失败了。搜了论坛才发现那个页面后面提到了需要安装 [<samp>sof-firmware<samp>](https://archlinux.org/packages/extra/x86_64/sof-firmware/)<sup>包</sup>，安装并重启后问题解决。
+
+## 输入法（2.23、2.25）
+参考 [ArchWiki](https://wiki.archlinuxcn.org/wiki/Fcitx5)，安装 [<samp>fcitx5-im</samp>](https://archlinux.org/groups/x86_64/fcitx5-im/)<sup>包组</sup>、[<samp>fcitx5-chinese-addons</samp>](https://archlinux.org/packages/extra/x86_64/fcitx5-chinese-addons/)<sup>包</sup> 和词库（可选），配置 `/etc/environment` 并重新登录，最后在系统设置中添加输入法。安装之前记得做系统更新，不然就会像我一样失败:upside_down_face:。
