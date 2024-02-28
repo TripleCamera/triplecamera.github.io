@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"triplecamera.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="doc（助教） | 2023-10-17 20:29:29 | ⭐️ 2 | 💬️ 3       doc（助教）    同学们在使用 Mars 编写 P2 课下汇编程序时，一定遇到过以下问题：  IO 面板不能直接复制粘贴多行输入，否则会出现异常 Message&#x2F;IO 面板尺寸较小，且无法进一步增加高度  也许充满创造力的你已经构建了一套基于第三方编辑器 + 命令行运行 Mars 的汇编“一">
+<meta property="og:type" content="website">
+<meta property="og:title" content="一个优化了部分使用体验的修改版 Mars">
+<meta property="og:url" content="https://triplecamera.github.io/co-discussions/1025.html">
+<meta property="og:site_name" content="TripleCamera 的博客">
+<meta property="og:description" content="doc（助教） | 2023-10-17 20:29:29 | ⭐️ 2 | 💬️ 3       doc（助教）    同学们在使用 Mars 编写 P2 课下汇编程序时，一定遇到过以下问题：  IO 面板不能直接复制粘贴多行输入，否则会出现异常 Message&#x2F;IO 面板尺寸较小，且无法进一步增加高度  也许充满创造力的你已经构建了一套基于第三方编辑器 + 命令行运行 Mars 的汇编“一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1025/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE_2023-10-20_091348.png">
+<meta property="article:published_time" content="2024-02-28T12:53:40.674Z">
+<meta property="article:modified_time" content="2024-02-28T12:53:40.674Z">
+<meta property="article:author" content="TripleCamera">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/1025/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE_2023-10-20_091348.png">
+
+
+<link rel="canonical" href="https://triplecamera.github.io/co-discussions/1025">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://triplecamera.github.io/co-discussions/1025.html","path":"co-discussions/1025.html","title":"一个优化了部分使用体验的修改版 Mars"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一个优化了部分使用体验的修改版 Mars | TripleCamera 的博客
+</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">TripleCamera 的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TripleCamera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">一个优化了部分使用体验的修改版 Mars
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <div class="post-info">
+<span>doc（助教）</span>
+|
+<abbr title="2023-10-17T20:29:29.841072+08:00"><time datetime="2023-10-17T20:29:29.841072+08:00">2023-10-17 20:29:29</time></abbr>
+|
+<span>⭐️ 2</span>
+|
+<span>💬️ 3</span>
+<br>
+<div></div>
+</div>
+
+<div id="reply-3920" class="reply reply-l0">
+<div class="reply-header">
+<span>doc（助教）</span>
+</div>
+<div class="reply-text">
+
+<p>同学们在使用 Mars 编写 P2 课下汇编程序时，一定遇到过以下问题：</p>
+<ul>
+<li>IO 面板不能直接复制粘贴多行输入，否则会出现异常</li>
+<li>Message/IO 面板尺寸较小，且无法进一步增加高度</li>
+</ul>
+<p>也许充满创造力的你已经构建了一套基于第三方编辑器 + 命令行运行 Mars
+的汇编“一条龙”方案，不再需要使用带 GUI 的 Mars
+了，但也请留步，阅读一下这篇帖子，希望能<strong>抛砖引玉</strong>地为你将来的美妙发明带来一些启发。</p>
+<blockquote>
+<p>注：以下内容为本人在 2022
+秋计算机组成课程学习过程中所做的思考与成果分享，有部分适应性改动。本帖中发布内容均系个人过去的成果，<strong>对于未来可能发布的工具，请以课程组官方名义发布文件为准</strong>。</p>
+</blockquote>
+<p>通过阅读原版 Mars 源码（附于 jar 压缩包内），我分析出问题的原因：</p>
+<ul>
+<li>GUI
+读入文本时，如遇一次读入多行的情况（比如接受粘贴文本），会直接“打包”处理带有多个换行符的文本。比如当应用
+5 号系统调用读取整数时，Mars 就会尝试转换这类文本到
+<code>Integer</code>。正逐渐上手 Java
+的你应该知道，这样会产生<code>NumberFormatException</code>异常。简单说就是
+Mars
+没有正确处理一次性输入的多行文本。我的补丁方案则是在对应的类内部加一个缓存队列，将输入文本中第一个换行符后的全部内容放入缓存，待下一次读取时分行取出。</li>
+<li>Mars 在创建代码编辑面板时未指定该面板的最小尺寸，导致 Java AWT
+在计算编辑面板的最小尺寸时默认了一个较大数值，编辑面板的最小尺寸进一步限制了其下方消息/IO
+窗口的最大高度。解决方案就是为代码编辑面板显式地声明最小尺寸为 0。</li>
+</ul>
+<p>当然，在经过这样一番修改后，Mars
+读入数据的局限性仍然很强，比如我们依然不能在一行输入中方便地按空格来分隔多个整数。当然，本帖作为一个抛砖引玉的软件修改思路参考帖，如果你有更高、更妙的想法，我们鼓励大家在讨论区一起分享、交流。</p>
+<p>现将修改后的代码与重打包的jar文件分享给大家。保证修改版 Mars
+除输入外，其他功能行为与原版完全一致。</p>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://bhpan.buaa.edu.cn/link/AA3C6FD01AE6A94651BF709B162D12BEFE">https://bhpan.buaa.edu.cn/link/AA3C6FD01AE6A94651BF709B162D12BEFE</a><small>（<a
+href="/images/co-discussions/1025/MARS_mod.zip">存档</a>）</small><br/>
+文件夹名：MARS_mod<br/> 有效期限：2024-01-31 23:59<br/>
+目录结构说明：<code>jar</code>单个文件可直接运行。<code>modified_codes</code>目录下包含了所有有改动的代码文件，可自行与原版代码比对差异。<code>modified_classes</code>内对应这些代码文件重新编译后的字节码文件。</p>
+</blockquote>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-17T20:29:29.848221+08:00"><time datetime="2023-10-17T20:29:29.848221+08:00">2023-10-17 20:29:29</time></abbr>
+|
+<span>CC0</span>
+<span class="reply-vote">❤️ 15</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-3966" class="reply reply-l1">
+<div class="reply-header">
+<span>pigKiller <a href="#reply-3920">回复</a> doc（助教）</span>
+</div>
+<div class="reply-text">
+
+<p>在我的电脑上，双击后只出现了打开加载界面（如下），后续并没有打开，请问这可能是什么问题呢，本地环境需要调整吗</p>
+<p><img src="/images/co-discussions/1025/屏幕截图_2023-10-20_091348.png"
+alt="屏幕截图 20231020 091348.png" /></p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-20T09:15:19.679777+08:00"><time datetime="2023-10-20T09:15:19.679777+08:00">2023-10-20 09:15:19</time></abbr>
+|
+<span>CC BY-NC-SA 4.0</span>
+<span class="reply-vote">❤️ 2</span>
+</div>
+</div>
+<hr class="reply-separator">
+<div id="reply-3969" class="reply reply-l2">
+<div class="reply-header">
+<span>doc（助教） <a href="#reply-3966">回复</a> pigKiller</span>
+</div>
+<div class="reply-text">
+
+<p>讨论区这位同学已经给出了解决方案：<a
+href="/#/discussion_area/1033/1164/posts">解决无法打开魔改MARS的问题</a></p>
+<hr />
+<p>抱歉，卡在启动界面的原因应该是我使用了版本较高的 JDK17
+进行编译。现已使用 JDK1.8
+重新编译并替换了原文件，重新下载即可。感谢指出！</p>
+</div>
+<div class="reply-footer">
+<abbr title="2023-10-20T10:51:00.197399+08:00"><time datetime="2023-10-20T10:51:00.197399+08:00">2023-10-20 10:51:00</time></abbr>
+|
+<span>CC0</span>
+<span class="reply-vote">❤️ 0</span>
+</div>
+</div>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">TripleCamera</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"TripleCamera","repo":"triplecamera.github.io","client_id":"8e3318b060ee959cacec","client_secret":"3a6c863d9640cee4d16dc8e59c8053fa56d7591b","admin_user":"TripleCamera","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"15f6ffbbca465ccef67e222a1571f80d"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

@@ -26,8 +26,8 @@
 <meta property="og:site_name" content="TripleCamera 的博客">
 <meta property="og:description" content="廖鹏飞 | 2023-11-07 13:12:06 | ⭐️ 3 | 💬️ 3  P4测试Verilog     廖鹏飞    CPU自动化测试 有幸和zlr同学一起开发462oj，这让我收获了一次非常宝贵的自动化测试经验。作为数据构造者，我想介绍一下评测机数据生成部分背后的一些细节，希望能从自动化数据生成的角度给同学们一些启示。 本文主要分享样例自动生成程序的思路（P4部分），分为四部分，分">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-02-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-25T07:39:01.360Z">
+<meta property="article:published_time" content="2024-02-28T12:53:40.674Z">
+<meta property="article:modified_time" content="2024-02-28T12:53:40.674Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
 
@@ -236,23 +236,27 @@ case检验</strong>来覆盖尽可能多的情况。</p>
 <hr class="reply-separator">
 <div id="reply-4353" class="reply reply-l0">
 <div class="reply-header">
-<span>???</span>
+<span>doc（助教）</span>
 </div>
 <div class="reply-text">
 
-<p>???</p>
+<p>同学好，你对自己的数据生成策略的测试覆盖率与正确性等指标进行了具体的分析，介绍涉及面广泛，这种分享精神值得鼓励。</p>
+<p>但是帖子中仍然存在一些问题需要指出，比如：<strong>只向前跳转并不能保证覆盖率</strong>，即便是增强数据规模也难以做到。举例说明，向后跳转利用了补码运算的特性，其依赖扩展器/扩展逻辑的正确性，如果某同学将分支跳转所用到的立即数扩展误实现为
+0
+扩展，那么在向后跳转的过程中就会出现错误。又比如，不应为了简化数据生成的复杂度而向测试的覆盖率妥协。</p>
+<p>更具体的细节问题我不再赘述，这部分将交由数据组的助教来解答。总而言之，我们鼓励一切有关测试的分享，但我们更希望大家能在构造数据的过程中尽自己最大的努力去<strong>保证数据的强度（即测试覆盖率）</strong>，若能在此基础上进一步实现自动化的数据生成，那……计组助教团队欢迎你的加入！</p>
 </div>
 <div class="reply-footer">
 <abbr title="2023-11-07T17:56:17.769158+08:00"><time datetime="2023-11-07T17:56:17.769158+08:00">2023-11-07 17:56:17</time></abbr>
 |
-<span>???</span>
+<span>CC0</span>
 <span class="reply-vote">❤️ 0</span>
 </div>
 </div>
 <hr class="reply-separator">
 <div id="reply-4354" class="reply reply-l1">
 <div class="reply-header">
-<span>廖鹏飞 <a href="#reply-4353">回复</a> ???</span>
+<span>廖鹏飞 <a href="#reply-4353">回复</a> doc（助教）</span>
 </div>
 <div class="reply-text">
 

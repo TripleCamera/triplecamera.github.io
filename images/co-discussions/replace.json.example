@@ -16,7 +16,7 @@
         "/assets/cscore-image/22373080/135dcbaa-ad8e-48cf-acfd-9e7c1811b58a/image\\.png": "/images/co-discussions/886/image--9.png",
         "/assets/cscore-image/22373080/a6a9601d-9d2a-4b60-8bfe-0342e50d8967/image\\.png": "/images/co-discussions/886/image--10.png",
         // 资料存档
-        "https://blog\\.csdn\\.net/weixin_39750496/article/details/104520683": "https://blog.csdn.net/weixin_39750496/article/details/104520683<small>（[存档](http://archive.today/7dRGo )）</small>", // TODO archive.today 链接后面有个空格，这是为了防止解析出现问题。Pandoc 会在下一个版本修复这个 bug，到那时即可删除这个空格。
+        "https://blog\\.csdn\\.net/weixin_39750496/article/details/104520683": "https://blog.csdn.net/weixin_39750496/article/details/104520683<small>（[存档](http://archive.today/7dRGo)）</small>",
         // 排版错误
         "ヾ\\(\\*′▽‘\\*\\)ﾉ": "ヾ(\\*′▽‘\\*)ﾉ"
     },
@@ -36,7 +36,7 @@
         // 图片换源
         "/assets/cscore-image/22373080/[\\w-]+/([\\w.-]+)": "/images/co-discussions/959/\\1",
         // 资料存档
-        "https://segmentfault\\.com/a/1190000018094567": "https://segmentfault.com/a/1190000018094567<small>（[存档](https://web.archive.org/web/20240216025819/https://segmentfault.com/a/1190000018094567 )）</small>" // TODO web.archive.org 链接后面有个空格，这是为了防止解析出现问题。Pandoc 会在下一个版本修复这个 bug，到那时即可删除这个空格。
+        "https://segmentfault\\.com/a/1190000018094567": "https://segmentfault.com/a/1190000018094567<small>（[存档](https://web.archive.org/web/20240216025819/https://segmentfault.com/a/1190000018094567)）</small>"
         // TODO 代码高亮失效，换用 archive.today。
     },
     "977": {
@@ -79,12 +79,24 @@
         "\\|掌控领域\\|编码\\|check\\|": "\n|掌控领域|编码|check|",
         "~(i|1-5|i-1|i\\+1|6)~": "<sub>\\1</sub>"
     },
+    "1025": {
+        // 图片换源
+        "/assets/cscore-image/22373017/7fddfb56-2725-4853-a687-9927439490f4/屏幕截图_2023-10-20_091348\\.png": "/images/co-discussions/1025/屏幕截图_2023-10-20_091348.png",
+        // 资料存档
+        "https://bhpan\\.buaa\\.edu\\.cn/link/AA3C6FD01AE6A94651BF709B162D12BEFE": "https://bhpan.buaa.edu.cn/link/AA3C6FD01AE6A94651BF709B162D12BEFE<small>（[存档](/images/co-discussions/1025/MARS_mod.zip)）</small>"
+    },
     "1040": {
         // 排版错误
         "    \\| 版本 \\| 计算60!的步数 \\|": "\n    | 版本 | 计算60!的步数 |",
         "    \\| 计算数字 \\| 结果位数 \\|  步数  \\|": "\n    | 计算数字 | 结果位数 |  步数  |"
     },
     "1045": {},
+    "1059": {
+        // 图片换源
+        "/assets/cscore-image/xujunhao/[\\w-]+/([\\w.-]+)": "/images/co-discussions/1059/\\1",
+        // 资料存档
+        "<a href=\"https://bhpan\\.buaa\\.edu\\.cn/link/AA95A8A03ADEC843C88C15EA33D149C54D\" rel=\"noreferrer\" target=\"_blank\">BUAA-CO-P3-tool\\.jar</a>": "<a href=\"https://bhpan.buaa.edu.cn/link/AA95A8A03ADEC843C88C15EA33D149C54D\" rel=\"noreferrer\" target=\"_blank\">BUAA-CO-P3-tool.jar</a><small>（<a target=\"_blank\" rel=\"noopener\" href=\"/images/co-discussions/1059/BUAA-CO-P3-tool.jar\">存档</a>）</small>" // 此处使用原始 HTML
+    },
     "1061": {
         // 图片换源
         "/assets/cscore-image/22371207/6d2f1ef9-1929-4db9-9ec0-915871db36d4/image\\.png": "/images/co-discussions/1061/image--1.png",
@@ -97,7 +109,7 @@
     },
     "1064": {
         // 资料存档
-        "https://bhpan\\.buaa\\.edu\\.cn/link/AA142FF068D230494AB6CF02281EEFE6FF": "https://bhpan.buaa.edu.cn/link/AA2B7CEECAD915432EA982A2509B60A861<small>（[存档](/images/co-discussions/1064/Mars_with_record_headless.jar)）</small>"
+        "https://bhpan\\.buaa\\.edu\\.cn/link/AA2B7CEECAD915432EA982A2509B60A861": "https://bhpan.buaa.edu.cn/link/AA2B7CEECAD915432EA982A2509B60A861<small>（[存档](/images/co-discussions/1064/Mars_with_record_headless.jar)）</small>（[GitHub Releases](https://github.com/swkfk/Mars-with-BUAA-CO-extension/releases)）"
     },
     "1066": {
         // 资料存档
