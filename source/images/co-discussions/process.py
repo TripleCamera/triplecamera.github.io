@@ -2,13 +2,13 @@
 将讨论区帖子转换为 Hexo 页面。
 作者：TripleCamera（https://triplecamera.github.io/）
 协议：MIT
-版本：20240216
+版本：20240228
 
 原始数据：从网站获得的 JSON 文件。为防止操作失误，我们只修改文件名，不修改内容。
  -  所有 discussion-info 放置在 info 下，并重命名为 discussion-info-{id}.json。
     程序会扫描此文件夹，并提取出所有帖子的 id。
- -  所有 response-list 放置在 post 下，并重命名为 response-list-{id}.json。
- -  所有 get-tag-details 放置在 tag 下，并重命名为 get-tag-details-{id}.json。
+ -  所有 response-list 放置在 responses 下，并重命名为 response-list-{id}.json。
+ -  所有 get-tag-details 放置在 tags 下，并重命名为 get-tag-details-{id}.json。
 
 补充数据：人工撰写的 JSON 文件。
  -  license.json：根对象以真名为键，信息对象为值。信息对象包含包含协议（"license"）和署名（"attribution"）。
@@ -25,7 +25,6 @@ import re
 OUTPUT_FORMAT = """
 ---
 title: {title}
-date: 2024-02-16
 mathjax: true
 ---
 <div class="post-info">
@@ -68,6 +67,8 @@ REPLY_FORMAT = """
 TABLE_FORMAT = """
 | {link} | {attribution} | {create_date} |
 """.strip()
+
+unknown_authors = set()
 
 # ISO 格式转年月日格式
 def date(iso: str) -> str:
@@ -114,6 +115,7 @@ def process_responses(reply_content_list: list, responses: dict, cite_id: int, l
                 reply['cite_author'] = '???'
                 reply['license'] = '???'
                 reply['header'] = '???'
+                unknown_authors.add(response['First_name'])
 
             reply_content = REPLY_FORMAT.format(**reply)
             reply_content_list.append(reply_content)
@@ -148,11 +150,11 @@ for id in id_list:
     info = json5.load(info_file)
     info_file.close()
 
-    responses_file = open(f'post/response-list-{id}.json', 'r', encoding='utf-8')
+    responses_file = open(f'responses/response-list-{id}.json', 'r', encoding='utf-8')
     responses = json5.load(responses_file)
     responses_file.close()
 
-    tags_file = open(f'tag/get-tag-details-{id}.json', 'r', encoding='utf-8')
+    tags_file = open(f'tags/get-tag-details-{id}.json', 'r', encoding='utf-8')
     tags = json5.load(tags_file)
     tags_file.close()
 
@@ -176,6 +178,10 @@ for id in id_list:
     post['attribution'] = license[post['author']]['attribution'] if post_flag else '???'
     post['link'] = '[{}]({})'.format(post['title'], post['id']) if post_flag else post['title']
     post['license'] = license[post['author']]['license'] if post_flag else '???'
+    if post_flag:
+        pass # TODO 将三元运算符拆分为 if-else
+    else:
+        unknown_authors.add(post['author'])
 
     print(TABLE_FORMAT.format(**post))
 
@@ -201,3 +207,5 @@ for id in id_list:
         converted_posts_count += 1
 
 print(f'转换了 {converted_posts_count} / {total_posts_count} 篇帖子。')
+if unknown_authors:
+    print('以下作者尚未同意转载其内容：', '、'.join(unknown_authors), sep='')

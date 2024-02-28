@@ -5,7 +5,7 @@
     },
     "???": {
         "license": "CC BY-NC 4.0",
-        "attribution": "沈锎（代码 ???）"
+        "attribution": "沈锎（代码 MIT）"
     },
     "???": {
         "license": "保留所有权利",
@@ -146,5 +146,33 @@
     "???": {
         "license": "保留所有权利",
         "attribution": "郝梓翔"
+    },
+    "???": {
+        "license": "CC0",
+        "attribution": "doc（助教）"
+    },
+    "???": {
+        "license": "CC BY-ND 4.0",
+        "attribution": "ScottMa（助教）"
+    },
+    "???": {
+        "license": "CC BY-ND 4.0",
+        "attribution": "Coooookie（助教）"
+    },
+    "???": {
+        "license": "CC BY-NC-SA 4.0",
+        "attribution": "ForeverYolo（助教）"
+    },
+    "???": {
+        "license": "CC0",
+        "attribution": "CookedBear（助教）"
+    },
+    "???": {
+        "license": "保留所有权利",
+        "attribution": "Xu（助教）"
+    },
+    "???": { // 注意第二个字
+        "license": "保留所有权利",
+        "attribution": "邱小瑄"
     }
 }
