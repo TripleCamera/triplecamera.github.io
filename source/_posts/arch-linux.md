@@ -1,7 +1,7 @@
 ---
 title: Arch Linux 害了他
 date: 2024-02-06
-updated: 2024-02-20
+updated: 2024-03-15
 tags:
 ---
 > 既然选择了 Arch，便只顾风雨兼程。——周国平没说过这句话
@@ -192,3 +192,20 @@ undefined reference to `pthread_yield'
 
 ## 输入法（2.23、2.25）
 参考 [ArchWiki](https://wiki.archlinuxcn.org/wiki/Fcitx5)，安装 [<samp>fcitx5-im</samp>](https://archlinux.org/groups/x86_64/fcitx5-im/)<sup>包组</sup>、[<samp>fcitx5-chinese-addons</samp>](https://archlinux.org/packages/extra/x86_64/fcitx5-chinese-addons/)<sup>包</sup> 和词库（可选），配置 `/etc/environment` 并重新登录，最后在系统设置中添加输入法。安装之前记得做系统更新，不然就会像我一样失败:upside_down_face:。
+
+## 更多高分屏与中文适配（3.4）
+最后还剩下 GRUB 和登录页面没有缩放且没有中文，解决方法如下：
+ -  GRUB
+     -  缩放：参见 ArchWiki 页面 [HiDPI&sect;降低帧缓冲分辨率](https://wiki.archlinuxcn.org/wiki/HiDPI#%E9%99%8D%E4%BD%8E%E5%B8%A7%E7%BC%93%E5%86%B2%E5%88%86%E8%BE%A8%E7%8E%87)。
+     -  中文：由于执行 `grub-mkconfig` 时环境语言为中文，所以生成的 GRUB 配置中语言也变为了中文。
+ -  登录页面
+     -  缩放：打开系统设置，选择*开机与关机 > 登录屏幕 (SDDM) > 应用 Plasma 设置...*，即可将全局缩放率等设置同步到登录页面。（[参考链接](https://forum.manjaro.org/t/hidpi-login-screen/33852)）
+     -  中文：参见[我在 archlinuxcn BBS 发的帖子](https://bbs.archlinuxcn.org/viewtopic.php?id=14095)。
+
+## Java（3.4）
+根据 [ArchWiki](https://wiki.archlinuxcn.org/wiki/Java)，安装 [<samp>jdk-openjdk</samp>](https://archlinux.org/packages/extra/x86_64/jdk-openjdk/)<sup>包</sup>（[<samp>java-runtime-common</samp>](https://archlinux.org/packages/extra/any/java-runtime-common/)<sup>包</sup> 和 [<samp>java-environment-common</samp>](https://archlinux.org/packages/extra/any/java-environment-common/)<sup>包</sup> 会自动安装；jdk-openjdk 与 [<samp>jre-openjdk</samp>](https://archlinux.org/packages/extra/x86_64/jre-openjdk/)<sup>包</sup> 有冲突，二者只能选其一），重新登录之后使用 `archlinux-java` 配置 Java 版本。
+
+## 蓝牙（3.14）
+参见 ArchWiki [蓝牙](https://wiki.archlinuxcn.org/wiki/%E8%93%9D%E7%89%99)页面。对我来说，由于之前没有安装 [<samp>bluedevil</samp>](https://archlinux.org/packages/extra/x86_64/bluedevil/)<sup>包</sup> （其中包含了 [<samp>bluez</samp>](https://archlinux.org/packages/extra/x86_64/bluez/)<sup>包</sup> 等核心组件），所以安装了一下，随后完成教程第四步“[启动/启用](https://wiki.archlinuxcn.org/wiki/%E5%90%AF%E5%8A%A8/%E5%90%AF%E7%94%A8) `bluetooth.service`”，即可使用。
+
+我听说 [KDE 6](https://kde.org/zh-cn/announcements/megarelease/6/) 更新以后，KDE Connect 支持通过蓝牙连接手机，但是在我这里并没有试验成功。为此我在 KDE Discuss 中发帖求助，得知蓝牙连接功能因故暂时关闭。详情请见[我发布的帖子](https://discuss.kde.org/t/how-to-connect-via-bluetooth-using-kde-connect/12299)。
