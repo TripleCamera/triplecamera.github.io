@@ -8,8 +8,8 @@ def pct2text(pct):
     time = int(alltime * pct / 100 + 0.01)
     return f'{time // 60}h{time % 60}min' if time % 60 != 0 else f'{time // 60}h'
 
-plt.rcParams['font.family'] = 'SimHei'
-plt.title('劳动节工作用时统计')
+plt.rcParams['font.family'] = 'Source Han Sans CN'
+plt.title('劳动节学习用时统计')
 plt.pie(
     data,
     labels = labels,
@@ -17,4 +17,4 @@ plt.pie(
 )
 
 # plt.show()
-plt.savefig('source/images/buaa4-laborday.png')
+plt.savefig('buaa4-laborday.svg')
