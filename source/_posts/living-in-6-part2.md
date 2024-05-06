@@ -93,3 +93,5 @@ tags:
 <p style="font-size: 200%;">&#x1F605;&#xFE0F;</p>
 
 <p style="text-align: right;">5 月 6 日（一）定稿</p>
+
+![劳动节工作用时统计](/images/buaa4-laborday.png)
