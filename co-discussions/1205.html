@@ -29,8 +29,8 @@
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1205/img1.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1205/img2.png">
 <meta property="og:image" content="https://triplecamera.github.io/images/co-discussions/1205/img3.png">
-<meta property="article:published_time" content="2024-05-06T15:59:41.394Z">
-<meta property="article:modified_time" content="2024-05-06T15:59:41.394Z">
+<meta property="article:published_time" content="2024-05-11T09:44:05.144Z">
+<meta property="article:modified_time" content="2024-05-11T09:44:05.144Z">
 <meta property="article:author" content="TripleCamera">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://triplecamera.github.io/images/co-discussions/1205/img1.png">
@@ -267,7 +267,7 @@ id="cp0设在m级时怎么保证dm不会存进异常指令让它存的值">CP0�
 信息, 不会对DM产生影响.</p></li>
 <li><p>法二:将存数/取数异常(<code>adel</code>/<code>ades</code>)置于M级初判断,得到<code>M_exccode</code>接入CP0.若CP0显示产生异常(即<code>req</code>为1),那么将DM的写使能<code>byteen</code>置0,从而无法写入(这里<strong>易错</strong>,上一个问题提到的"视为nop"处理方法在这种架构中会因为<strong>太晚判断(即到了CP0所在级才判断)exccode</strong>而失效,必须要改DM写使能)</p>
 <p>具体来说:</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> m_data_byteen = (req) ? <span class="number">4&#x27;b0</span> :</span><br><span class="line">					   m_data_byteen_tmp;</span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">assign</span> m_data_byteen = (req) ? <span class="number">4&#x27;b0</span> :</span><br><span class="line">  					   m_data_byteen_tmp;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3

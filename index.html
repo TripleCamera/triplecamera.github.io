@@ -477,7 +477,7 @@ target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/vivado">
 
 <ol type="1">
 <li>刚启动安装程序就发现 UI 小得可怜，同时控制台有提示：
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INFO Could not detect the display scale (hDPI).</span><br><span class="line">       If you are using a high resolution monitor, you can set the insaller scale factor like this:</span><br><span class="line">       export XINSTALLER_SCALE=2</span><br><span class="line">       setenv XINSTALLER_SCALE 2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    INFO Could not detect the display scale (hDPI).</span><br><span class="line">           If you are using a high resolution monitor, you can set the insaller scale factor like this:</span><br><span class="line">           export XINSTALLER_SCALE=2</span><br><span class="line">           setenv XINSTALLER_SCALE 2</span><br></pre></td></tr></table></figure>
 
 所以要加 <code>XINSTALLER_SCALE=2</code>。</li>
 <li>配置安装选项时发现默认安装到
@@ -490,19 +490,19 @@ Vivado，然后在十分钟以内完成了安装。不知道如果用了 AUR
 <h4 id="除错">除错</h4>
 <ol type="1">
 <li><p>安装结束时控制台有报错：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">######## Execution of Pre/Post Installation Tasks Failed ########</span><br><span class="line">Warning: AMD software was installed successfully, but an unexpected status was returned from the following post installation task(s) /tools/Xilinx/Vivado/2023.2/bin/unwrapped/lnx64.o/vivado: error while loading shared libraries: libcrypt.so.1: cannot open shared object file: No such file or directory /tools/Xilinx/Vivado/2023.2/bin/unwrapped/lnx64.o/vivado: error while loading shared libraries: libcrypt.so.1: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">    ######## Execution of Pre/Post Installation Tasks Failed ########</span><br><span class="line">    Warning: AMD software was installed successfully, but an unexpected status was returned from the following post installation task(s) /tools/Xilinx/Vivado/2023.2/bin/unwrapped/lnx64.o/vivado: error while loading shared libraries: libcrypt.so.1: cannot open shared object file: No such file or directory /tools/Xilinx/Vivado/2023.2/bin/unwrapped/lnx64.o/vivado: error while loading shared libraries: libcrypt.so.1: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
 
 <p>运行 Vivado 时同样产生了报错。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /tools/Xilinx/Vivado/2023.2/bin/vivado</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    $ /tools/Xilinx/Vivado/2023.2/bin/vivado</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/tools/Xilinx/Vivado/2023.2/bin/unwrapped/lnx64.o/vivado: error while loading shared libraries: libcrypt.so.1: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    /tools/Xilinx/Vivado/2023.2/bin/unwrapped/lnx64.o/vivado: error while loading shared libraries: libcrypt.so.1: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
 
 <p>看来必须得处理了。</p>
 <p>通过搜索 ArchWiki，得知安装 <a
 target="_blank" rel="noopener" href="https://archlinux.org/packages/core/x86_64/libxcrypt-compat/"><samp>libxcrypt-compat</samp></a><sup>包</sup>
 即可解决。</p></li>
 <li><p>我是占位符。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">application-specific initialization failed: couldn&#x27;t load file &quot;librdi_commontasks.so&quot;: libtinfo.so.5: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    application-specific initialization failed: couldn&#x27;t load file &quot;librdi_commontasks.so&quot;: libtinfo.so.5: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
 
 <p>《联合仿真》中说要安装 <code>libtinfo5</code>，但是 Arch Linux 中没有
 <code>libtinfo5</code>，应该安装的是——<a
@@ -536,25 +536,25 @@ Installer，就发现字大得离谱——原来是不支持高分屏。于是�
 <p>……失败了？</p>
 <ol type="1">
 <li>我是占位符。
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash: /usr/synopsys/scl/2018.06/linux64/bin/lmgrd: 无法执行：找不到需要的文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    bash: /usr/synopsys/scl/2018.06/linux64/bin/lmgrd: 无法执行：找不到需要的文件</span><br></pre></td></tr></table></figure>
 
 激活教程中说要安装 <code>lsb-core</code>，但是 Arch Linux 中没有
 <code>lsb-core</code>，应该安装的是——<a
 target="_blank" rel="noopener" href="https://archlinux.org/packages/extra/x86_64/ld-lsb/"><samp>ld-lsb</samp></a><sup>包</sup>！</li>
 <li>我是占位符。
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lmgrd) Invalid License File</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    (lmgrd) Invalid License File</span><br></pre></td></tr></table></figure>
 
 这使我百思不得其解。我一度以为自己的密钥有问题。经过上网查询，发现原来是因为
 <code>Synopsys.dat</code> 的权限是 755，而 <code>lmgrd</code>
 执意要把它改成 644。解决方法如下：（<a
 target="_blank" rel="noopener" href="http://www.artwork.com/support/flexlm/linux/license_file_error.htm">参考链接</a>）
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chmod 644 /usr/synopsys/scl/2018.06/admin/license/Synopsys.dat</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    # chmod 644 /usr/synopsys/scl/2018.06/admin/license/Synopsys.dat</span><br></pre></td></tr></table></figure>
 </li>
 <li>我是占位符。
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(snpslmd) Can&#x27;t make directory /usr/tmp/.flexlm, errno: 2(No such file or directory)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    (snpslmd) Can&#x27;t make directory /usr/tmp/.flexlm, errno: 2(No such file or directory)</span><br></pre></td></tr></table></figure>
 
 激活教程中已经给了解决方法：
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkdir /usr/tmp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    # mkdir /usr/tmp</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h4 id="除错-1">除错</h4>
