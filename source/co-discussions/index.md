@@ -1,7 +1,7 @@
 ---
 title: CO 2023 讨论区优质帖汇总
 date: 2024-01-12
-updated: 2024-04-08
+updated: 2024-05-11
 ---
 <style>
 th:nth-child(2),
@@ -18,28 +18,6 @@ td:nth-child(2) {
  -  [replace.json.example](/images/co-discussions/replace.json.example)
  -  [note.json.example](/images/co-discussions/note.json.example)
  -  [styles.styl](https://github.com/TripleCamera/triplecamera.github.io/tree/main/source/_data/styles.styl)
-
-**注意**：目前本项目仍处于测试阶段，所有文章及评论暂时**保留所有权利**（评论左下角的协议标注无效），直到正式公开发布。
-
-## 待办事项
- -  [ ] 修复渲染差异
-     -  [ ] [1020](1020)、[1098](1098) 中代码块的 4 空格缩进被去除（会在 Hexo 下一个版本修复）
-     -  [ ] [1075](1075) 中 $ 无法转义
-
-### pre7
- -  [x] 对参考资料进行存档
- -  [x] 为 `replace.json` 设计一套简化语法
- -  [x] 关闭帖子下方的评论（帖子实在太多了 QAQ）
- -  [x] 美化表格
-
-### pre6
- -  [x] 新增 [1025](1025)、[1059](1059)
- -  [x] 新增助教的评论
- -  [x] 整理本页面
- -  [x] 升级 Pandoc 至 3.1.12
- -  [x] 修复渲染差异（部分）
-     -  [x] [999](999) 中有一处代码块解析不正确（会在 Pandoc 下一个版本修复）
-     -  [x] [1040](1040) 中有一处粗斜体解析不正确（会在 Pandoc 下一个版本修复）
 
 | 标题 | 作者<br><small>发布日期</small> |
 |-|-|

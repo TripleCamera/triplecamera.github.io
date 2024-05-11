@@ -50,6 +50,7 @@ highlight:
   tab_replace: ''
   wrap: true
   hljs: false
+  strip_indent: false
 prismjs:
   enable: false
   preprocess: true
@@ -111,3 +112,4 @@ pandoc:
     - "-t"
     - "html"
     - "--mathjax"
+    # - "-p" # 保留制表符
