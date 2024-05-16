@@ -1,7 +1,7 @@
 ---
 title: Arch Linux 害了他
 date: 2024-02-06
-updated: 2024-03-15
+updated: 2024-05-16
 tags:
 ---
 > 既然选择了 Arch，便只顾风雨兼程。——周国平没说过这句话
@@ -200,7 +200,16 @@ undefined reference to `pthread_yield'
      -  中文：由于执行 `grub-mkconfig` 时环境语言为中文，所以生成的 GRUB 配置中语言也变为了中文。
  -  登录页面
      -  缩放：打开系统设置，选择*开机与关机 > 登录屏幕 (SDDM) > 应用 Plasma 设置...*，即可将全局缩放率等设置同步到登录页面。（[参考链接](https://forum.manjaro.org/t/hidpi-login-screen/33852)）
-     -  中文：参见[我在 archlinuxcn BBS 发的帖子](https://bbs.archlinuxcn.org/viewtopic.php?id=14095)。
+     -  中文：参见[我在 archlinuxcn BBS 发的帖子](https://bbs.archlinuxcn.org/viewtopic.php?id=14095) 和 [Azure Zeng 的博客](https://blog.azurezeng.com/installation-guide-for-archlinux-kde/#header-id-17)。
+
+**3 月 25 日更新**：更新至 KDE 6 后登录页面无法同步缩放，我在 KDE Discuss 上[发帖求助](https://discuss.kde.org/t/login-screen-does-not-respect-plasma-global-scaling/12943)，得知此 bug [已被汇报](https://bugs.kde.org/show_bug.cgi?id=467039)，将在不久后修复。
+
+**4 月 12 日更新**：再次检查发现工单已被标记为解决，但测试发现仍然无法同步缩放。通过查阅 [Azure Zeng 的博客](https://blog.azurezeng.com/installation-guide-for-archlinux-kde/#header-id-20)、上述工单及工单中的链接，我得到了另一种解决方法：修改 SDDM 配置文件 `/etc/sddm.conf`。
+
+```conf
+[General]
+GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=2.5,LANG=zh_CN.UTF-8
+```
 
 ## Java（3.4）
 根据 [ArchWiki](https://wiki.archlinuxcn.org/wiki/Java)，安装 [<samp>jdk-openjdk</samp>](https://archlinux.org/packages/extra/x86_64/jdk-openjdk/)<sup>包</sup>（[<samp>java-runtime-common</samp>](https://archlinux.org/packages/extra/any/java-runtime-common/)<sup>包</sup> 和 [<samp>java-environment-common</samp>](https://archlinux.org/packages/extra/any/java-environment-common/)<sup>包</sup> 会自动安装；jdk-openjdk 与 [<samp>jre-openjdk</samp>](https://archlinux.org/packages/extra/x86_64/jre-openjdk/)<sup>包</sup> 有冲突，二者只能选其一），重新登录之后使用 `archlinux-java` 配置 Java 版本。
@@ -209,3 +218,87 @@ undefined reference to `pthread_yield'
 参见 ArchWiki [蓝牙](https://wiki.archlinuxcn.org/wiki/%E8%93%9D%E7%89%99)页面。对我来说，由于之前没有安装 [<samp>bluedevil</samp>](https://archlinux.org/packages/extra/x86_64/bluedevil/)<sup>包</sup> （其中包含了 [<samp>bluez</samp>](https://archlinux.org/packages/extra/x86_64/bluez/)<sup>包</sup> 等核心组件），所以安装了一下，随后完成教程第四步“[启动/启用](https://wiki.archlinuxcn.org/wiki/%E5%90%AF%E5%8A%A8/%E5%90%AF%E7%94%A8) `bluetooth.service`”，即可使用。
 
 我听说 [KDE 6](https://kde.org/zh-cn/announcements/megarelease/6/) 更新以后，KDE Connect 支持通过蓝牙连接手机，但是在我这里并没有试验成功。为此我在 KDE Discuss 中发帖求助，得知蓝牙连接功能因故暂时关闭。详情请见[我发布的帖子](https://discuss.kde.org/t/how-to-connect-via-bluetooth-using-kde-connect/12299)。
+
+## Vivado again（???）
+**WIP**
+
+面对综合报错和仿真无法打开文件的问题，学长建议我安装 Vivado 2019。但是据说今年官方推荐的版本将改为 Vivado 2023，学长建议我保留 2023。
+
+之前同学就建议我安装 AUR 上的 [<span>vivado</span>](https://aur.archlinux.org/packages/vivado)<sup>AUR</sup>，加上 Vivado 2019 的完整版安装包小了很多（26.5G），我觉得值得一试。
+
+我最初的想法是使用支持 Vivado 2019.2 的 PKGBUILD（commit `3dbc515`）进行构建，但是报错说有些包找不到。这是因为在三年多的时间里，有些包已经被其他包取代了。
+
+于是我以最新 commit 为基底，修改了版本信息：
+
+最后值得一提的是，[在升级时跳过 vivado](https://wiki.archlinuxcn.org/wiki/Pacman#%E5%9C%A8%E5%8D%87%E7%BA%A7%E6%97%B6%E8%B7%B3%E8%BF%87%E8%BD%AF%E4%BB%B6%E5%8C%85)。
+
+## 启动速度慢 + CPU 高占用（3.31 &ndash; 4.2）
+最近两天，我的 Arch Linux 突然出现了一些问题，对日常使用有很大影响：
+1.  启动速度慢。GRUB 加载 Linux 之后会黑屏 2 分钟，然后才能正常启动。
+2.  CPU 高占用。开机后风扇一直在高速运转，CPU 有一个核满载。
+
+我在 [archlinuxcn BBS](https://bbs.archlinuxcn.org/viewtopic.php?id=14172) 上发帖求助，两位大佬帮我解决了问题：
+1.  检查内核日志可知是 [Nouveau](https://wiki.archlinuxcn.org/wiki/Nouveau)（NVIDIA 显卡开源驱动）的问题。解决方法是使用 NVIDIA 闭源驱动或者禁用独显，我选择了前者。
+2.  使用 `top`/`htop` 查看 CPU 占用，得知是 [Baloo](https://wiki.archlinuxcn.org/wiki/Baloo) 的问题，禁用即可。
+
+非常感谢他们，同时使我认识到自己的 Linux 基础知识仍然匮乏。
+
+下面附上安装 NVIDIA 闭源驱动的方法（总结自 ArchWiki 的 [NVIDIA](https://wiki.archlinuxcn.org/wiki/NVIDIA) 页面）：
+1.  查询显卡型号：
+    ```
+    $ lspci -k | grep -A 2 -E "(VGA|3D)"
+    ```
+2.  根据 ArchWiki 的指引，安装 [<samp>nvidia</samp>](https://archlinux.org/packages/?name=nvidia) 和 [<samp>lib32-nvidia-utils</samp>](https://archlinux.org/packages/?name=lib32-nvidia-utils)（不同型号安装的包有所不同）。
+3.  编辑 `/etc/mkinitcpio.conf`，删除 `HOOKS` 中的 `kms`。
+4.  重新生成启动镜像：
+    ```
+    # mkinitcpio -P
+    ```
+5.  重启，完成。
+
+## 微码（4.15）
+微码的作用是将复杂指令分解为一系列简单指令。及时更新微码可以修复 CPU 的重大漏洞。
+
+我根据 [ArchWiki](https://wiki.archlinuxcn.org/wiki/%E5%BE%AE%E7%A0%81) 上的教程，运行了以下命令来检查是否已经安装了微码：
+```
+# journalctl -k --grep=microcode
+4月 15 19:38:29 triplecamera kernel: Register File Data Sampling: Vulnerable: No microcode
+4月 15 19:38:29 triplecamera kernel: microcode: Current revision: 0x00000421
+```
+
+看来没有。于是我安装了 [<samp>intel-ucode</samp>](https://archlinux.org/packages/?name=intel-ucode)，重启后再次检查：
+```
+# journalctl -k --grep=microcode
+4月 15 20:08:50 triplecamera kernel: microcode: Current revision: 0x00000432
+4月 15 20:08:50 triplecamera kernel: microcode: Updated early from: 0x00000421
+```
+
+没想到居然已经装好了。赞。
+
+## 电源管理方案（4.19）
+查看电池状态时注意到电源管理方案不可用：
+
+<img src="/images/archlinux-power.png" alt="电源管理方案不可用的提示" style="max-height: 20em;">
+
+于是去 [ArchWiki](https://wiki.archlinuxcn.org/wiki/KDE#%E7%94%B5%E6%BA%90%E7%AE%A1%E7%90%86) 上查了一下，发现 KDE 的电源管理依赖于 [<samp>powerdevil</samp>](https://archlinux.org/packages/?name=powerdevil) 和 [<samp>power-profiles-daemon</samp>](https://archlinux.org/packages/?name=power-profiles-daemon)。前者在我安装 [<samp>plasma</samp>](https://archlinux.org/groups/x86_64/plasma/)<sup>组</sup> 时就一并安装了，后者需要手动安装。
+
+安装过后重启，电源管理方案就可以使用了。
+
+## IntelliJ IDEA（4.22）
+4 月 21 日那天，我突然想来一场“自我放逐”：从某一天开始，从 Windows 换成 Arch Linux，并且再也不要换回来了。看看自己能坚持多久。
+
+为此我需要将平日会用到的软件在 Arch 上都装一份——其中之一就是 IntelliJ IDEA。去 ArchWiki 上看了发现只有 Community Edition，经过一番搜索才发现 Ultimate Edition 在 AUR 上。
+
+**5 月 1 日更新**：已在 ArchWiki 上补充相关信息。
+
+## 但愿是最后一次适配高分屏（4.25）
+刚装上 Arch Linux 的时候，默认启动项是 Windows，所以每次想要启动 Arch 都要在开机时长按 <kbd>F12</kbd>，切换启动项。为了延长键盘寿命（笑），我决定将默认启动项改为 Arch 使用的 GRUB，然后在 GRUB 中选择启动 Windows 还是 Arch。
+
+上回[降低 GRUB 分辨率](#更多高分屏与中文适配（3.4）)之后，Windows 的启动画面也变成了低分辨率（启动后分辨率会恢复正常），由于分辨率太低，厂商徽标无法显示，只能显示低清的 Win11 大蓝标，**特别丑**。Arch 虽然当时没有出问题，但换上 NVIDIA 专有驱动后也出现了启动分辨率同 GRUB 一致的问题。
+
+Arch 的问题是 NVIDIA 专有驱动造成的，无法解决。Windows 的问题倒是可以解决：只需用命令提示符运行 `bcdedit /set {globalsettings} highestmode on` 或用 PowerShell 运行 `bcdedit /set "{globalsettings}" highestmode on`。（[参考链接](https://superuser.com/questions/1723882/low-resolution-boot-screen-on-windows)）
+
+```
+> bcdedit /set {globalsettings} highestmode on
+操作成功完成。
+```
