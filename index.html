@@ -411,7 +411,7 @@ target="_blank" rel="noopener" href="https://csdiy.wiki/%E6%93%8D%E4%BD%9C%E7%B3
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-15 00:00:00" itemprop="dateModified" datetime="2024-03-15T00:00:00+08:00">2024-03-15</time>
+      <time title="修改时间：2024-05-16 00:00:00" itemprop="dateModified" datetime="2024-05-16T00:00:00+08:00">2024-05-16</time>
     </span>
 
   
@@ -676,9 +676,24 @@ target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/HiDPI#%E9
 target="_blank" rel="noopener" href="https://forum.manjaro.org/t/hidpi-login-screen/33852">参考链接</a>）</li>
 <li>中文：参见<a
 target="_blank" rel="noopener" href="https://bbs.archlinuxcn.org/viewtopic.php?id=14095">我在
-archlinuxcn BBS 发的帖子</a>。</li>
+archlinuxcn BBS 发的帖子</a> 和 <a
+target="_blank" rel="noopener" href="https://blog.azurezeng.com/installation-guide-for-archlinux-kde/#header-id-17">Azure
+Zeng 的博客</a>。</li>
 </ul></li>
 </ul>
+<p><strong>3 月 25 日更新</strong>：更新至 KDE 6
+后登录页面无法同步缩放，我在 KDE Discuss 上<a
+target="_blank" rel="noopener" href="https://discuss.kde.org/t/login-screen-does-not-respect-plasma-global-scaling/12943">发帖求助</a>，得知此
+bug <a
+target="_blank" rel="noopener" href="https://bugs.kde.org/show_bug.cgi?id=467039">已被汇报</a>，将在不久后修复。</p>
+<p><strong>4 月 12
+日更新</strong>：再次检查发现工单已被标记为解决，但测试发现仍然无法同步缩放。通过查阅
+<a
+target="_blank" rel="noopener" href="https://blog.azurezeng.com/installation-guide-for-archlinux-kde/#header-id-20">Azure
+Zeng 的博客</a>、上述工单及工单中的链接，我得到了另一种解决方法：修改
+SDDM 配置文件 <code>/etc/sddm.conf</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[General]</span><br><span class="line">GreeterEnvironment=QT_SCREEN_SCALE_FACTORS=2.5,LANG=zh_CN.UTF-8</span><br></pre></td></tr></table></figure>
+
 <h2 id="java34">Java（3.4）</h2>
 <p>根据 <a
 target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/Java">ArchWiki</a>，安装 <a
@@ -706,6 +721,111 @@ target="_blank" rel="noopener" href="https://kde.org/zh-cn/announcements/megarel
 支持通过蓝牙连接手机，但是在我这里并没有试验成功。为此我在 KDE Discuss
 中发帖求助，得知蓝牙连接功能因故暂时关闭。详情请见<a
 target="_blank" rel="noopener" href="https://discuss.kde.org/t/how-to-connect-via-bluetooth-using-kde-connect/12299">我发布的帖子</a>。</p>
+<h2 id="vivado-again">Vivado again（???）</h2>
+<p><strong>WIP</strong></p>
+<p>面对综合报错和仿真无法打开文件的问题，学长建议我安装 Vivado
+2019。但是据说今年官方推荐的版本将改为 Vivado 2023，学长建议我保留
+2023。</p>
+<p>之前同学就建议我安装 AUR 上的 <a
+target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/vivado"><span>vivado</span></a><sup>AUR</sup>，加上
+Vivado 2019 的完整版安装包小了很多（26.5G），我觉得值得一试。</p>
+<p>我最初的想法是使用支持 Vivado 2019.2 的 PKGBUILD（commit
+<code>3dbc515</code>）进行构建，但是报错说有些包找不到。这是因为在三年多的时间里，有些包已经被其他包取代了。</p>
+<p>于是我以最新 commit 为基底，修改了版本信息：</p>
+<p>最后值得一提的是，<a
+target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/Pacman#%E5%9C%A8%E5%8D%87%E7%BA%A7%E6%97%B6%E8%B7%B3%E8%BF%87%E8%BD%AF%E4%BB%B6%E5%8C%85">在升级时跳过
+vivado</a>。</p>
+<h2 id="启动速度慢--cpu-高占用331--42">启动速度慢 + CPU 高占用（3.31 –
+4.2）</h2>
+<p>最近两天，我的 Arch Linux
+突然出现了一些问题，对日常使用有很大影响：</p>
+<ol type="1">
+<li>启动速度慢。GRUB 加载 Linux 之后会黑屏 2
+分钟，然后才能正常启动。</li>
+<li>CPU 高占用。开机后风扇一直在高速运转，CPU 有一个核满载。</li>
+</ol>
+<p>我在 <a
+target="_blank" rel="noopener" href="https://bbs.archlinuxcn.org/viewtopic.php?id=14172">archlinuxcn
+BBS</a> 上发帖求助，两位大佬帮我解决了问题：</p>
+<ol type="1">
+<li>检查内核日志可知是 <a
+target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/Nouveau">Nouveau</a>（NVIDIA
+显卡开源驱动）的问题。解决方法是使用 NVIDIA
+闭源驱动或者禁用独显，我选择了前者。</li>
+<li>使用 <code>top</code>/<code>htop</code> 查看 CPU 占用，得知是 <a
+target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/Baloo">Baloo</a>
+的问题，禁用即可。</li>
+</ol>
+<p>非常感谢他们，同时使我认识到自己的 Linux 基础知识仍然匮乏。</p>
+<p>下面附上安装 NVIDIA 闭源驱动的方法（总结自 ArchWiki 的 <a
+target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/NVIDIA">NVIDIA</a> 页面）：</p>
+<ol type="1">
+<li>查询显卡型号：
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    $ lspci -k | grep -A 2 -E &quot;(VGA|3D)&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li>根据 ArchWiki 的指引，安装 <a
+target="_blank" rel="noopener" href="https://archlinux.org/packages/?name=nvidia"><samp>nvidia</samp></a>
+和 <a
+target="_blank" rel="noopener" href="https://archlinux.org/packages/?name=lib32-nvidia-utils"><samp>lib32-nvidia-utils</samp></a>（不同型号安装的包有所不同）。</li>
+<li>编辑 <code>/etc/mkinitcpio.conf</code>，删除 <code>HOOKS</code> 中的
+<code>kms</code>。</li>
+<li>重新生成启动镜像：
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    # mkinitcpio -P</span><br></pre></td></tr></table></figure>
+</li>
+<li>重启，完成。</li>
+</ol>
+<h2 id="微码415">微码（4.15）</h2>
+<p>微码的作用是将复杂指令分解为一系列简单指令。及时更新微码可以修复 CPU
+的重大漏洞。</p>
+<p>我根据 <a
+target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/%E5%BE%AE%E7%A0%81">ArchWiki</a>
+上的教程，运行了以下命令来检查是否已经安装了微码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># journalctl -k --grep=microcode</span><br><span class="line">4月 15 19:38:29 triplecamera kernel: Register File Data Sampling: Vulnerable: No microcode</span><br><span class="line">4月 15 19:38:29 triplecamera kernel: microcode: Current revision: 0x00000421</span><br></pre></td></tr></table></figure>
+
+<p>看来没有。于是我安装了 <a
+target="_blank" rel="noopener" href="https://archlinux.org/packages/?name=intel-ucode"><samp>intel-ucode</samp></a>，重启后再次检查：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># journalctl -k --grep=microcode</span><br><span class="line">4月 15 20:08:50 triplecamera kernel: microcode: Current revision: 0x00000432</span><br><span class="line">4月 15 20:08:50 triplecamera kernel: microcode: Updated early from: 0x00000421</span><br></pre></td></tr></table></figure>
+
+<p>没想到居然已经装好了。赞。</p>
+<h2 id="电源管理方案419">电源管理方案（4.19）</h2>
+<p>查看电池状态时注意到电源管理方案不可用：</p>
+<img src="/images/archlinux-power.png" alt="电源管理方案不可用的提示" style="max-height: 20em;">
+
+<p>于是去 <a
+target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/KDE#%E7%94%B5%E6%BA%90%E7%AE%A1%E7%90%86">ArchWiki</a>
+上查了一下，发现 KDE 的电源管理依赖于 <a
+target="_blank" rel="noopener" href="https://archlinux.org/packages/?name=powerdevil"><samp>powerdevil</samp></a>
+和 <a
+target="_blank" rel="noopener" href="https://archlinux.org/packages/?name=power-profiles-daemon"><samp>power-profiles-daemon</samp></a>。前者在我安装
+<a
+target="_blank" rel="noopener" href="https://archlinux.org/groups/x86_64/plasma/"><samp>plasma</samp></a><sup>组</sup>
+时就一并安装了，后者需要手动安装。</p>
+<p>安装过后重启，电源管理方案就可以使用了。</p>
+<h2 id="intellij-idea422">IntelliJ IDEA（4.22）</h2>
+<p>4 月 21 日那天，我突然想来一场“自我放逐”：从某一天开始，从 Windows
+换成 Arch Linux，并且再也不要换回来了。看看自己能坚持多久。</p>
+<p>为此我需要将平日会用到的软件在 Arch 上都装一份——其中之一就是 IntelliJ
+IDEA。去 ArchWiki 上看了发现只有 Community Edition，经过一番搜索才发现
+Ultimate Edition 在 AUR 上。</p>
+<p><strong>5 月 1 日更新</strong>：已在 ArchWiki 上补充相关信息。</p>
+<h2
+id="但愿是最后一次适配高分屏425">但愿是最后一次适配高分屏（4.25）</h2>
+<p>刚装上 Arch Linux 的时候，默认启动项是 Windows，所以每次想要启动 Arch
+都要在开机时长按
+<kbd>F12</kbd>，切换启动项。为了延长键盘寿命（笑），我决定将默认启动项改为
+Arch 使用的 GRUB，然后在 GRUB 中选择启动 Windows 还是 Arch。</p>
+<p>上回<a href="#更多高分屏与中文适配（3.4）">降低 GRUB
+分辨率</a>之后，Windows
+的启动画面也变成了低分辨率（启动后分辨率会恢复正常），由于分辨率太低，厂商徽标无法显示，只能显示低清的
+Win11 大蓝标，<strong>特别丑</strong>。Arch 虽然当时没有出问题，但换上
+NVIDIA 专有驱动后也出现了启动分辨率同 GRUB 一致的问题。</p>
+<p>Arch 的问题是 NVIDIA 专有驱动造成的，无法解决。Windows
+的问题倒是可以解决：只需用命令提示符运行
+<code>bcdedit /set &#123;globalsettings&#125; highestmode on</code> 或用
+PowerShell 运行
+<code>bcdedit /set "&#123;globalsettings&#125;" highestmode on</code>。（<a
+target="_blank" rel="noopener" href="https://superuser.com/questions/1723882/low-resolution-boot-screen-on-windows">参考链接</a>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; bcdedit /set &#123;globalsettings&#125; highestmode on</span><br><span class="line">操作成功完成。</span><br></pre></td></tr></table></figure>
 
       
     </div>
