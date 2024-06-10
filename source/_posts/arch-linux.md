@@ -1,7 +1,7 @@
 ---
 title: Arch Linux 害了他
 date: 2024-02-06
-updated: 2024-05-16
+updated: 2024-06-10
 tags:
 ---
 > 既然选择了 Arch，便只顾风雨兼程。——周国平没说过这句话
@@ -302,3 +302,30 @@ Arch 的问题是 NVIDIA 专有驱动造成的，无法解决。Windows 的问�
 > bcdedit /set {globalsettings} highestmode on
 操作成功完成。
 ```
+
+## VLC 高分屏适配（6.8）
+使用 VLC 时遇到了下方按钮过小的问题——又要做高分屏适配了。
+
+<img src="/images/archlinux-vlc-nohidpi.png" alt="没有启用 HiDPI 的 VLC 界面" style="max-height: 13em;">
+
+上网一搜就能搜到，传入环境变量 `QT_SCALE_FACTOR`（或 `QT_AUTO_SCREEN_SCALE_FACTOR`、`QT_SCREEN_SCALE_FACTORS`）即可。（[参考链接](https://unix.stackexchange.com/questions/557181/how-to-increase-dpi-for-vlc-media-player-in-cinnamon-on-uhd-display)）
+
+先用命令行尝试一下，确实可以工作：
+```
+$ QT_SCREEN_SCALE_FACTORS=2.5 vlc
+```
+
+~~其实以上内容是我很久之前就研究出来的，今天突然想起来这项研究还没做完就赶紧补完写出来了。~~
+
+我们在应用程序启动器（KDE 的“开始菜单”）中右键 VLC 的快捷方式，选择“编辑应用程序...”，然后切换到“应用程序”选项卡，将“环境变量”设置为 `QT_SCREEN_SCALE_FACTORS=2.5`。点击“确定”，Plasma 就会将 VLC 的系统快捷方式（位于 `/usr/share/applications/vlc.desktop`）拷贝到用户目录（`~/.local/share/applications/`），然后再进行修改，从而避免对系统快捷方式的影响。
+
+再次打开 VLC，可以看到缩放正常了：
+
+<img src="/images/archlinux-vlc-hidpi.png" alt="启用了 HiDPI 的 VLC 界面" style="max-height: 23em;">
+
+我正在担心打开文件的时候该怎么传入环境变量，结果一试，双击文件时也会应用环境变量——这点可比 Windows 做的好。
+
+## 帮助中心（6.9）
+每次我查看 KDE 应用程序的使用手册时都会跳转到官网——那么有没有办法离线查看手册呢？我去问湖人，湖人不知道，让我去加[微信群](https://kde-china.org/usergroup.html)。我加群后问了问题，可是一直没有人回答我。
+
+最后我找到了 KDE 的帮助中心 [KHelpCenter](https://apps.kde.org/zh-cn/khelpcenter/)（软件包：[<samp>khelpcenter</samp>](https://archlinux.org/packages/?name=khelpcenter)）。确实是离线的，嗯。
