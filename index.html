@@ -464,7 +464,7 @@ data-emoji="sob">😭</span><br />
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 00:00:00" itemprop="dateModified" datetime="2024-05-16T00:00:00+08:00">2024-05-16</time>
+      <time title="修改时间：2024-06-10 00:00:00" itemprop="dateModified" datetime="2024-06-10T00:00:00+08:00">2024-06-10</time>
     </span>
 
   
@@ -879,6 +879,35 @@ PowerShell 运行
 <code>bcdedit /set "&#123;globalsettings&#125;" highestmode on</code>。（<a
 target="_blank" rel="noopener" href="https://superuser.com/questions/1723882/low-resolution-boot-screen-on-windows">参考链接</a>）</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; bcdedit /set &#123;globalsettings&#125; highestmode on</span><br><span class="line">操作成功完成。</span><br></pre></td></tr></table></figure>
+
+<h2 id="vlc-高分屏适配68">VLC 高分屏适配（6.8）</h2>
+<p>使用 VLC 时遇到了下方按钮过小的问题——又要做高分屏适配了。</p>
+<img src="/images/archlinux-vlc-nohidpi.png" alt="没有启用 HiDPI 的 VLC 界面" style="max-height: 13em;">
+
+<p>上网一搜就能搜到，传入环境变量 <code>QT_SCALE_FACTOR</code>（或
+<code>QT_AUTO_SCREEN_SCALE_FACTOR</code>、<code>QT_SCREEN_SCALE_FACTORS</code>）即可。（<a
+target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/557181/how-to-increase-dpi-for-vlc-media-player-in-cinnamon-on-uhd-display">参考链接</a>）</p>
+<p>先用命令行尝试一下，确实可以工作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ QT_SCREEN_SCALE_FACTORS=2.5 vlc</span><br></pre></td></tr></table></figure>
+
+<p><del>其实以上内容是我很久之前就研究出来的，今天突然想起来这项研究还没做完就赶紧补完写出来了。</del></p>
+<p>我们在应用程序启动器（KDE 的“开始菜单”）中右键 VLC
+的快捷方式，选择“编辑应用程序...”，然后切换到“应用程序”选项卡，将“环境变量”设置为
+<code>QT_SCREEN_SCALE_FACTORS=2.5</code>。点击“确定”，Plasma 就会将 VLC
+的系统快捷方式（位于
+<code>/usr/share/applications/vlc.desktop</code>）拷贝到用户目录（<code>~/.local/share/applications/</code>），然后再进行修改，从而避免对系统快捷方式的影响。</p>
+<p>再次打开 VLC，可以看到缩放正常了：</p>
+<img src="/images/archlinux-vlc-hidpi.png" alt="启用了 HiDPI 的 VLC 界面" style="max-height: 23em;">
+
+<p>我正在担心打开文件的时候该怎么传入环境变量，结果一试，双击文件时也会应用环境变量——这点可比
+Windows 做的好。</p>
+<h2 id="帮助中心69">帮助中心（6.9）</h2>
+<p>每次我查看 KDE
+应用程序的使用手册时都会跳转到官网——那么有没有办法离线查看手册呢？我去问湖人，湖人不知道，让我去加<a
+target="_blank" rel="noopener" href="https://kde-china.org/usergroup.html">微信群</a>。我加群后问了问题，可是一直没有人回答我。</p>
+<p>最后我找到了 KDE 的帮助中心 <a
+target="_blank" rel="noopener" href="https://apps.kde.org/zh-cn/khelpcenter/">KHelpCenter</a>（软件包：<a
+target="_blank" rel="noopener" href="https://archlinux.org/packages/?name=khelpcenter"><samp>khelpcenter</samp></a>）。确实是离线的，嗯。</p>
 
       
     </div>
