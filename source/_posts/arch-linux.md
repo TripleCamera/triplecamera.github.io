@@ -329,3 +329,33 @@ $ QT_SCREEN_SCALE_FACTORS=2.5 vlc
 每次我查看 KDE 应用程序的使用手册时都会跳转到官网——那么有没有办法离线查看手册呢？我去问湖人，湖人不知道，让我去加[微信群](https://kde-china.org/usergroup.html)。我加群后问了问题，可是一直没有人回答我。
 
 最后我找到了 KDE 的帮助中心 [KHelpCenter](https://apps.kde.org/zh-cn/khelpcenter/)（软件包：[<samp>khelpcenter</samp>](https://archlinux.org/packages/?name=khelpcenter)）。确实是离线的，嗯。
+
+## `paccache`（7.15）
+一不注意磁盘占用超过 80% 了。拿 Filelight 看了一下，发现能删的东西中，pacman 和 yay 的缓存占了大部分。
+
+那么怎么清理呢？直接删掉缓存文件夹当然是可以的，但 [ArchWiki](https://wiki.archlinuxcn.org/wiki/Pacman#%E6%B8%85%E7%90%86%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%BC%93%E5%AD%98) 给出的方法是使用 `paccache` 或 `yay -Sc`。前者可以保留最近几个版本的包（默认是 3 个），后者只会保留最新版的包（`yay -Scc` 会全部删除，但没有必要那样做）。
+
+我选择了前者：
+```
+$ paccache -d
+
+==> finished dry run: 1383 candidates (disk space saved: 17.32 GiB)
+$ paccache -r
+==> Escalating privileges using sudo
+[sudo] triplecamera 的密码：
+
+==> finished: 1383 packages removed (disk space saved: 17.32 GiB)
+```
+
+清理完后磁盘占用 74%……有人可能问我（其实没人问）为什么不选择后者，我觉得即使选择后者也只能解一时之急，重新分区才是长远之计。
+
+## `pacdiff`（7.23）
+ -  Vim：配色亮<abbr title="瞎">目害</abbr>眼。
+ -  gVim：没用过，不熟。
+ -  KDiff3：崩溃了……
+ -  Kompare：能用，但是不能选择“不应用差异”，只能选择“应用差异”。
+
+TODO
+
+## 发送报告（7.23）
+TODO
