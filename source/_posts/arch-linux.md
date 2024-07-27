@@ -1,7 +1,7 @@
 ---
 title: Arch Linux 害了他
 date: 2024-02-06
-updated: 2024-06-10
+updated: 2024-07-27
 tags:
 ---
 > 既然选择了 Arch，便只顾风雨兼程。——周国平没说过这句话
@@ -350,12 +350,39 @@ $ paccache -r
 清理完后磁盘占用 74%……有人可能问我（其实没人问）为什么不选择后者，我觉得即使选择后者也只能解一时之急，重新分区才是长远之计。
 
 ## `pacdiff`（7.23）
+起因是<abbr title="7 月 21 日">星期天</abbr>滚系统的时候，[<samp>sudo</samp>](https://archlinux.org/packages/?name=sudo) 更新了配置文件 `/etc/sudoers`，pacman 将新版本存到了 `/etc/sudoers.pacnew`，让用户手动处理差异。
+
+这可造成了不小麻烦……我先试着用 Kate 打开，结果 Kate 因为权限不足打不开。我又用 sudo 运行 Kate，结果 Kate 拒绝以 sudo 模式运行。于是我只好用 Vim……先把 `/etc/sudoers` 移动到 `/etc/sudoers.bak`，再把 `/etc/sudoers.pacnew` 修改好以后移动到 `/etc/sudoers`——结果这第一步就出了问题，`/etc/sudoers` 不见以后，sudo 没法运行了。于是我只好用 root 账户完成了剩下的操作……
+
+两天以后，[<samp>glibc</samp>](https://archlinux.org/packages/?name=glibc) 更新了 `/etc/locale.gen`。因为手动处理差异太麻烦了，我就根据 [ArchWiki](https://wiki.archlinuxcn.org/wiki/Pacman/pacnew_%E4%B8%8E_pacsave#pacdiff) 的指引尝试了一下 `pacdiff`。
+
+`pacdiff` 支持各种差异工具。我想找个 GUI 的，最好是 KDE 的。嗯……最后找到了 [<samp>kdiff3</samp>](https://archlinux.org/packages/?name=kdiff3) 和 [<samp>kompare</samp>](https://archlinux.org/packages/?name=kompare)（前者是后者的新版）。那就来比试一番吧！
  -  Vim：配色亮<abbr title="瞎">目害</abbr>眼。
  -  gVim：没用过，不熟。
  -  KDiff3：崩溃了……
  -  Kompare：能用，但是不能选择“不应用差异”，只能选择“应用差异”。
 
-TODO
+就这样。**没一个能用的。**
 
 ## 发送报告（7.23）
-TODO
+书接上回。我在尝试 KDiff3 的时候，KDiff3 崩溃了：
+```
+$ DIFFPROG=kdiff3 pacdiff
+```
+
+幸运的是，崩溃是可以稳定复现的：
+```
+$ kdiff3 /etc/locale.gen /etc/locale.gen.pacnew
+```
+
+此时屏幕右下角弹出了崩溃处理程序的通知，于是我试着汇报了一下：
+
+点击“报告程序缺陷”，就会弹出一个窗口，上面有“发送自动报告”和“查看开发者信息”两个选项。前者会直接将崩溃信息发送到 [crash-reports.kde.org](https://crash-reports.kde.org/)，可惜只有开发者能查看。（[参考链接](https://discuss.kde.org/t/this-week-in-kde-looking-forward-towards-plasma-6-1/13248/4)）
+
+后者则会显示详细的崩溃日志。可是堆栈信息中全是未知的符号——这是因为缺少调试符号包。点击右上角的“安装调试符号包”，安装完成后堆栈信息就清晰可见了。此时发送的崩溃报告就具备参考价值了。
+
+最后介绍两个选项：
+ -  [ ] 自动报告崩溃
+ -  [x] 自动下载调试符号包以提高崩溃报告价值
+
+后者十分有用，我就把它勾上了。
