@@ -364,7 +364,7 @@ $ paccache -r
 
 就这样。**没一个能用的。**
 
-## 发送报告（7.23）
+## 发送崩溃报告（7.23）
 书接上回。我在尝试 KDiff3 的时候，KDiff3 崩溃了：
 ```
 $ DIFFPROG=kdiff3 pacdiff
