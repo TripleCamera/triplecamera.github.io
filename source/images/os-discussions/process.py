@@ -41,7 +41,7 @@ comments: false
 <div id="reply-0" class="reply">
 <div class="reply-header">
 <span>{F_attribution}</span>
-<div class="reply-badges"><div class="badge badge-subscribes">\U0001F516\uFE0E {subscribes} 订阅</div><div class="badge badge-likes">\U0001F44D\uFE0E {likes} 点赞</div>{F_badges}</div>
+<div class="reply-badges">{F_badges}</div>
 </div>
 <div class="reply-text">
 
@@ -50,10 +50,10 @@ comments: false
 </div>
 <div class="reply-footer">
 <span>{F_license}</span>
-<div style="float: right;">
-<span>创建于：{F_created_at}</span>
-<br><span>最后修改于：{F_last_edited_at}</span>
-<br><span>最后回复于：{F_last_replied_at}</span>
+<div class="reply-datetime">
+创建于：<time datetime="{created_at}" title="{created_at}">{F_created_at}</time>
+<br>最后修改于：<time datetime="{last_edited_at}" title="{last_edited_at}">{F_last_edited_at}</time>
+<br>最后回复于：<time datetime="{last_replied_at}" title="{last_replied_at}">{F_last_replied_at}</time>
 </div>
 </div>
 <div style="clear: both;"></div>
@@ -68,7 +68,7 @@ REPLY_FORMAT = """\
 <div id="reply-{id}" class="reply reply-l{Level}">
 <div class="reply-header">
 <span>{F_header}</span>
-<div class="reply-badges"><div class="badge badge-likes">{likes} 点赞</div>{F_badges}</div>
+<div class="reply-badges">{F_badges}</div>
 </div>
 <div class="reply-text">
 
@@ -77,7 +77,7 @@ REPLY_FORMAT = """\
 </div>
 <div class="reply-footer">
 <span>{F_license}</span>
-<div style="float: right;">
+<div class="reply-datetime">
 <span>创建于：{F_created_at}</span>
 <br><span>最后修改于：{F_last_edited_at}</span>
 </div>
@@ -92,15 +92,46 @@ TABLE_FORMAT = """
 | {F_link} | {F_attribution}<br><small>{F_created_at}</small> |
 """.strip()
 
-discussion_config: dict = dict()
-author_config: dict = dict()
-unknown_authors = set()
+discussion_config: dict
+author_config: dict
+unknown_authors: set = set()
 archive_needed_count = 0
 
 
 # 转换过程中时区信息会保留
 def format_iso_time(iso_time: str) -> str:
     return datetime.datetime.fromisoformat(iso_time).strftime('%Y-%m-%d %H:%M:%S')
+
+
+def format_badges(subscribes: int | None, likes: int, topped: bool, closed: bool, authentic: bool) -> str:
+    result = ''
+
+    # subscribes: 大于 0 时显示有色版本，等于 0 时显示无色版本，为 None 时不显示
+    if subscribes is not None:
+        if subscribes > 0:
+            result += f'<div class="badge badge-subscribes">&#x1F516;&#xFE0E; {subscribes} 订阅</div>'
+        else:
+            result += f'<div class="badge">&#x1F516;&#xFE0E; {subscribes} 订阅</div>'
+
+    # likes: 大于 0 时显示有色版本，等于 0 时显示无色版本
+    if likes > 0:
+        result += f'<div class="badge badge-likes">&#x1F44D;&#xFE0E; {likes} 点赞</div>'
+    else:
+        result += f'<div class="badge">&#x1F44D;&#xFE0E; {likes} 点赞</div>'
+
+    # topped: 为 True 时显示有色版本，为 False 时不显示
+    if topped:
+        result += '<div class="badge badge-topped">&#x1F51D;&#xFE0E; 已置顶</div>'
+
+    # closed: 为 True 时显示有色版本，为 False 时不显示
+    if closed:
+        result += '<div class="badge badge-closed">&#x274C;&#xFE0E; 已关闭</div>'
+
+    # authentic: 为 True 时显示有色版本，为 False 时不显示
+    if authentic:
+        result += '<div class="badge badge-authentic">&#x2714;&#xFE0E; 由课程团队认证</div>'
+
+    return result
 
 
 # 对回复文本进行多功能查找替换
@@ -138,7 +169,7 @@ def advanced_replace(post_id: int, text: str, rules: list) -> str:
                 print(f'[ERROR] Unknown function {rule[0]}')
     return text
 
-def process_responses(reply_content_list: list, topic: dict, reply_target: int, level: int) -> str:
+def process_responses(topic: dict, reply_target: int, level: int) -> str:
     global unknown_authors
 
     l = []
@@ -146,7 +177,9 @@ def process_responses(reply_content_list: list, topic: dict, reply_target: int, 
     for reply in topic['reply_list']:
         if reply['reply_target'] == reply_target:
             reply['Level'] = level
-            reply['F_badges'] = '???'
+            reply['F_badges'] = format_badges(
+                None, reply['likes'], False, False, reply['authentic']
+            )
             reply['F_created_at'] = format_iso_time(reply['created_at'])
             reply['F_last_edited_at'] = format_iso_time(reply['last_edited_at'])
             if reply['author_name'] in author_config:
@@ -157,9 +190,9 @@ def process_responses(reply_content_list: list, topic: dict, reply_target: int, 
                 reply['F_header'] = '???'
                 reply['F_license'] = '???'
                 reply['F_content'] = '???'
+                unknown_authors.add(reply['author_name'])
             reply_content = REPLY_FORMAT.format(**reply)
-            reply_content_list.append(reply_content)
-            deep = process_responses(reply_content_list, topic, reply['id'], level + 1)
+            deep = process_responses(topic, reply['id'], level + 1)
             if deep:
                 l.append(f'{reply_content}\n<hr class="reply-separator">\n{deep}')
             else:
@@ -178,14 +211,9 @@ def process_topic(topic: dict) -> str:
     topic['F_last_edited_at'] = format_iso_time(topic['last_edited_at'])
     topic['F_last_replied_at'] = format_iso_time(topic['last_replied_at'])
     topic['F_link'] = '[{}]({})'.format(topic['title'], topic['id'])
-    badge_list = []
-    if topic['topped']:
-        badge_list.append('<div class="badge badge-topped">\U0001F51D\uFE0E 已置顶</div>')
-    if topic['closed']:
-        badge_list.append('<div class="badge badge-closed">\u274C\uFE0E 已关闭</div>')
-    if topic['authentic']:
-        badge_list.append('<div class="badge badge-authentic">\u2714\uFE0E 由课程团队认证</div>')
-    topic['F_badges'] = ''.join(badge_list)
+    topic['F_badges'] = format_badges(
+        topic['subscribes'], topic['likes'], topic['topped'], topic['closed'], topic['authentic']
+    )
     if topic['author_name'] in author_config:
         topic['F_attribution'] = author_config[topic['author_name']]['attribution']
         topic['F_license'] = author_config[topic['author_name']]['license']
@@ -194,10 +222,9 @@ def process_topic(topic: dict) -> str:
         topic['F_attribution'] = '???'
         topic['F_license'] = '???'
         topic['F_content'] = '???'
+        unknown_authors.add(topic['author_name'])
 
-    reply_content_list = []
-    topic['F_reply_list'] = process_responses(reply_content_list, topic, 0, 0) if topic['reply_list'] else ''
-    # topic['Reply_list'] = '\n<hr class="reply-separator">\n'.join(reply_content_list)
+    topic['F_reply_list'] = process_responses(topic, 0, 0) if topic['reply_list'] else ''
     return OUTPUT_FORMAT.format(**topic)
 
 

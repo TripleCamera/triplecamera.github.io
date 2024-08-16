@@ -31,12 +31,12 @@ for id in range(361):
 
 print(f'Topic count: {topic_count}')
 for likes in sorted(likes_count.keys()):
-    if len(likes_count[likes]) <= 5:
+    if True: # len(likes_count[likes]) <= 5:
         print(f'{likes} likes: {len(likes_count[likes])} ({likes_count[likes]})')
     else:
         print(f'{likes} likes: {len(likes_count[likes])}')
 for subscribes in sorted(subscribes_count.keys()):
-    if len(subscribes_count[subscribes]) <= 5:
+    if True: # len(subscribes_count[subscribes]) <= 5:
         print(f'{subscribes} subscribes: {len(subscribes_count[subscribes])} ({subscribes_count[subscribes]})')
     else:
         print(f'{subscribes} subscribes: {len(subscribes_count[subscribes])}')
