@@ -1,7 +1,7 @@
 ---
 title: Arch Linux 害了他
 date: 2024-02-06
-updated: 2024-07-27
+updated: 2024-08-20
 tags:
 ---
 > 既然选择了 Arch，便只顾风雨兼程。——周国平没说过这句话
@@ -386,3 +386,89 @@ $ kdiff3 /etc/locale.gen /etc/locale.gen.pacnew
  -  [x] 自动下载调试符号包以提高崩溃报告价值
 
 后者十分有用，我就把它勾上了。
+
+## 修改分区（8.16 &ndash; 8.20）
+上文提到，半年前规划的分区结构不甚合理：经过半年的使用，Arch 的地位不断上升并有可能（部分）取代 Windows，原先分配的 252 GiB 空间根本不够 Arch 施展拳脚。因此现在迫切需要对分区结构进行修改。
+
+虽然 KDE 和 Gnome 的分区管理器都很好用，但它们不允许你在开着 Linux 的情况下修改 Linux 自身所在的分区——这就好比你没法拆掉自己脚下正踩着的那块地板，要想拆掉它，得先把脚拿开。所以，我们需要一股外部力量来完成修改分区的操作——这股力量正是 LiveCD。
+
+### GParted Live
+GParted 提供 LiveCD 版本，所以我选择了它。事实证明，这款软件虽然能用，但是存在着一些小问题……
+
+首先是老生常谈的问题——NVIDIA 显卡驱动。第一次进系统时我选了 `GParted Live (Default settings)` 启动项，结果黑屏了。由于之前帮室友装 Ubuntu 的时候遇到过类似的问题，所以我直接给启动参数加上了 `nomodeset`，问题顺利解决。后来查看 GRUB 菜单时，发现启动项 `GParted Live (Safe graphic settings, vga=normal)` 也加了这个参数——下次就用它来启动系统。
+
+接下来是分辨率过高的问题——无论是 GRUB 还是桌面环境，字都小到看不清。幸好我有之前配置 GRUB 的经验，于是直接修改了 `/boot/grub/grub.cfg`：
+```diff
+ if loadfont $font; then
+-  set gfxmode=auto
++  set gfxmode=800x600x32,auto
+   insmod gfxterm
+   # Set the language for boot menu prompt, e.g., en_US, zh_TW...
+   set lang=en_US
+   terminal_output gfxterm
+ fi
+```
+
+GRUB 的分辨率降下来了。令我惊喜的是，系统的分辨率跟随 GRUB，于是系统的分辨率也降下来了。
+
+另外还有截图工具双击没有反应的问题。经过一番翻找，我找到了这个桌面图标对应的配置文件：`~/.idesktop/screenshot.lnk`，里面写着运行程序所需的命令：`gl-screenshot`。我在终端中运行了这个命令，输出如下：
+```
+$ gl-screenshot
+No gdialog or Xdialog was found!
+Program terminated!!!
+```
+
+[GitLab issue](https://gitlab.gnome.org/GNOME/gparted/-/issues/256) 里面说这个问题在最新的测试版中已经修复。可惜我没有空去试了，因为我想玩点不一样的——群友的 LiveCD。
+
+### 群友的 LiveCD
+我在 [archlinuxcn 交流群](https://www.archlinuxcn.org/archlinuxcn-group-mailling-list/)中求助时，有人建议我使用[群友的 LiveCD](https://github.com/archlinux-jerry/custom-archiso)，里面包含了 Xfce 桌面环境和 GParted 等实用软件。
+
+第一次启动的时候图形界面没有自动启动，第二次启动的时候就有图形界面了，原因未知。
+
+调节缩放比（Scale）似乎有问题，于是我只好降低分辨率（Resolution）。
+
+以下是修改前的分区（截图工具没装，只好拍屏了）：
+
+![修改前的分区](/images/archlinux-partition-before.jpg)
+
+### GParted，启动！
+终于可以对分区进行大刀阔斧的改造了！下面是分解动作：
+
+1.  将 D 盘压缩至 512 GiB。（为了避免 NTFS 兼容问题，我在这一步使用了 Windows 的磁盘管理工具。）
+
+2.  将 swap 分区删除。
+
+3.  将 Linux 主分区移动到空闲区域的最左侧。
+
+4.  创建 swap 分区，大小为 24 GiB，位于空闲区域的最右侧。
+
+    这台电脑有 16 GiB 内存。ArchWiki 上说，如果要启用休眠，那么 swap 分区的大小应不低于内存大小；RedHat 建议，如果要启用休眠，那么 swap 分区的大小应至少为内存大小的 1.5 倍。虽然我还没有启用休眠，但为了长远考虑，最后我分配了 24 GiB。
+
+5.  将 Linux 主分区扩展，占满空闲区域。
+
+以下是修改后的分区：
+
+![修改后的分区](/images/archlinux-partition-after.jpg)
+
+### 善后工作
+GRUB 和 Arch 的配置都是基于原有的分区结构生成的，现在分区结构变了，配置却还没有更新，势必会带来问题。果不其然：启动 Arch 时，虽然系统能正常启动，但 swap 分区没有正确挂载。
+
+我插上 Arch 启动盘，但这次不需要走完装系统的整个流程。只需要依次挂载主分区、挂载 EFI 分区、启用 swap 分区，然后运行 `genfstab -U /mnt >> /mnt/etc/fstab` 更新 `/etc/fstab` 即可。以下是 `/etc/fstab` 的变更情况：
+```diff
+ # Static information about the filesystems.
+ # See fstab(5) for details.
+
+ # <file system> <dir> <type> <options> <dump> <pass>
+ # /dev/nvme0n1p7
+ UUID=1c13125e-cd3c-427b-adb0-8155a5c5122a	/         	ext4      	rw,relatime	0 1
+
+ # /dev/nvme0n1p1 LABEL=SYSTEM
+ UUID=EC68-766C      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+ # /dev/nvme0n1p6
+-UUID=4c079726-ded2-4448-9e3a-40eefb72eb90	none      	swap      	defaults  	0 0
++UUID=f85dc3e2-6486-4cb2-b002-73bf4bfe232f	none      	swap      	defaults  	0 0
+
+```
+
+注意到只有 swap 分区的 UUID 产生了变化（因为我删除并重新创建了 swap 分区），各个分区的编号都没有变。这就是为什么 GRUB 仍然可以启动 Arch。但保险起见，我还是重新运行了 `grub-mkconfig`。
