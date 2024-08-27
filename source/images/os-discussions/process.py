@@ -2,7 +2,7 @@
 将讨论区帖子转换为 Hexo 页面。
 作者：TripleCamera（https://triplecamera.github.io/）
 协议：MIT
-版本：20240xxx
+版本：20240827
 
 原始数据：从网站获得的 JSON 文件。为防止操作失误，我们只修改文件名，不修改内容。
  -  所有 query-topic 放置在 discussion 下，并重命名为 query-topic-{id}.json。
@@ -32,7 +32,7 @@ import re
 # 输出格式，数据来自 post 字典
 OUTPUT_FORMAT = """\
 ---
-title: {title}
+title: '{title}'
 mathjax: true
 comments: false
 ---
@@ -148,10 +148,10 @@ def advanced_replace(post_id: int, text: str, rules: list) -> str:
                 text = re.sub(rule[1], rule[2], text)
             case 'img':
                 assert len(rule) == 3
-                text = text.replace(rule[1], f'/images/co-discussions/{post_id}/{rule[2]}')
+                text = text.replace(rule[1], f'/images/os-discussions/{post_id}/{rule[2]}')
             case 'img.re':
                 assert len(rule) == 2
-                text = re.sub(rule[1], f'/images/co-discussions/{post_id}/\\1', text)
+                text = re.sub(rule[1], f'/images/os-discussions/{post_id}/\\1', text)
             case 'arc':
                 assert len(rule) == 3
                 text = text.replace(rule[1], f'{rule[1]}<small>（[存档]({rule[2]})）</small>')
@@ -185,11 +185,12 @@ def process_responses(topic: dict, reply_target: int, level: int) -> str:
             if reply['author_name'] in author_config:
                 reply['F_header'] = author_config[reply['author_name']]['attribution']
                 reply['F_license'] = author_config[reply['author_name']]['license']
-                reply['F_content'] = reply['content']
+                reply['F_content'] = advanced_replace(topic['id'], reply['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else reply['content'] # TODO Strict here too
             else:
                 reply['F_header'] = '???'
                 reply['F_license'] = '???'
                 reply['F_content'] = '???'
+                # reply['F_content'] = advanced_replace(topic['id'], reply['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else reply['content'] # debug
                 unknown_authors.add(reply['author_name'])
             reply_content = REPLY_FORMAT.format(**reply)
             deep = process_responses(topic, reply['id'], level + 1)
@@ -217,11 +218,12 @@ def process_topic(topic: dict) -> str:
     if topic['author_name'] in author_config:
         topic['F_attribution'] = author_config[topic['author_name']]['attribution']
         topic['F_license'] = author_config[topic['author_name']]['license']
-        topic['F_content'] = topic['content']
+        topic['F_content'] = advanced_replace(topic['id'], topic['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else topic['content'] # TODO Every topic needs replace
     else:
         topic['F_attribution'] = '???'
         topic['F_license'] = '???'
         topic['F_content'] = '???'
+        # topic['F_content'] = advanced_replace(topic['id'], topic['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else topic['content'] # DEBUG
         unknown_authors.add(topic['author_name'])
 
     topic['F_reply_list'] = process_responses(topic, 0, 0) if topic['reply_list'] else ''

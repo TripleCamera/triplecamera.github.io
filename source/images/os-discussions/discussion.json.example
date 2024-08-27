@@ -1,12 +1,125 @@
 {
-    "61": {},
-    "107": {},
-    "118": {},
-    "150": {},
-    "166": {},
-    // "296": {
-    //     "note": "test!!!",
+    // 21 likes
+    "118": {
+        "replace": [
+            // 图片换源
+            [ "img.re", "/public/22373080/[\\w-]+/([\\w.-]+)" ]
+        ]
+    },
+    "314": {
+        "replace": [
+            // 排版错误
+            [ "sub.re", "(对于sigaction.*)\\n(.*)\\n(.*)\\n", "\\1<br>\\n\\2<br>\\n\\3\\n" ],
+            [ "sub.re", "(有两种.*)\\n(.*)\\n(.*)\\n", "\\1<br>\\n\\2<br>\\n\\3\\n" ],
+            [ "sub.re", "(\\*\\*6\\*\\*\\.)\\n(.*)\\n(.*)\\n(.*)\\n", "\\1<br>\\n\\2<br>\\n\\3<br>\\n\\4\\n" ],
+            [ "sub.re", "(\\*\\*(?:1|3|5|9)\\*\\*\\.)\\n(.*)\\n(.*)\\n", "\\1<br>\\n\\2<br>\\n\\3\\n" ],
+            [ "sub.re", "(\\*\\*(?:2|4|7|8|10|11)\\*\\*\\.)\\n(.*)\\n", "\\1<br>\\n\\2\\n" ]
+        ]
+    },
+    // 20 likes
+    "107": {
+        "replace": [
+            // 图片换源
+            [ "img", "/public/22373362/f27b7389-106f-4378-ac26-58683d64601b/image.png", "image--1.png" ],
+            [ "img", "/public/22373362/533c072b-cdca-43c8-90f5-5730c834a789/image.png", "image--2.png" ],
+            [ "img.re", "/public/22373362/[\\w-]+/([\\w.-]+)" ]
+        ]
+    },
+    // 16 likes
+    // "61": {
+    //     "replace": [
+    //         // 图片换源
+    //         [ "img", "/public/22371207/b53ca091-aeee-42da-b42c-00147db06be6/image.png", "image--1.png" ],
+    //         [ "img", "/public/22371207/58f9e9d3-78b2-4b00-a02f-ac7b8bb23462/image.png", "image--2.png" ],
+    //         [ "img", "/public/22371207/dfcd2f61-609f-4801-b68e-7289588f7bbf/image.png", "image--3.png" ],
+    //         // 资料存档
+    //         [ "arc_need", "[https://bhpan.buaa.edu.cn/link/AAB1F52516010E4FD783EDCEC1340480BB](https://bhpan.buaa.edu.cn/link/AAB1F52516010E4FD783EDCEC1340480BB)" ],
+    //         // 排版错误
+    //         [ "sub", "**停止容器**", "**停止容器**<br>" ],
+    //         [ "sub", "[https://bhpan.buaa.edu.cn/link/AAB1F52516010E4FD783EDCEC1340480BB](https://bhpan.buaa.edu.cn/link/AAB1F52516010E4FD783EDCEC1340480BB)", "<https://bhpan.buaa.edu.cn/link/AAB1F52516010E4FD783EDCEC1340480BB>" ], // TODO This is a bug in pandoc
+    //         [ "sub", "<你的学号>。", "<你的学号>。<br>" ]
+    //     ]
+    // },
+    "150": {
+        "replace": [
+            // 图片换源
+            [ "img", "/public/22373213/7cde75f9-74b1-4ab8-9c92-7bb01d629b41/image.png", "image--1.png" ],
+            [ "img", "/public/20373209/4ece0fb8-4402-424e-bd6f-5f3e4251c23e/image.png", "image--2.png" ],
+            [ "img.re", "/public/22373213/[\\w-]+/([\\w.-]+)" ],
+            // 排版错误
+            [ "sub", "tmux！**", "tmux！**<br>" ]
+        ]
+    },
+    // 15 likes
+    // "326": {
     //     "replace": []
     // },
-    "314": {}
+    // 11 likes
+    // "208": {
+    //     "replace": [
+    //         // 图片换源
+    //         [ "img", "/public/21375049/d77cd450-38c7-4e82-a0c7-4c4e4fdc947d/image.png", "image.png" ]
+    //     ]
+    // },
+    // "289": {
+    //     "replace": [
+    //         // 排版错误
+    //         [ "sub", "神！！！", "神！！！<br>" ],
+    //         [ "sub", "过……", "过……<br>" ]
+    //     ]
+    // },
+    // 10 likes
+    // "166": {},
+    // 9 likes
+    // "138": {},
+    // 8 likes
+    "147": {
+        "replace": []
+    },
+    // "250": {
+    //     "replace": [
+    //         // 图片换源
+    //         [ "img", "https://os.buaa.edu.cn/tutorial-embedded/2024%E6%98%A5-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E9%A2%84%E4%B9%A0%E6%95%99%E7%A8%8B/assets/mips-stackframe.png", "mips-stackframe.png" ],
+    //         [ "img.re", "/public/22371207/[\\w-]+/([\\w.-]+)" ]
+    //     ]
+    // },
+    // "309": {},
+    // "318": {
+    //     "replace": []
+    // },
+    // 7 likes
+    // 114 -- 往年精华帖
+    // 132 -- 往年精华帖
+    // 6 likes
+    // "264": {
+    //     "replace": [ // WIP
+    //         // 资料存档
+    //         [ "arc_need", "[测试程序](https://gist.github.com/Qin-shihuang/5b32acd3d55e6aa2e5c065f25fe2d086)" ],
+    //         // 排版错误
+    //         [ "sub", "更新——————", "更新——————<br>" ],
+    //         [ "sub", "return 0;\n}", "return 0;\n}\n```" ],
+    //         [ "sub", "~~~", "~~" ],
+    //         [ "sub", "一下。", "一下。<br>" ]
+    //     ]
+    // },
+    // "311": {},
+    // "327": {
+    //     "replace": [
+    //         // 排版错误
+    //         [ "sub.re", "(6\\.24)\\n(.*)\\n(.*)\\n(.*)\\n(.*)\\n(.*)$", "\\1<br>\\n\\2<br>\\n\\3<br>\\n\\4<br>\\n\\5<br>\\n\\6" ],
+    //         [ "sub.re", "(我现在.*)\\n(.*)\\n(.*)\\n", "\\1<br>\\n\\2<br>\\n\\3\\n" ],
+    //         [ "sub.re", "(问题已.*)\\n(.*)\\n(.*)\\n(.*)\\n(.*)$", "\\1<br>\\n\\2<br>\\n\\3<br>\\n\\4<br>\\n\\5" ],
+    //         [ "sub.re", "(SIGKILL.*)\\n(.*)\\n", "\\1<br>\\n\\2\\n" ]
+    //     ]
+    // },
+    // 5 likes
+    // 116 -- 往年精华帖
+    // "218": {
+    //     "replace": [
+    //         // 排版错误
+    //         [ "sub.re", "(在做.*)\\n(.*)\\n(.*)\\n(.*)\\n(.*)$", "\\1<br>\\n\\2<br>\\n\\3<br>\\n\\4<br>\\n\\5" ],
+    //         [ "sub.re", "(我应该.*)\\n(.*)$", "\\1<br>\\n\\2" ]
+    //     ]
+    // },
+    // "308": {}
 }
