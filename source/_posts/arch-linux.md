@@ -472,3 +472,16 @@ GRUB 和 Arch 的配置都是基于原有的分区结构生成的，现在分区
 ```
 
 注意到只有 swap 分区的 UUID 产生了变化（因为我删除并重新创建了 swap 分区），各个分区的编号都没有变。这就是为什么 GRUB 仍然可以启动 Arch。但保险起见，我还是重新运行了 `grub-mkconfig`。
+
+## 腾讯会议（8.28 &ndash; 8.29）
+我在暑假时就安装了腾讯会议（[<samp>wemeet-bin</samp>](https://aur.archlinux.org/packages/wemeet-bin)<sup>AUR</sup>），但一直苦于没有人能帮我测试各项功能是否正常。直到返校以后，才有了和室友一起测试的机会。
+
+经过各方面的测试，我发现：腾讯会议大部分功能都能正常工作，唯一的问题是 Wayland 下不支持屏幕共享：开启屏幕共享后只能操作腾讯会议的控制栏，点击屏幕的其他地方都没有任何反应；同时，会议中其他人看到的只有黑屏。根据 AUR 中的评论，有两种解决方法：
+
+1.  **改用 X11**。注销并使用 X11 重新登录。
+
+2.  **使用 OBS 创建虚拟摄像机**。安装 [<samp>obs-studio</samp>](https://archlinux.org/packages/?name=obs-studio)、[<samp>v4l2loopback-dkms</samp>](https://archlinux.org/packages/?name=v4l2loopback-dkms)、[<samp>linux-headers</samp>](https://archlinux.org/packages/?name=linux-headers)，打开 OBS 即可看到“启动虚拟摄像机”按钮。配置好场景（添加来源“屏幕采集(PipeWire)”并缩放到刚好占满屏幕），点击“启动虚拟摄像机”，然后打开腾讯会议，将摄像头切换为“OBS Virtual Camera”，即可共享屏幕。（[参考链接](https://wiki.archlinuxcn.org/wiki/Open_Broadcaster_Software#%E8%99%9A%E6%8B%9F%E6%91%84%E5%83%8F%E6%9C%BA%E8%BE%93%E5%87%BA)）
+
+    注意：画布比例应为 16:9，否则腾讯会议会裁剪掉多余的部分。另外腾讯会议会对摄像头内容进行重度压缩，并且没有办法关闭。
+
+那么就是这样。
