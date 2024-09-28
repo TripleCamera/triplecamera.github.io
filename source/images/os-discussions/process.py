@@ -2,31 +2,17 @@
 将讨论区帖子转换为 Hexo 页面。
 作者：TripleCamera（https://triplecamera.github.io/）
 协议：MIT
-版本：20240827
+版本：20240927
 
-原始数据：从网站获得的 JSON 文件。为防止操作失误，我们只修改文件名，不修改内容。
- -  所有 query-topic 放置在 discussion 下，并重命名为 query-topic-{id}.json。
+从网站获取 JSON 文件（https://os.buaa.edu.cn/api/student/discussion/query-topic?id={id}），重命名为
+query-topic-{id}.json，并放置到 discussion 目录下。为避免人工操作失误，我们只修改文件名，不修改
+内容。
 
-补充数据：人工撰写的 JSON 文件。
- -  discussion.json：……
- -  author.json：……
-
- -  license.json：根对象以真名为键，信息对象为值。信息对象包含包含协议（"license"）和署名
-        （"attribution"）。
-        需要询问每一位发帖/评论的同学是否允许转载。如果同学对协议不了解，建议保留所有权利；如果同学
-        发布了代码，建议将代码使用代码专用的协议授权。
-        若还未询问同学或同学不同意则不要填写，该同学的所有文章都不会导出，该同学的所有评论都会被隐
-        藏。
- -  replace.json：根对象以 id 为键，查找替换数组为值。查找替换数组中的每个元素为命令数组，命令数组第
- 一个元素为命令名称，后面的元素为参数。详见代码。
-        注意如果未找到某篇文章，程序会直接报错，请确保所有文章都已写入文件（无需查找替换的文章请将
-        id 映射到空对象）。
- -  note.json：根对象以 id 为键，注释为值。注释会出现在帖子顶部。
+将需要查找替换的内容写入 replace.json，将作者的署名和协议写入 author.json。
 """
 
 import datetime
 import json5
-import os
 import re
 
 # 输出格式，数据来自 post 字典
@@ -37,7 +23,7 @@ mathjax: true
 comments: false
 ---
 <div class="post-info">{replies} 回复</div>
-
+{F_note}
 <div id="reply-0" class="reply">
 <div class="reply-header">
 <span>{F_attribution}</span>
@@ -165,44 +151,52 @@ def advanced_replace(post_id: int, text: str, rules: list) -> str:
             case 'arc_noneed':
                 assert len(rule) == 2
                 text = text.replace(rule[1], f'{rule[1]}<small>（无需存档）</small>')
+            case 'arc_lost':
+                assert len(rule) == 2
+                text = text.replace(rule[1], f'{rule[1]}<small>（已丢失）</small>')
             case _:
                 print(f'[ERROR] Unknown function {rule[0]}')
     return text
 
-def process_responses(topic: dict, reply_target: int, level: int) -> str:
+def format_replies(topic: dict, reply_target: int, level: int) -> str:
     global unknown_authors
 
-    l = []
+    formatted_reply_list = []
 
+    filtered_reply_list = []
     for reply in topic['reply_list']:
         if reply['reply_target'] == reply_target:
-            reply['Level'] = level
-            reply['F_badges'] = format_badges(
-                None, reply['likes'], False, False, reply['authentic']
-            )
-            reply['F_created_at'] = format_iso_time(reply['created_at'])
-            reply['F_last_edited_at'] = format_iso_time(reply['last_edited_at'])
-            if reply['author_name'] in author_config:
-                reply['F_header'] = author_config[reply['author_name']]['attribution']
-                reply['F_license'] = author_config[reply['author_name']]['license']
-                reply['F_content'] = advanced_replace(topic['id'], reply['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else reply['content'] # TODO Strict here too
-            else:
-                reply['F_header'] = '???'
-                reply['F_license'] = '???'
-                reply['F_content'] = '???'
-                # reply['F_content'] = advanced_replace(topic['id'], reply['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else reply['content'] # debug
-                unknown_authors.add(reply['author_name'])
-            reply_content = REPLY_FORMAT.format(**reply)
-            deep = process_responses(topic, reply['id'], level + 1)
-            if deep:
-                l.append(f'{reply_content}\n<hr class="reply-separator">\n{deep}')
-            else:
-                l.append(reply_content)
+            filtered_reply_list.append(reply)
+    filtered_reply_list.sort(key=lambda x: datetime.datetime.fromisoformat(x['created_at']))
+
+    for reply in filtered_reply_list:
+        reply['Level'] = level
+        reply['F_badges'] = format_badges(
+            None, reply['likes'], False, False, reply['authentic']
+        )
+        reply['F_created_at'] = format_iso_time(reply['created_at'])
+        reply['F_last_edited_at'] = format_iso_time(reply['last_edited_at'])
+        if reply['author_name'] in author_config:
+            reply['F_header'] = author_config[reply['author_name']]['attribution']
+            reply['F_license'] = author_config[reply['author_name']]['license']
+            reply['F_content'] = advanced_replace(topic['id'], reply['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else reply['content'] # TODO Strict here too
+        else:
+            reply['F_header'] = '???'
+            reply['F_license'] = '???'
+            reply['F_content'] = '???'
+            # reply['F_content'] = advanced_replace(topic['id'], reply['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else reply['content'] # debug
+            unknown_authors.add(reply['author_name'])
+        reply_content = REPLY_FORMAT.format(**reply)
+        formatted_nested_replies = format_replies(topic, reply['id'], level + 1)
+        if formatted_nested_replies:
+            formatted_reply_list.append(f'{reply_content}\n<hr class="reply-separator">\n{formatted_nested_replies}')
+        else:
+            formatted_reply_list.append(reply_content)
     
     if level == 0:
-        return '## 回复主题帖\n\n' + '\n\n## 回复主题帖\n\n'.join(l)
+        return '## 回复主题帖\n\n' + '\n\n## 回复主题帖\n\n'.join(formatted_reply_list)
     else:
-        return '\n<hr class="reply-separator">\n'.join(l)
+        return '\n<hr class="reply-separator">\n'.join(formatted_reply_list)
 
 
 def process_topic(topic: dict) -> str:
@@ -215,6 +209,11 @@ def process_topic(topic: dict) -> str:
     topic['F_badges'] = format_badges(
         topic['subscribes'], topic['likes'], topic['topped'], topic['closed'], topic['authentic']
     )
+    topic['F_note'] = (
+        f"\n> **提示**：{discussion_config[str(topic['id'])]['note']}\n"
+        if 'note' in discussion_config[str(topic['id'])]
+        else ''
+    )
     if topic['author_name'] in author_config:
         topic['F_attribution'] = author_config[topic['author_name']]['attribution']
         topic['F_license'] = author_config[topic['author_name']]['license']
@@ -226,7 +225,7 @@ def process_topic(topic: dict) -> str:
         # topic['F_content'] = advanced_replace(topic['id'], topic['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else topic['content'] # DEBUG
         unknown_authors.add(topic['author_name'])
 
-    topic['F_reply_list'] = process_responses(topic, 0, 0) if topic['reply_list'] else ''
+    topic['F_reply_list'] = format_replies(topic, 0, 0) if topic['reply_list'] else ''
     return OUTPUT_FORMAT.format(**topic)
 
 
@@ -239,18 +238,20 @@ def main():
     with open('author.json', 'r', encoding='utf-8') as f:
         author_config = json5.load(f)
 
-    post_count = 0
-    for id_str in discussion_config: # TODO 先对 id_str 排序，再从小到大遍历
-        id = int(id_str)
+    topics = []
+    for id_str in discussion_config:
+        topics.append(int(id_str))
+    topics.sort()
+
+    for id in topics:
         with open(f'discussion/query-topic-{id}.json', 'r', encoding='utf-8') as f:
             topic = json5.load(f)
         output = process_topic(topic)
         with open(f'output/{id}.md', 'w', encoding='utf-8') as f:
             f.write(output)
         print(TABLE_FORMAT.format(**topic))
-        post_count += 1
 
-    print(f'转换了 {post_count} 篇帖子。')
+    print(f'转换了 {len(topics)} 篇帖子。')
     if unknown_authors:
         print('以下作者尚未同意转载其内容：', '、'.join(unknown_authors), sep='')
     if archive_needed_count > 0:
