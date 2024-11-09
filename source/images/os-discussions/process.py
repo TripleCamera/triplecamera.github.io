@@ -2,7 +2,7 @@
 将讨论区帖子转换为 Hexo 页面。
 作者：TripleCamera（https://triplecamera.github.io/）
 协议：MIT
-版本：20240927
+版本：20241109
 
 从网站获取 JSON 文件（https://os.buaa.edu.cn/api/student/discussion/query-topic?id={id}），重命名为
 query-topic-{id}.json，并放置到 discussion 目录下。为避免人工操作失误，我们只修改文件名，不修改
@@ -11,9 +11,12 @@ query-topic-{id}.json，并放置到 discussion 目录下。为避免人工操�
 将需要查找替换的内容写入 replace.json，将作者的署名和协议写入 author.json。
 """
 
+IGNORE_LICENSE: bool = False
+
 import datetime
 import json5
 import re
+import sys
 
 # 输出格式，数据来自 post 字典
 OUTPUT_FORMAT = """\
@@ -176,15 +179,30 @@ def format_replies(topic: dict, reply_target: int, level: int) -> str:
         )
         reply['F_created_at'] = format_iso_time(reply['created_at'])
         reply['F_last_edited_at'] = format_iso_time(reply['last_edited_at'])
-        if reply['author_name'] in author_config:
+        if IGNORE_LICENSE:
+            reply['F_header'] = (
+                author_config[reply['author_name']]['attribution']
+                if reply['author_name'] in author_config and 'attribution' in author_config[reply['author_name']]
+                else f"【未署名】{reply['author_name']}"
+            )
+            reply['F_license'] = (
+                author_config[reply['author_name']]['license']
+                if reply['author_name'] in author_config and 'license' in author_config[reply['author_name']]
+                else '【未选择协议】'
+            )
+            reply['F_content'] = (
+                advanced_replace(topic['id'], reply['content'], discussion_config[str(topic['id'])]['replace'])
+                if 'replace' in discussion_config[str(topic['id'])]
+                else f"【无替换规则】\n\n{reply['content']}"
+            )
+        elif reply['author_name'] in author_config:
             reply['F_header'] = author_config[reply['author_name']]['attribution']
             reply['F_license'] = author_config[reply['author_name']]['license']
-            reply['F_content'] = advanced_replace(topic['id'], reply['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else reply['content'] # TODO Strict here too
+            reply['F_content'] = advanced_replace(topic['id'], reply['content'], discussion_config[str(topic['id'])]['replace'])
         else:
             reply['F_header'] = '???'
             reply['F_license'] = '???'
             reply['F_content'] = '???'
-            # reply['F_content'] = advanced_replace(topic['id'], reply['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else reply['content'] # debug
             unknown_authors.add(reply['author_name'])
         reply_content = REPLY_FORMAT.format(**reply)
         formatted_nested_replies = format_replies(topic, reply['id'], level + 1)
@@ -214,15 +232,34 @@ def process_topic(topic: dict) -> str:
         if 'note' in discussion_config[str(topic['id'])]
         else ''
     )
-    if topic['author_name'] in author_config:
+    if IGNORE_LICENSE:
+        topic['F_attribution'] = (
+            author_config[topic['author_name']]['attribution']
+            if topic['author_name'] in author_config and 'attribution' in author_config[topic['author_name']]
+            else f"【未署名】{topic['author_name']}"
+        )
+        topic['F_license'] = (
+            author_config[topic['author_name']]['license']
+            if topic['author_name'] in author_config and 'license' in author_config[topic['author_name']]
+            else '【未选择协议】'
+        )
+        topic['F_content'] = (
+            advanced_replace(topic['id'], topic['content'], discussion_config[str(topic['id'])]['replace'])
+            if 'replace' in discussion_config[str(topic['id'])]
+            else f"【无替换规则】\n\n{topic['content']}"
+        )
+    elif topic['author_name'] in author_config:
         topic['F_attribution'] = author_config[topic['author_name']]['attribution']
         topic['F_license'] = author_config[topic['author_name']]['license']
-        topic['F_content'] = advanced_replace(topic['id'], topic['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else topic['content'] # TODO Every topic needs replace
+        topic['F_content'] = advanced_replace(
+            topic['id'],
+            topic['content'],
+            discussion_config[str(topic['id'])]['replace'] if 'replace' in discussion_config[str(topic['id'])] else [],
+        )
     else:
         topic['F_attribution'] = '???'
         topic['F_license'] = '???'
         topic['F_content'] = '???'
-        # topic['F_content'] = advanced_replace(topic['id'], topic['content'], discussion_config[str(topic['id'])]['replace']) if 'replace' in discussion_config[str(topic['id'])] else topic['content'] # DEBUG
         unknown_authors.add(topic['author_name'])
 
     topic['F_reply_list'] = format_replies(topic, 0, 0) if topic['reply_list'] else ''
@@ -241,7 +278,11 @@ def main():
     topics = []
     for id_str in discussion_config:
         topics.append(int(id_str))
+    if topics != sorted(topics):
+        print('[WARNING] discussion.json 中帖子 ID 不是递增的。', file=sys.stderr)
     topics.sort()
+    if topics != [61, 107, 114, 116, 118, 132, 138, 147, 150, 166, 208, 218, 250, 264, 275, 281, 289, 295, 296, 302, 304, 305, 308, 309, 311, 314, 318, 326, 327]:
+        print('[WARNING] discussion.json 中帖子 ID 不是预期的值。', file=sys.stderr)
 
     for id in topics:
         with open(f'discussion/query-topic-{id}.json', 'r', encoding='utf-8') as f:

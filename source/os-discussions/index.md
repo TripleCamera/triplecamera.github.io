@@ -16,10 +16,12 @@ td:nth-child(2) {
 OS 的讨论区并没有精华帖机制，取而代之的是，助教会定期选择少量帖子进行置顶。因此，我需要选择一种快速筛选优质贴的方式。我先是整理出了所有帖子的点赞数量（这里的点赞数量为主题帖的点赞数量，不包括回复）：
 
 ![OS 2024 讨论区点赞数量统计](/images/os-discussions/likes.svg)
+![OS 2024 讨论区点赞与订阅数量统计](/images/os-discussions/stats.svg)
 
-注意到拥有至少 5 个赞的讨论帖仅有 22 个，占全部讨论帖的 $\frac{22}{287} \approx 8\%$。
+注意到拥有至少 5 个赞的讨论帖仅有 22 个，占全部讨论帖的 $\frac{22}{287} \approx 8\%$；而拥有至少 5 个赞或 5 个订阅的讨论帖共有 29 个，占全部讨论帖的 $\frac{29}{287} \approx 10\%$。
 
 以下是本项目使用的脚本、配置、样式文件，如有建议请不吝赐教。学弟学妹如果对本项目感兴趣，可以联系我获取帮助。
+ -  [stats.py](/images/os-discussions/stats.py)
  -  [process.py](/images/os-discussions/process.py)
  -  [discussion.json.example](/images/os-discussions/discussion.json.example)
  -  [author.json.example](/images/os-discussions/author.json.example)（真名已隐藏）
@@ -30,14 +32,22 @@ OS 的讨论区并没有精华帖机制，取而代之的是，助教会定期�
 
 ## 待办事项
  -  `discussion.json`
-     -  加入所有超过 5 赞的帖子（原作者不明的帖子除外）
-         -  [ ] ~~118、314、107、61、150、326、208、289~~
-         -  [ ] ~~166、138~~
-         -  [ ] ~~147、250、309、318~~
-         -  [ ] 114、132、~~264~~、311、327、116、~~218~~、308
+     -  [ ] 继续编写查找替换规则
  -  `author.json`
      -  [ ] 取得更多作者的授权
  -  [ ] 撰写本页面
+
+### pre5
+ -  `stats.py`
+     -  [x] 使用 gnuplot 生成三维统计图（matplotlib 有 bug）
+ -  `process.py`
+     -  [x] 新增 `IGNORE_LICENSE` 旗标
+ -  `discussion.json`
+     -  [x] 加入所有大于等于 5 赞或 5 订阅的帖子（原作者不明的帖子除外）
+     -  [x] 继续编写查找替换规则
+ -  `author.json`
+     -  [x] 取得更多作者的授权
+ -  [x] 撰写本页面（部分完成）
 
 ### pre4
  -  `process.py`
@@ -84,8 +94,18 @@ OS 的讨论区并没有精华帖机制，取而代之的是，助教会定期�
 | [open函数原理的疑问](218) | 爱吃糖的猫<br><small>2024-05-18 16:01:08</small> |
 | [ [娱乐性任务][Rust] 获取内核调用栈 ](250) | 离.nvme0n1p2<br><small>2024-05-28 22:47:07</small> |
 | [挑战性任务sigaction的一些问题](264) | fickle<br><small>2024-06-02 16:39:58</small> |
+| [挑战性任务 shell 求助](275) | Nadleeh<br><small>2024-06-10 16:09:09</small> |
+| [sigaction优先级疑问](281) | siven<br><small>2024-06-12 09:57:05</small> |
 | [「Sigaction 挑战性任务」为什么进程控制块会变成预期之外的值？](289) | 杨振炜（助教）<br><small>2024-06-13 13:52:18</small> |
+| [sigaction评测结果信息](295) | &#x5F;&#x5F;cxc&#x5F;&#x5F;<br><small>2024-06-13 21:57:06</small> |
+| [sigaction的bug在哪里？](296) | RyotoTannhauser<br><small>2024-06-13 22:00:38</small> |
+| [sigaction的EPC等细节求助](302) | alpha<br><small>2024-06-14 20:05:18</small> |
+| [sigaction测试方式求助](304) | 唐锡浩<br><small>2024-06-15 01:07:37</small> |
+| [【已解决】 shell增强 测试点1，5求助](305) | Nadleeh<br><small>2024-06-15 11:10:16</small> |
+| [Sigaction挑战性任务问题集合](308) | 戴波（助教）<br><small>2024-06-16 01:45:41</small> |
 | [Shell挑战性任务问题集合](309) | 戴波（助教）<br><small>2024-06-16 02:09:57</small> |
+| [能否对sigaction提供更强的样例](311) | &#x5F;&#x5F;cxc&#x5F;&#x5F;<br><small>2024-06-16 10:06:43</small> |
 | [关于sigaction实现的细节问题](314) | 唐凌<br><small>2024-06-16 15:28:40</small> |
 | [一组测试sigset的样例](318) | fickle<br><small>2024-06-18 13:29:49</small> |
 | [Shell 挑战性任务对历史指令的评测问题](326) | 陈睿正<br><small>2024-06-20 19:40:51</small> |
+| [Sigaction测试点4求助：16/18 【已解决】](327) | Daytoy<br><small>2024-06-20 21:08:54</small> |
