@@ -302,7 +302,7 @@ class Topic:
 
         self.id = _id
         self.title = _title
-        self.escaped_title = _title.replace('_', '\\_')
+        self.escaped_title = re.sub(r'([_`])', r'\\\1', _title)
         self.replies = _replies
         self.created_at = _created_at
         self.created_at_datetime = format_iso_time(_created_at)
