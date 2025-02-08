@@ -486,8 +486,91 @@ GRUB 和 Arch 的配置都是基于原有的分区结构生成的，现在分区
 
 那么就是这样。
 
-## Fontconfig（？）
-TODO
+## Windows 字体（10.23 &ndash; 10.24）
+一份使用了多种艺术字体的 PPT，在 Arch 上打开的时候，全篇都是 Noto Sans——看来电脑字体太缺了，得把 Windows 自带的那一套字体装上了。
+
+我在 ArchWiki 上找来找去，只找到了 [<samp>ttf-win7-fonts</samp>](https://aur.archlinux.org/packages/ttf-win7-fonts)<sup>AUR</sup>，需要手动从 Windows 7 机器或安装包中提取字体。问了别人以后，才知道有 [<samp>ttf-ms-win11-auto</samp>](https://aur.archlinux.org/packages/ttf-ms-win11-auto)<sup>AUR</sup>，支持自动下载字体。可能是我找的不够认真。
+
+于是安装 <samp>ttf-ms-win11-auto</samp><sup>AUR</sup>，完成。
+
+## Fontconfig（10.26）
+安装以后重启电脑，发现好多地方的字体都变成微软雅黑了。虽然 Plasma 和部分软件可以设置默认字体，但还是有相当一部分软件不行（比如微信！）。于是这些软件都变成了微软雅黑。
+
+真是丑到家了！（下图为 IntelliJ IDEA 截图）
+
+![IntelliJ IDEA 截图，可以看到微软雅黑字形高度不一，非常难看](/images/archlinux-yahei.png)
+
+看来配置 [Fontconfig](https://wiki.archlinuxcn.org/wiki/%E5%AD%97%E4%BD%93%E9%85%8D%E7%BD%AE) 这件事不能再拖了，于是我花时间研究了一下。
+
+首先，我们试着运行一下 `fc-match -s`（[参考链接](https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96#%E4%BF%AE%E6%AD%A3%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E4%B8%BA%E5%BC%82%E4%BD%93%EF%BC%88%E6%97%A5%E6%96%87%EF%BC%89%E5%AD%97%E5%BD%A2)），看看默认情况下的字体优先级如何：
+
+```console
+$ fc-match -s
+msyh.ttc: "微软雅黑" "Regular"
+NotoSans-Regular.ttf: "Noto Sans" "Regular"
+NimbusSans-Regular.otf: "Nimbus Sans" "Regular"
+msyhl.ttc: "微软雅黑" "Light"
+FreeSans.otf: "FreeSans" "Regular"
+...
+```
+
+可以看到，微软雅黑是排在第一位的。
+
+ArchWiki 上提供了好几种不同的 Fontconfig 配置，看得我眼花缭乱。于是我开始研究配置文件的语法，最后自己写了一份：
+
+```xml
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+<fontconfig>
+  <alias>
+    <family>sans-serif</family>
+    <prefer>
+      <family>Noto Sans</family>
+      <family>Noto Sans CJK SC</family>
+      <family>Noto Sans CJK TC</family>
+      <family>Noto Sans CJK JP</family>
+      <family>Noto Sans CJK KR</family>
+    </prefer>
+  </alias>
+  <alias>
+    <family>serif</family>
+    <prefer>
+      <family>Noto Serif</family>
+      <family>Noto Serif CJK SC</family>
+      <family>Noto Serif CJK TC</family>
+      <family>Noto Serif CJK JP</family>
+      <family>Noto Serif CJK KR</family>
+    </prefer>
+  </alias>
+  <alias>
+    <family>monospace</family>
+    <prefer>
+      <family>Fira Code Retina</family>
+      <family>Noto Sans Mono</family>
+      <family>Noto Sans Mono CJK SC</family>
+      <family>Noto Sans Mono CJK TC</family>
+      <family>Noto Sans Mono CJK JP</family>
+      <family>Noto Sans Mono CJK KR</family>
+    </prefer>
+  </alias>
+</fontconfig>
+```
+
+非常简洁。
+
+保存到 `~/.config/fontconfig/fonts.conf`，清空缓存，然后再运行 `fc-match -s`，可以看到 Noto Sans 已经排到第一位了。
+
+```console
+$ fc-cache -fv
+...
+$ fc-match -s
+NotoSansCJK-Regular.ttc: "Noto Sans CJK SC" "Regular"
+NotoSans-Regular.ttf: "Noto Sans" "Regular"
+NimbusSans-Regular.otf: "Nimbus Sans" "Regular"
+msyh.ttc: "微软雅黑" "Regular"
+msyhl.ttc: "微软雅黑" "Light"
+...
+```
 
 ## LLVM（？）
 TODO
