@@ -2,7 +2,7 @@
 将讨论区帖子转换为 Hexo 页面。
 作者：TripleCamera（https://triplecamera.github.io/）
 协议：MIT
-版本：20241225
+版本：20250305
 
 从网站获取 JSON 文件（https://os.buaa.edu.cn/api/student/discussion/query-topic?id={id}），重命名为
 query-topic-{id}.json，并放置到 discussion 目录下。为避免人工操作失误，我们只修改文件名，不修改
@@ -181,8 +181,10 @@ class Reply:
     attribution: str
     license: str
     reply_list: list[Reply]
+    reply_target_reply: Reply | None
+    header: str
 
-    def __init__(self, reply_dict: dict, discussion_id: int, level: int):
+    def __init__(self, reply_dict: dict, discussion_id: int, level: int, reply_target_reply: Reply):
         _id = reply_dict['id']
         _reply_target = reply_dict['reply_target']
         _author_name = reply_dict['author_name']
@@ -233,12 +235,20 @@ class Reply:
             self.license = '???'
             unknown_authors.add(_author_name)
 
+        
+        self.reply_target_reply = reply_target_reply
+        self.header = (
+            f'{self.attribution} <a href=\"#reply-{self.reply_target}\">回复</a> {self.reply_target_reply.attribution}'
+            if self.reply_target != 0
+            else self.attribution
+        )
+
 
     def get_output_str(self) -> str:
         result = REPLY_FORMAT.format(
             id=self.id,
             Level=self.level,
-            F_header=self.attribution,
+            F_header=self.header,
             F_badges=self.badges,
             F_content=self.content,
             F_license=self.license,
@@ -332,8 +342,9 @@ class Topic:
             self.attribution = author_attribution or f'【未署名】{_author_name}'
             self.license = author_license or '【未选择协议】'
         elif author_attribution and author_license:
-            assert discussion_replace is not None
-            self.content = advanced_replace(_id, _content, discussion_replace)
+            if not self.ignore:
+                assert discussion_replace is not None
+                self.content = advanced_replace(_id, _content, discussion_replace)
             self.attribution = author_attribution
             self.license = author_license
         else:
@@ -387,30 +398,17 @@ def process_replies(obj: Topic | Reply, topic_dict: dict, reply_target: int, lev
     direct_reply_obj_list = []
     for reply_dict in direct_reply_list:
         reply_id = reply_dict['id']
-        reply_obj = Reply(reply_dict, discussion_id, level)
+        reply_obj = Reply(reply_dict, discussion_id, level, obj)
         process_replies(reply_obj, topic_dict, reply_id, level + 1)
         direct_reply_obj_list.append(reply_obj)
     obj.reply_list = direct_reply_obj_list
     return
 
-    for reply in direct_reply_list:
-        # TODO: Cleanup code below
-        reply_content = REPLY_FORMAT.format(**reply)
-        formatted_nested_replies = process_replies(topic, reply['id'], level + 1)
-        if formatted_nested_replies:
-            formatted_reply_list.append(f'{reply_content}\n<hr class="reply-separator">\n{formatted_nested_replies}')
-        else:
-            formatted_reply_list.append(reply_content)
-    
-    if level == 0:
-        return '## 回复主题帖\n\n' + '\n\n## 回复主题帖\n\n'.join(formatted_reply_list)
-    else:
-        return '\n<hr class="reply-separator">\n'.join(formatted_reply_list)
-
 
 def process_topic(topic_dict: dict) -> Topic:
     topic_obj = Topic(topic_dict)
-    process_replies(topic_obj, topic_dict, 0, 0)
+    if not topic_obj.ignore:
+        process_replies(topic_obj, topic_dict, 0, 0)
     return topic_obj
 
 

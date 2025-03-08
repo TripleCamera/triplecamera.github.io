@@ -34,6 +34,7 @@ menu:
   home: / || fa fa-home
   archives: /archives/ || fa fa-archive
   CO 讨论区精华: /co-discussions/ || fa fa-comment
+  OS 讨论区精华: /os-discussions/ || fa fa-comment
 
 # ---------------------------------------------------------------
 # Math Formulas Render Support
