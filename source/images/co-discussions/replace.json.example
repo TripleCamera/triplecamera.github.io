@@ -57,7 +57,8 @@
     ],
     "982": [
         // 图片换源
-        [ "img.re", "https://pigkiller-011955-1319328397\\.cos\\.ap-beijing\\.myqcloud\\.com/img/([\\w.-]+)" ]
+        [ "img.re", "https://pigkiller-011955-1319328397\\.cos\\.ap-beijing\\.myqcloud\\.com/img/([\\w.-]+)" ],
+        [ "img", "/assets/cscore-image/wangyufan/fe845cc3-2efa-4092-891b-0dc855ab9052/98fbda373adc1cb1883ddfca8bcf55b.png", "98fbda373adc1cb1883ddfca8bcf55b.png" ]
     ],
     "983": [
         // 图片换源
