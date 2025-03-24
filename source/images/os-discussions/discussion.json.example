@@ -26,6 +26,7 @@
         ]
     },
     "107": {
+        "note": "启用汇编级调试的命令应为 `set disassemble-next-line on`。",
         "replace": [
             // 图片换源
             [ "img", "/public/22373362/f27b7389-106f-4378-ac26-58683d64601b/image.png", "image--1.png" ],
