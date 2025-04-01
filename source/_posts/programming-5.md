@@ -48,6 +48,33 @@ SyntaxError: invalid regular expression flag s
 
 正则表达式的 `s` 旗标于 ES2018 加入。对 `s` 旗标的支持早在 2017 年就已提出，但直到 2020 年 6 月的 Firefox 78 才支持。反观 Chrome，早在 2017 年 10 月发布的 Chrome 62 中就已支持了这一功能。
 
-<!-- 考试结束后，调查。 -->
+考试结束后，我对错误的来源展开了调查。首先我需要安装 Firefox 70 来稳定复现这一漏洞。由于在 Linux 上直接安装旧版可能会破坏系统环境，我暂时换到了 Windows。（有人向我推荐了 mozregression，日后可以试一下。）确认稳定复现之后，就可以开始深入调查了。
+
+使用 debug 构建，并在 `chunk-vendors.js` 中查找出问题的正则表达式 `/^-{3}\\s*[\\n\\r](.*?)[\\n\\r]-{3}\\s*[\\n\\r]+/s`，可以找到来源文件：
+
+```js
+/***/ "./node_modules/mermaid/dist/mermaid.min.js":
+/*!**************************************************!*\
+  !*** ./node_modules/mermaid/dist/mermaid.min.js ***!
+  \**************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("...");
+
+/***/ }),
+```
+
+然后使用 `npm list mermaid` 来检查 `mermaid` 的版本：
+
+```console
+> npm list mermaid
+pendulum-frontend@0.1.0 D:\Code\osome\pendulum-frontend
+└─┬ @wekanteam/markdown-it-mermaid@0.6.2
+  └── mermaid@9.3.0
+```
+
+可以看到，`mermaid` 作为 `@wekanteam/markdown-it-mermaid` 的依赖项被安装，且版本为 `9.3.0`。
+
+我直接在 `mermaid` 的 GitHub 仓库上开了个 GitHub Codespaces。
 
 ## 解决方案
