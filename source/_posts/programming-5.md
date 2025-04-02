@@ -1,12 +1,13 @@
 ---
 title: 编程随笔（五）
 date: 2025-04-01
+updated: 2025-04-02
 tags:
 categories:
 - 编程随笔
 ---
 
-最近我们为 OSome 做了一次兼容性更新，使其能支持新主楼机房的 Firefox 70。
+最近我们为 OSome 做了一次兼容性更新，使其能够兼容新主楼机房的 Firefox 70。
 
 ## 背景
 上周四（3 月 27 日）是我第一次去新主楼上机，我被那里的环境震惊到了：
@@ -50,7 +51,7 @@ SyntaxError: invalid regular expression flag s
 
 考试结束后，我对错误的来源展开了调查。首先我需要安装 Firefox 70 来稳定复现这一漏洞。由于在 Linux 上直接安装旧版可能会破坏系统环境，我暂时换到了 Windows。（有人向我推荐了 mozregression，日后可以试一下。）确认稳定复现之后，就可以开始深入调查了。
 
-使用 debug 构建，并在 `chunk-vendors.js` 中查找出问题的正则表达式 `/^-{3}\\s*[\\n\\r](.*?)[\\n\\r]-{3}\\s*[\\n\\r]+/s`，可以找到来源文件：
+启动开发服务器（debug 构建），并在 `chunk-vendors.js` 中查找出问题的正则表达式 `/^-{3}\\s*[\\n\\r](.*?)[\\n\\r]-{3}\\s*[\\n\\r]+/s`，可以找到来源文件：
 
 ```js
 /***/ "./node_modules/mermaid/dist/mermaid.min.js":
@@ -75,6 +76,34 @@ pendulum-frontend@0.1.0 D:\Code\osome\pendulum-frontend
 
 可以看到，`mermaid` 作为 `@wekanteam/markdown-it-mermaid` 的依赖项被安装，且版本为 `9.3.0`。
 
-我直接在 `mermaid` 的 GitHub 仓库上开了个 GitHub Codespaces。
+我直接在 `mermaid` 的 GitHub 仓库上开了个 GitHub Codespaces。经过一番 blame，确定相关正则表达式引入自 [`mermaid-js/mermaid#3706`](https://github.com/mermaid-js/mermaid/pull/3706)，于 2022 年 11 月 21 日合并，于 [v9.3.0](https://github.com/mermaid-js/mermaid/releases/tag/v9.3.0) 发布。另外，通过搜索构建成品，可以发现 v9.3.0 含有相关正则表达式，而上一个版本 v9.2.2 不含，从而得出相同的结论。
+
+因此将 `mermaid` 降级到 v9.2.2 即可解决问题。
 
 ## 解决方案
+为了确保不会出现依赖问题，我们在降级 `mermaid` 的同时还要降级 `@wekanteam/markdown-it-mermaid`。以下是二者的版本对应关系：
+
+| `@wekanteam/markdown-it-mermaid` | `mermaid` |
+|----------------------------------|-----------|
+| `0.6.4`（最新版）                | `^10.0.0` |
+| `0.6.3`                          | `^9.4.0`  |
+| `0.6.2`（正在使用的版本）        | `^9.3.0`  |
+| `0.6.1`                          | `^9.2.2`  |
+
+因此，我们需要将 `mermaid` 锁定在 9.2.2，同时将 `@wekanteam/markdown-it-mermaid` 锁定在 0.6.1。`package.json` 的配置如下：
+
+```json
+  "dependencies": {
+    "@wekanteam/markdown-it-mermaid": "0.6.1",
+    // ...
+  },
+  "overrides": {
+    "mermaid": "9.2.2"
+  },
+```
+
+使用 Firefox 70 访问，网站内容可以正常显示了。
+
+另外控制台还有两处报错，它们的原因也很快被找到了：
+ -  打开教程时报错：`SyntaxError: invalid regular expression flag s`——这是因为教程中的某些组件会加载远程服务器上的 OSome，从而引发相同的报错。
+ -  报错：`SyntaxError: invalid identity escape in regular expression`——这是因为依赖项 `mavon-editor` 尝试加载高版本的 `highlight.min.js`。由于目测讨论区的 Markdown 编辑器没有受到影响，加上考试时并不需要用到讨论区功能，因此暂时不予修复。
