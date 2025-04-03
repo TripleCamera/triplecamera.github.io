@@ -1,7 +1,7 @@
 ---
 title: 编程随笔（四）
 date: 2025-03-19
-updated: 2025-03-30
+updated: 2025-04-03
 categories:
 - 编程随笔
 ---
@@ -165,6 +165,165 @@ categories:
 
 [Vue Playground][2]
 
+## 第二版
+看上去非常好！可惜还有一点美中不足：如果先进入助教列表页面，然后刷新，那么 slider 会回到“发展历史”下方，而不是继续停在“课程助教”下方。
+
+>   在 Vue Playground 中，我们使用的是 [Memory 模式](https://router.vuejs.org/zh/guide/essentials/history-mode.html#Memory-%E6%A8%A1%E5%BC%8F)，因此当前路由不会记录在 URL 中。当你刷新页面时，你会回到初始路由 `/`。若要改变初始路由，请在 `router.ts` 中创建 `router` 后加入如下代码：
+>   ```ts
+>   router.push('/assistant?year=2025');
+>   ```
+
+在着手修复这个小 bug 之前，不妨让我们先回头看一下第一版的改动。我们可以使用 `v-model` 来将 `<v-tabs>` 的状态双向绑定到 `selectedTab` 上。`v-model` 会被展开为 `v-bind:model-value` 和 `v-on:update:model-value`，前者将 `selectedTab` 的值传入 `<v-tabs>`，后者在 `<v-tabs>` 更新状态时将新值同步到 `selectedTab`。即前者读取 `selectedTab`，后者写入 `selectedTab`。我们所作的修改是：
+ -  拦截正常写入逻辑。当 `<v-tabs>` 欲写入的新值为 2 时，不写入。
+ -  额外新增写入逻辑。当点击菜单中的菜单项时，写入 2。
+
+目前的问题是缺乏初始的写入逻辑。那么最简单的解法就是在初始化时根据当前路由设定初始值。
+
+### 次优解
+只需要在 `app.vue` 的 `<script setup>` 中添加如下代码：
+```ts
+import { useRoute } from 'vue-router';
+const route = useRoute();
+switch (route.path) {
+  case '/':
+    selectedTab.value = 0;
+    break;
+  case '/professor':
+    selectedTab.value = 1;
+    break;
+  case '/assistant':
+    selectedTab.value = 2;
+    break;
+  default:
+    selectedTab.value = -1;
+    break;
+}
+```
+
+即可正确初始化 `selectedTab`。注意在 `<script setup>` 中不能使用 `$route`，需要通过 `useRoute()` 来获取 route 对象。
+
+### 最优解……？
+虽然问题解决了，但是我还想介绍一种更简单的方法。
+
+我在 StackOverflow 上搜索如何获取当前路由的时候，看到[这个问题](https://stackoverflow.com/q/53126710)以及其下的许多回答都提到了 [计算属性（`computed`）](https://cn.vuejs.org/guide/essentials/computed)。于是我去了解了一下计算属性，然后发现之前的逻辑完全可以使用计算属性重写。
+
+我们将 `selectedTab` 改为计算属性实现，让其在路由改变时自动变化。这样就不需要再去手动更新它了，`<v-tabs>` 的 `@update:model-value` 和 `<v-list-item>` 的 `@click`，都可以删掉了。
+
+以下是重写后的 `<script setup>`：
+```ts
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const years = ["2025", "2024"]
+const selectedTab = computed(() => {
+  switch (route.path) {
+    case '/':
+      return 0;
+    case '/professor':
+      return 1;
+    case '/assistant':
+      return 2;
+    default:
+      return -1;
+  }
+});
+```
+
+总揽全局，我们发现：点击按钮时路由更新，路由更新触发 `<v-tabs>` 组件状态更新，组件状态更新触发 slider 更新。现在我们所做的，就是重写“路由更新触发组件状态更新”这一步骤。
+
+最后我们修复两个小 bug：
+ -  点击“课程助教”时菜单栏的位置和选项卡略有重叠，这是 `<v-tab>` 嵌套 `<button>` 搞的鬼，把 `<button>` 去掉即可。
+ -  给“课程助教”右侧加个下三角图标。
+
+结果没想到，修了这两个 bug 又引入了新的 bug？！
+
+现在点击“课程助教”时，slider 会直接滑动到“课程助教”下方。这使我百思不得其解。我用 Vue DevTools 看了一下，发现在教师团队页面点击“课程助教”选项卡时，虽然 `<VTabs>` 的 `modelValue` 属性仍然为 `1`，但 `<VSlideGroup>` 的 `modelValue` 属性却已经变成了 `2`。这是为什么？？
+
+我不由得对之前没有弄懂的 `useProxiedModel()` 产生了怀疑。但是由于逻辑实在是太复杂了，我让 Copliot 解释这个函数的内容。
+
+<details><summary>Copilot 的回答：（点击展开）</summary>
+
+>   这段代码定义了一个名为 `useProxiedModel` 的 TypeScript 函数，主要用于在 Vue 3 的组合式 API 中处理受控和非受控的双向绑定模型。它通过代理模式简化了组件属性的管理，尤其是在需要支持 `v-model` 或类似功能的场景中。
+>   
+>   ### 函数签名
+>   `useProxiedModel` 是一个泛型函数，接受以下参数：
+>   1. **`props`**: 一个对象，包含组件的属性。
+>   2. **`prop`**: 一个字符串，表示需要代理的属性名。
+>   3. **`defaultValue`**: 可选参数，表示属性的默认值。
+>   4. **`transformIn`** 和 **`transformOut`**: 两个函数，用于在内部值和外部值之间进行转换，默认是直接返回值。
+>   
+>   ### 内部变量
+>   - **`vm`**: 通过 `getCurrentInstance` 获取当前组件实例，用于访问组件的虚拟节点和事件。
+>   - **`internal`**: 一个 `ref`，存储内部状态。如果 `props[prop]` 有值，则使用它，否则使用 `defaultValue`。
+>   - **`kebabProp`** 和 **`checkKebab`**: 用于处理属性名的驼峰式和短横线式写法的兼容性。
+>   - **`isControlled`**: 一个 `computed` 计算属性，用于判断当前属性是否受控。受控属性意味着它由父组件通过 `v-model` 或 `onUpdate` 事件进行管理。
+>   
+>   ### 核心逻辑
+>   1. **受控属性检测**:
+>      - 如果属性是受控的（即父组件通过 `v-model` 或 `onUpdate` 事件管理），`isControlled` 会返回 `true`。
+>      - 受控属性的值直接来源于 `props[prop]`，而非内部状态。
+>   
+>   2. **非受控属性的同步**:
+>      - 使用 `useToggleScope` 和 `watch`，当属性是非受控时，监听 `props[prop]` 的变化，并将其同步到 `internal`。
+>   
+>   3. **`model` 的定义**:
+>      - `model` 是一个 `computed` 对象，提供 `get` 和 `set` 方法。
+>      - `get` 方法根据 `isControlled` 决定返回外部值（`props[prop]`）还是内部值（`internal`），并通过 `transformIn` 转换。
+>      - `set` 方法用于更新值。它会通过 `transformOut` 转换后，更新内部状态或触发 `update` 事件通知父组件。
+>   
+>   4. **`externalValue` 的定义**:
+>      - 使用 `Object.defineProperty` 为 `model` 添加一个只读属性 `externalValue`，直接返回当前的外部值或内部值。
+>   
+>   ### 返回值
+>   函数最终返回 `model`，它是一个响应式对象，既可以作为受控属性的代理，也可以作为非受控属性的内部状态管理工具。
+>   
+>   ### 应用场景
+>   `useProxiedModel` 适用于需要支持双向绑定的 Vue 组件开发。它通过统一的接口处理受控和非受控属性，简化了组件逻辑，同时提供了灵活的值转换功能（`transformIn` 和 `transformOut`），适合复杂的场景。
+
+</details>
+
+豁然开朗了。由于我们删掉了 `<v-tabs>` 的 `@update:model-value`，导致 `useProxiedModel()` 认为 `<v-tabs>`“不受控”，于是只会将外部 `modelValue` 的更新单向同步到内部，而内部 `modelValue` 的更新则不会同步到外部。这就导致内外 `modelValue`“脱节”。
+
+那么该如何解决呢？我们可以向 `<v-tabs>` 传入一个空的 `@update:model-value`，但那样只会让代码变得更乱。如果我们能将读写逻辑封装在一块儿就好了。——之前研究计算属性时瞥到过的[可写计算属性](https://cn.vuejs.org/guide/essentials/computed.html#writable-computed)就派上用场了。
+
+### 成功！
+
+以下是最终版的 `selectedTab`：
+```ts
+const selectedTab = computed({
+  get() {
+    switch (route.path) {
+      case '/':
+        return 0;
+      case '/professor':
+        return 1;
+      case '/assistant':
+        return 2;
+      default:
+        return -1;
+    }
+  },
+  set() {
+    // Do nothing.
+  }
+});
+```
+
+以下是最终版的代码：
+
+[Vue Playground][3]
+
+## 后记
+这次探索真的非常不容易！虽然最后的代码实现看上去并不复杂，但是为了写出它们，我阅读了 Vuetify 源码，并学习了 Vue 的各种机制。由于我对 Vue 的理解尚浅，缺乏实践经验，导致研究的过程更加的冗长。
+
+但是，这次探索也非常有意义。它让我对 Vue 和 Vuetify 有了更深入的理解。在此之前，我只会“搭积木”似的将各种组件“缝”在一起，这是我第一次对组件进行深入的自定义。
+
+在探索初期，我曾让 Copilot 帮我实现需求，但它没能实现出来。那时 DeepSeek 刚刚火起来，可惜我后来并没有尝试让 DeepSeek 实现，之后可以考验一下它。
+
+另外如果你对我的研究过程或实现方式有任何的建议，欢迎在讨论区提出。谢谢！
+
 
 [1]: https://play.vuejs.org/#eNqFVttuG0UYfpVhg2RHyu46dpK2xgkuqBIgAVGJ4AIjNF6P7W12Z5aZWTuW5TuEWqpQoaoSJ6kSV3BVARcgJe3T1E25yivwz8wevU6IFHnnPx+/mbkVYp8694TVtvwwYlyiOfI4wZLcjiK0QEPOQlSbxKTWo4kAZ7EkPOE4rjnm7FT/05hIfzgr2lDnXFA5SI3gKHKMkx71GBUSJeJov2yuvqlF0gjr8A8UhJxYkLoJJT8nNgwhZDGV9doGuKptWltW4hIS70gSRgEYPFCCnYkNLP2ZHuw+5shjAeP7PSvifoj5rGclIkUhW/oyIAevHp++fP7LxV9nF2dPXz97cfHbw5dnDy/OTi/P7y+fP14+OH3997Pli68vz3/qeGxADuZz9KaO3RnGQXCI5RgtFh1X8y7PH3TcVQeZ5zRytEFOJKHCZzRj6sAk7osCJaUhySAVF5JYPvp++ceT5XffLB/9qRwB82r5iLMhEYJxUHz15MflP/eXP//67w9P/1cRC+ELial8e0Yw3282mruFAmYKIaExYhGhNqP2mE0IX5EppYw96U+w1F2ZI4gtEmhRMauV+rGUjCJ/AKJZLD0LTey+TxVRa4Ouadfy298hvY5r1KoxuKWJWUkiAOvIC8AN2O2P7BEnMyCOxtAgu7U+PqNl+2AXYhrqlPTBp0hVDEJD7WMyS8jqpCchP3e9wPeO4UzxxB9BaEesrlibwHPXZGA8rrYAyKoH5UZWmptQ8sGqFKQwsvkmKajJVcyy2hOfTLMAtf9UKrEB3yXzcBQe9yOJAkxHkLBUxRFExko0AyHY/7sGqAoAZCdg9VZBkMLmHEHpSmAHAikQJXC3n1usbwLbMHVvgPd5zzIzvYX0107P+iI3kbcERLGYUQ/VJziISRsJyX062kT7B2iukjbenCgW47omIBQBHrRRLd+h2pZhfBUTPmsbPfWngmkjbdiQFupnoaJFCE+xD5EkyeoUEHJdNIX5Z1MnYB6WgB4OJwHDA80H9Y5ram3q/oZto7GUkWi7LkTiHasNHQag7rHQxe6NW7uN7cathttsQDGazQaybdU+IWcatLpJ0WupkZhGxyOtnEB1t+XccLZvugPINKU5IdxQnhCqKRBPYis1i4QHgDEAykZWIFOSqT9QhdtrOs3d6ETnOyZqDdto56YmmAQzg3ApJOVfdx9+SELGZ++BB/jZSohXj5gymFj4jASQIjnEI5JdeAWavvjyiTxMMbYkX6KuaNxO8y5plKipRmmozeBCWQA8kxmrQWIMrFJCoUzFwBd66HLJ7Cooq5SjX1UqjHBRqZyAUiosT7Z/xYqb3RibZrTXdai+qX2bROFzoR8O5ERXbECGOA5S29B3U0nAngh6zyh0XzsAdNUMQJhsz3pW3mVF7llrpzmR6O44LaeRzXNCdYgI7T5nU6GHDWAjtd0FIXdAJpKxQAD8+Ve5qAh295w9Z9sN/L4L1l1Ya3JStp3s0zVBX7mCYFHb0oACxYSSSVg8OvRHKwVTbfUDwj+OFJyUC4cDwIoPNE3ymGSBeWPiHa+h3xMnJthDTqBSE1JIRmI+InCFK/adTz4CXCswQzaIA5C+hnmXCBbEKkYj9k5MBxB2QU5H+77uP0D0kbiTvrCyQHU1tLwu7rvXpJ6H23J2ClVcwYHKa7T4PFu5CEG7ggoV/eIrrapfwYiKfvE9BM9XeKlK2Donea7qG8hR9w48WOGlWvXwJdwQqmZguOXsOtsta/EffGxK/g==
-[2]: https://play.vuejs.org/#eNqFVt1uG0UUfpXpNpIdKbvrOElLjZ26oEqABESlgguM6Ho9drbZ3VlmZp1Ylu8QaqlChapK/EmVuIKrCrgAKWmfpm7KVV6Bb2Z/vOt1wkUU7/n5zjfnnDlzpkbgeKF1XxgtwwsixiWZEpdTR9JbUURmZMhZQGrjmNZ6YWrAWSwpTzWWnXwu1Jn/pzGV3nBSxFDfC0MVIANxoshKgvRCl4VCktScdMpw9XVtkjGs4w8SQqxY0HpCZfGdYiSCgMWhrNeuIlRt3dgw0pA4eFvSIPIBuKsM22MTKv0z+zD7Dicu8xnv9IyIe4HDJz0jNSkamdKTPt19/eT41Ytfzv46OTt59ub5y7PfHr06eXR2cnx++mD+4sn84fGbv5/PX359fvpT22UDujudkjXN3RrGvr/nyH0ym7VtrTs/fdi2lwPkkTPm5Co9kjQUHgtzpSYmnb5YCAhpBQD1zbHjxxSHEdSnrqSDu06/ZxTtunE0AO6S+Rod01CSzi5Jf13pdEiT3CQFHFQsVTqChHHQR6+0SBwO6NAL6aAYpkA1I0skQxwb2Z0//n7+x9P5d9/MH/+pMgDlxfYRZ0MqBONwfP30x/k/D+Y///rvD88udiyJtDCgYbwkLWXYcaU3dqRugilBxEiQWaENCk79WEoWEm8AU0cIT0gnlD2DjM2+Fyqh9oZv0h3zb38H6baduFU52KUGXaLtA524PsIAtz8yR5xOIBztox/MrdX8Ei/TA25VS0BzqE+p9MQLyYQ6HGxXmbYO6CS1vMBAd+z/mKga3rPzTN1UATtrU+Uyu7faiR6hHqsUXdf33INyb6Mnm6tg7BW5TnKz3B4QV/qj2lypRCwu6HLpCnd5MWLUDF64JFPMHHv0MCeo42dWKQZ+l+DxKVzuRZL4TjhCAiRqhpspY2WaT2dOh6W5/vZi5uo6I1ef94xmo7nTMzaI/rXdM77IbMpZBVi9sQ6Itp3ETnhcMU2yL2UkWraNiroHbEz50GeHlssC27Gv39hpbDZuNOxmA3GazQYxTXUcISd6unVTtrUMJA6jg5F2Tmd6d8u6bm2+ZQ9Qq0xmBXjKXCHUkcAnxcKoTzK68pX7kAaMT94DCv5tpMI7yQtXyJKZv3J5Jj+jPvjQPWdE82esINPPGYik1nvZgCrZl6RLHrey21DyKEkzj6w2mmRSQLQJZhRekhap2TUcjAE1xFRulYjPNsqW+Rwtu5TZLzvl97bsVD6AckITlajy/HVPMl6fKuD9pBitVRWqr+vYyUHxc6bXAXqkM4YXxon9DBt1TzKJixOh9ixE9XUAzCKtwPVoES1RskWVlbhnrGy91KK7bW1Zjbz5UqlFRWD2OTsUutlwfTLsLozsAR1LxnyBu+tdFKJi2L1mXbM2bd/r20C38XrQozJ22vyXkL7wvgBRYymoGZKJlEmB+gy90VLCVFk9n/KPI4kVo5w4x8fF/kDLJI9pTszdp+7BCvl9cZSQ3eMUmRrTwmGkw0cUL6VS3/7kIyw1BSV2kdiH9SXKO1QwP1YcE7N3sHeAdsFOs31f198LR3fF7WxvyonqbGh7ndx3Lzn6gu6WtV3I4tIcqOyYxd1maYrDuzIVKv7FFafqX5kRFf/i2oGlFPunxK2z0iX0q5jyiaUeA6yh2D+rEb7EOFc5A/CWtWNtbhmz/wBoFR1t
+[2]: https://play.vuejs.org/#eNqFVl9vG0UQ/yrbayQ7Uu7OsZOWGjt1QZUACYhKBQ8Y0fN57Vxzd3vs7jmxLL+iQlUqhCqBQKrEEzwh4AUphU9TN/SpX6G/2/vj2zsnfYjim/3NzG9nZmdmYQSOF1r3hdE1vCBiXJIFcTl1JL0VRWRJJpwFpDGLaWMYZgDOYkl5dmLZ6ef6ONf/NKbSm8zLNpLvNTBxkBtxoshKnQxDl4VCkgxO+rq55raC5Ayb+IOEECsWtJlSWX9nNlJBwOJQNhtX4aqxbewYmUtcvCdpEPkweJAAezMTR+pn/mGOHE5c5jPeHxoR9wKHz4dGBimDTOlJnx68+OHR839/Of/77Pzs6f9//Hf+28PnZw/Pzx69evag57IxPVgsyJYia01i3z905BFZLnu2Onv17JsCJ6hPXUnHd51Rl0Cp9K0p9OwqhYJbfjdylZ5KGgqPhcWhoi6dkVgLCOkGMOqbM8ePKa5bcjk0yrhBHI1htwLfojMaStI/INmvK/0+aZObGvV+fugIEsbBCNXUJXE4phMvpOOymxLVnCyRDH5sxH/1+PvVn09W3329evxXEgEcXoyPOJtQIRiH4osnP63+ebD6+deXPz69WFETKWFAw7gi1SLsuNKbOVKVyYLAYyTIslQoJaVRLCULiTcG1BHCE9IJ5dAgM3PkhYlQaUM3rZ/Vt7+DdM9O1eocbK2EK7R9WCeuDzewO5qaU07nEE6PUA9mZzO/VMv0YLd+SkBzom6ZnBMvJHPqcLDdBO0e03mGvACgKvYNkCSH9+wiUjcTh/2tRaKyvLdZiZ4iH5sOBq7vucd6baMm25vM2BtincamWh4Q1+qjXlyZRKwfaDV1pbe8bkJJl16rpH3OnHn0pCCo/OeozAZ+a+bxKVzuRZL4TjhFACRyhpcp4wRa9G9OJ1rnf3vdlVWeEavPh0a71d4fGjtE/dobGl/kGD2qMNZsbcNEz059pzyumCY5kjISXdtGRt1jNqN84rMTy2WB7djXb+y3dls3Wna7BT/tdouYZnIdIeequw0yto3cSBxGx1OlnHX9Qce6bu2+ZY+Rq1xmBRh2rhDJlcAns4VhkEZ04xz8kAaMz9+DFfzbyYR30hlYipJZzMEikp9RH3zooTOlxaArydTAA5EMfZg3KA2vSSsat/LXoGlo0lwjz40imSYQZYIehdHTJQ27gYsxWA3Rlbsa8eWOjiz6qK6is68qFe9WV9IvkCihiDSqvJj/acSbi8TwUZqM7qYMNbeV7/Si+LlUCwM9VRHDhHFiP7eNvKeRxMOJkHsWIvvKAXqROsDzwNxNH9jQWGc5EQ+NjaWXIQZ7VsdqFcWXSS0qAnPE2YlQxYbnk9seAGSP6Uwy5gu8Xe8iFzXg4Jp1zdq1fW9kw7qN6UFPddtZ8V9C+sL3AovKVmJqiWAiZFIgPxNvWglYklbPp/zjSGLF0APn+HjYHyiZ5DEtiLlH1D3eIL8vTlOyh5wiUjNauox0+JRiUibHtz/5CEtN6RC7SOwDfcnhHSqYHyccU9g72DtAu4RTbN9X+ffC6V1xO9+bCqIqGgqvgvvuJVdf0+1Ye6UoVvpAbQst7zaVLg7tWleo6ZdXnLp+rUfU9MtrB9ZR7J4Sr87KttavYsrnVjIMsIZi/6x7+BLtPIkZDHesfWu3YyxfA7rhJo0=
+[3]: https://play.vuejs.org/#eNp9Vt1uG0UUfpVhW8mOlN114qShxgkuUAmQgKhUcIERXa/H9ja7M8vMrBPL8i0qVKVCqBIIpEpcwRUCbpBSeJq6gau+Qr+Z/bedXCTeOec7Z77zM2dmbkVewJz70upYQRRzocic+IJ6it6KY7IgI8Ej0pgmtNFnGUDwRFGRaRw3XZbq3P6ThKpgNKv60OsSqDfInXhx7KSb9JnPmVQkg5PDurvmloHkDJv4g4QQJ5G0mVIp15mPVBDxhKlm4xq2amxZ21a2JQLvKhrFIRweaWB3akNlPvOFPfAE8XnIxWHfikUQeWLWtzJIFWSrQIX06MX3j57/8/PFX+cX50//+/3fi18fPj9/eHH+6OWzB12fD+nRfE6uG7LOKAnDY09NyGLRdY3u5bOvC5ykIfUVHd71Bh0Co8o637xq13VXmRQU8xDJNXqmKJMBZ4XSRKC8gSRTO4KrEFFWdyojLbFEcaBc6JaPv1v+8WT57VfLx39qAlBejo8FH1EpuYDhiyc/Lv9+sPzpl/9/eHqJYURZUpPVIvF8FUw9ZaoyJ3AdS7JYYVthMLUHARuaCgLZtwhSRdnQDtBwkEbDwOxnD/kpg5e0cMtvfgPPTfTg1601Tm3DMEAP+6EnJVwPxvZY0BmE4wmSb7c3k9Q2dgCfoDoyUZlFwMiMekIz7pzQWSbWK1Pj6lrn+J6LTeHJY+pNbXd4fa71i3tA0DPkjLhrcaR717MP4Ur6syzIsqtWE1BpwPIA6QlTmqRn1J4G9LQgYvbKUZkPfNfcYyl9EcSKhB4bI06lEyKpSjS0nD08irHBsDa63qgAMBfuaApVgJ3NMODy8WMkGD45vLkFZaoyxYDqs76129rd71vbxHzt9a3Pc0zl+OgJlpFqznWAY6qaW8R8EiJPA+VPSDq6nBiToFAR4nuSkobb6JQ1EAhYMNICmxqmOFgbwDur4KJBNoB3C/CQjrwkVOsQO3e40D+Lbf0fhSiDcl3yDieMq0nAxo4B9dlCZ7DrpkVMC/qabZOJUrHsuC74+Cd8SsUo5KcOMuZ67sHN/dZO62bL3W0h0bu7LWLbui+kmpnZ1suq2sidJCw+GRvjbPT32s6Bs/O6O0S8ucyJcOP5UupyX+Ghh4HgjjhTvQNnz9k7cGHiRmhGEXjhkMpgzPTkkMaViSxjhbsl7aeN1+oHNOJi9i744Gc7E5oWE5taUucp8/ApDcGLHntjWtybFZm5P8tOP84booavSVcsbuVdUbOoSXOL2ilJzwKKjBmM/u3ojkVg6HnOKFOdGvG0W0pk2bc1kzr7VaOyf2tG9QC0Ec5jjaoonhNpxtMDOUmL0dlUoeaW2TsNFJ8L8/5Ag2cljhM5aVYYpSNXz4WG7vc+o2cmudlhyszQImnSMfZitAlnaBTDBcPcKDDccOOnx6lvlQ2hxX1rY79niN6e03ZaRcdnUofKyB4IfipNX2Jo5b57ALlDOlWchxKTN7hsizVg74Zzw9lxw2DgwruLy5We1X1nJ+4K0pceUng0vvLpgZQpiVKOgvFKwnQHBCEVH8UKr5p64rwQ0+R9I1MioQUxf0L9kw3y+/IsJXssKDI1pZVglCcwulP17Y8/xDuqosS7KQmBvkJ5h0oeJppjCnsrYUPQruAM2/dM/TE478rb+VOtIFoOXJPct68IvaTbdvYqWVwZGWvv3+p7buUOhvXaAFmzrz7r1u3XxsmaffXdhYcwXr24RqSTvZe/TKiYOfqQ4eWLJ+/6Dl/gDtE5g+O2s+/stK3FK+rbaxs=
