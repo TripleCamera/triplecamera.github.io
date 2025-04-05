@@ -1,7 +1,7 @@
 ---
 title: 编程随笔（四）
 date: 2025-03-19
-updated: 2025-04-03
+updated: 2025-04-05
 categories:
 - 编程随笔
 ---
@@ -17,9 +17,12 @@ categories:
 
 值得注意的是，最初的版本不长这个样子。在最初的版本中，“课程助教”选项卡是用 `<v-btn>` 实现的，点击展开菜单，再次点击菜单项即可跳转——和官方文档里的[溢出到菜单](https://vuetifyjs.com/zh-Hans/components/tabs/#section-6ea251fa523083dc5355)示例几乎一模一样。但是每个 `<v-tab>` 下方都有一个横条（文档中叫 slider），用来指示当前选中的选项卡。而 `<v-btn>` 下方没有 slider，这就导致路由切换到“课程助教”页面时，slider 并不会自动更新，还位于其他选项卡下方：
 
-![路由切换到“课程助教”页面时，slider 还位于“教师团队”选项卡下方](/images/programming-4.png)
+<figure>
+  <img src="/images/programming-4.png" alt="路由切换到“课程助教”页面时，slider 还位于“教师团队”选项卡下方" style="max-height: 12em">
+  <figcaption>路由切换到“课程助教”页面时，slider 还位于“教师团队”选项卡下方</figcaption>
+</figure>
 
-于是他改成了用 `<v-tab>` 套 `<v-btn>` 实现，并把交互逻辑改成了悬浮展开菜单、点击跳转。一位高阶助教又在此基础上进行小修，将 `<v-btn>` 改为 `<button>`，修复了样式问题。
+于是这位助教改成了用 `<v-tab>` 套 `<v-btn>` 实现，并把交互逻辑改成了悬浮展开菜单、点击跳转。一位高阶助教又在此基础上进行小修，将 `<v-btn>` 改为 `<button>`，修复了样式问题。
 
 不得不说，这位助教的实现虽然能用，但是存在一些问题：
  -  用户在没有外部提示的情况下，往往会直接点击选项卡，很难发现需要悬停才能展开菜单。（文字右侧本来有一个下三角图标的，可惜去掉了，再加回来就好）
@@ -146,7 +149,7 @@ categories:
 接下来，我通过查阅 Vue 文档了解了 [`v-model` 的底层原理](https://cn.vuejs.org/guide/components/v-model.html#under-the-hood)：原来 `v-model` 会展开为 `v-bind` 和 `v-on`！那么，如果我不用 `v-model` 这个简写，而是手动指定 `v-bind` 和 `v-on`，那我岂不是可以控制数据的更新了？
 
 于是我给 `<v-tabs>` 加上了 `v-bind:model-value` 和 `v-on:update:model-value`，并对数据更新进行了拦截：如果新值为 2 就不更新，其他情况下正常更新。这可比等它更新完再改回去要方便多了。
-```vue
+```html
         <v-tabs
           :model-value="selectedTab"
           @update:model-value="$event => $event !== 2 ? selectedTab = $event as number : undefined"
@@ -154,7 +157,7 @@ categories:
 ```
 
 以及在 `<v-menu>` 被点击时手动更新选项卡状态：
-```vue
+```html
                 <v-list-item
                   ...
                   @click="selectedTab = 2"
@@ -240,7 +243,7 @@ const selectedTab = computed(() => {
 
 现在点击“课程助教”时，slider 会直接滑动到“课程助教”下方。这使我百思不得其解。我用 Vue DevTools 看了一下，发现在教师团队页面点击“课程助教”选项卡时，虽然 `<VTabs>` 的 `modelValue` 属性仍然为 `1`，但 `<VSlideGroup>` 的 `modelValue` 属性却已经变成了 `2`。这是为什么？？
 
-我不由得对之前没有弄懂的 `useProxiedModel()` 产生了怀疑。但是由于逻辑实在是太复杂了，我让 Copliot 解释这个函数的内容。
+我不由得对之前没有弄懂的 `useProxiedModel()` 产生了怀疑。但是由于实在看不懂这个函数的内容，只好交给 Copliot 解释。
 
 <details><summary>Copilot 的回答：（点击展开）</summary>
 
@@ -319,7 +322,7 @@ const selectedTab = computed({
 
 但是，这次探索也非常有意义。它让我对 Vue 和 Vuetify 有了更深入的理解。在此之前，我只会“搭积木”似的将各种组件“缝”在一起，这是我第一次对组件进行深入的自定义。
 
-在探索初期，我曾让 Copilot 帮我实现需求，但它没能实现出来。那时 DeepSeek 刚刚火起来，可惜我后来并没有尝试让 DeepSeek 实现，之后可以考验一下它。
+在探索初期，我曾让 Copilot 帮我实现需求，但它并没能写出让我满意的代码。那时 DeepSeek 刚刚火起来，可惜我后来并没有尝试让 DeepSeek 实现，之后如果有机会，可以问问 DeepSeek，看看它能不能做出来。
 
 另外如果你对我的研究过程或实现方式有任何的建议，欢迎在讨论区提出。谢谢！
 
