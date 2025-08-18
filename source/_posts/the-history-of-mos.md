@@ -1,6 +1,7 @@
 ---
 title: 追本溯源：北航 MOS 操作系统的历史
 date: 2025-05-01
+updated: 2025-08-15
 tags:
 ---
 
@@ -93,11 +94,20 @@ static inline u_long va2pa(Pde *pgdir, u_long va) {
 这一天是 2025 年 4 月 8 日，找到这个仓库为我的考证工作打下了坚实的基础。
 
 ### 【内部资料】指导书与代码提交记录
+由于我有幸担任了 2025 年操作系统实验助教，因此可以接触到内部资料：指导书和 MOS 两个仓库的提交记录。这些内部资料为考证工作带来了方便，但没有它们也能得出下文的结论。
+
+ -	指导书在 v2.1.4（2017 年 10 月 10 日）及以前提交记录与 GitHub 上的提交记录完全重合。
+ -	MOS 提交记录始于 2022 年 9 月 4 日。尚不清楚在此之前是使用何种方式分发代码的。
 
 ## MIT 操作系统课程
-https://csdiy.wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/MIT6.S081/
+首先，建议阅读一下 [CS 自学指南（csdiy.wiki）](https://csdiy.wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/MIT6.S081/) 对 MIT 6.S081（原名 6.828）这门课程的介绍。
 
-### 2002
+由于我并不是 MIT 的学生（笑），所以只能通过翻阅官网的方式了解这门课程的历史。幸好官网对校外是完全开放的，我不仅能查阅课程资料，还可以下载各个 Lab 的代码。
+
+在春季学期到暑假的这段时间，我将之前下载的各种资料整理了一下，准备上传到 Internet Archive。由于资料还没有整理完成，所以分了几批上传。但是 <abbr title="Internet Archive">IA</abbr> 的网页上传工具实在是太难用了，上传时不能新建文件夹，只能上传后再移动，在此过程中系统自动生成的文件也删不掉，于是我只好新建了一个 GitHub 仓库来暂存各种资料，并不定期同步到 <abbr title="Internet Archive">IA</abbr>。你可以前往 [Internet Archive](https://archive.org/details/mit-6.828-lab-files) 或 [GitHub](https://github.com/TripleCamera/mit-6.828-lab-files) 来查阅我整理的资料。我还请求第三方为它们做了备份，所以有了双重保险，不用怕它们丢失了。
+
+---
+
 最开始 MIT 并没有操作系统课。2002 年，MIT 开设了 [6.097: OPERATING SYSTEM ENGINEERING](https://pdos.csail.mit.edu/archive/6.097/) 课程。这门课程的任务是学习 V6 操作系统（后来换成了 xv6 操作系统），并自己编写一个操作系统（后来被命名为 JOS）。
 
 注意从 2003 到 2002 的链接有点隐蔽，你需要仔细观察才能找到它。
