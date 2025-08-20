@@ -1,7 +1,7 @@
 ---
 title: 追本溯源：北航 MOS 操作系统的历史
 date: 2025-05-01
-updated: 2025-08-15
+updated: 2025-08-20
 tags:
 ---
 
@@ -116,5 +116,110 @@ static inline u_long va2pa(Pde *pgdir, u_long va) {
 ### 2019 - 现在
 
 ## MOS 断代工程
+我们已经准备好了 MIT 6.828 的历届代码，以及一份 2015 年的 Jos-mips 代码。接下来，我们就可以开始为 MOS 做一次“断代”了。
+
+根据指导书中的大事表，课程组在 2007 年发现、完成并开始移植 JOS，到 2009 年完成移植。那么移植的到底是 2007 年还是 2009 年的版本呢？我决定把 MIT 每一年的代码都拿出来比较。
+
+由于 Makefile 中有 `Copyright (C) 2007` 字样，于是我从 2007 年开始比较。我从 MIT 6.828 官网下载了 2006 年和 2007 年的代码。（注：按理来说应该下载 2007 年和 2008 年的代码，但我脑抽了。）非常可惜的是，这两年的 Lab5 和 Lab6 代码都缺失了。我只好用 Lab4 的代码进行对比。
+
+首先，运行如下命令：
+
+```console
+$ diff -ru 2006/lab4 2007/lab4 > 2006-2007-lab4.diff
+```
+
+得到一份 2006 年和 2007 年的 Lab4 差异。接下来，我们将这些差异与 Jos-mips 逐一比较：
+ -	对于 2007 年新增的内容：
+	 -	如果 Jos-mips 中也有，说明 Jos-mips 使用的<u>很可能</u>是 2007 年或更晚的版本。
+	 -	如果 Jos-mips 中没有，不能说明什么，因为可能本来就没有，也可能是移植的过程中删掉的。
+ -	对于 2007 年删除的内容：
+	 -	如果 Jos-mips 中还存在，说明 Jos-mips 使用的<u>很可能</u>是 2006 年或更早的版本。
+	 -	如果 Jos-mips 中也没有，不能说明什么，理由同上。
+ -	对于 2007 年修改的内容：
+	 -	如果 Jos-mips 中与 2006 年版一致，说明 Jos-mips 使用的<u>很可能</u>是 2006 年或更早的版本。
+	 -	如果 Jos-mips 中与 2007 年版一致，说明 Jos-mips 使用的<u>很可能</u>是 2007 年或更晚的版本。
+	 -	当然，大多数情况下，Jos-mips 中也没有相关内容。
+
+在这里我举几个例子：
+
+<ol><li>
+
+我是占位符。
+
+```diff
+diff -ru 2006/lab4/inc/trap.h 2007/lab4/inc/trap.h
+--- 2006/lab4/inc/trap.h	2006-10-12 03:56:25.000000000 +0800
++++ 2007/lab4/inc/trap.h	2007-10-09 23:32:52.000000000 +0800
+@@ -16,7 +16,7 @@
+#define T_TSS       10		// invalid task switch segment
+#define T_SEGNP     11		// segment not present
+#define T_STACK     12		// stack exception
+-#define T_GPFLT     13		// genernal protection fault
++#define T_GPFLT     13		// general protection fault
+#define T_PGFLT     14		// page fault
+/* #define T_RES    15 */	// reserved
+#define T_FPERR     16		// floating point error
+[...]
+```
+
+这里修复了一处 typo。Jos-mips 在 `include/trap.h` 中也有这段代码，其中的 typo 并没有修复，说明很可能是 2006 或以前。
+
+</li><li>
+
+我是占位符。
+
+```diff
+diff -ru 2006/lab4/kern/init.c 2007/lab4/kern/init.c
+--- 2006/lab4/kern/init.c	2006-10-12 03:56:25.000000000 +0800
++++ 2007/lab4/kern/init.c	2007-10-09 23:32:52.000000000 +0800
+@@ -33,8 +33,6 @@
+ 	// Lab 2 memory management initialization functions
+ 	i386_detect_memory();
+ 	i386_vm_init();
+-	page_init();
+-	page_check();
+ 
+ 	// Lab 3 user environment initialization functions
+ 	env_init();
+```
+
+这里删掉了 `page_init()` 和 `page_check()` 这两个函数的调用。Jos-mips 的 `mips_init()` 中也有这两个函数调用（但 `page_check()` 被注释掉了），说明很有可能是 2006 或以前。
+
+</li><li>
+
+我是占位符。
+
+```diff
+diff -ru 2006/lab4/kern/kclock.c 2007/lab4/kern/kclock.c
+--- 2006/lab4/kern/kclock.c	2006-10-12 03:56:25.000000000 +0800
++++ 2007/lab4/kern/kclock.c	2007-10-09 23:32:52.000000000 +0800
+@@ -1,7 +1,9 @@
+ /* See COPYRIGHT for copyright information. */
+ 
+-/* The Run Time Clock and other NVRAM access functions that go with it. */
+-/* The run time clock is hard-wired to IRQ8. */
++/* Support for two time-related hardware gadgets: 1) the run time
++ * clock with its NVRAM access functions; 2) the 8253 timer, which
++ * generates interrupts on IRQ 0.
++ */
+ 
+ #include <inc/x86.h>
+ #include <inc/stdio.h>
+```
+
+Jos-mips 的 `lib/kclock.c` 中也有这段注释，而且和 2006 版一样，说明很可能是 2006 或以前。
+
+</li></ol>
+
+证据有很多，这里就不一一列举了。总之，经过耐心比对，可以认为 Jos-mips 使用的是 2006 年或更早的版本。
+
+随后我又比较了 2005 和 2006、2004 和 2005。最后认定 Jos-mips 使用的是 2004 年或更早的版本。我还想继续比下去，可惜 2003 年的文件已经全部丢失了（其实是路径变化，我没有找着而已），2002 年的文件全部禁止访问。
+
+### MIT OpenCourseWare
+（4 月 17 日）我在网上搜索 [MIT 6.828 2003](https://www.google.com/search?q=MIT+6.828+2003)，结果发现 DSpace（MIT 数字图书馆）
+
+首先介绍一下 [MIT OpenCourseWare](https://ocw.mit.edu/)。这是 MIT 的公开课平台，里面有各类课程的公开资料。更多信息可以去看[英文维基百科](https://en.wikipedia.org/wiki/MIT_OpenCourseWare)，我这里就不过多介绍了。
+
+——说起来，北航似乎也曾经有过一个公开课平台。我们知道，智学北航的网址是 [spoc.buaa.edu.cn](https://spoc.buaa.edu.cn/)。我曾经查过 SPOC 这个缩写，它的意思是“小型私人在线课程”（Small Private Online Course），与 MOOC（Massive Open Online Course，大规模开放在线课程）互为反义词。于是我尝试了一下 [mooc.buaa.edu.cn](http://mooc.buaa.edu.cn/) 这个网址，没想到这个网站确实存在，但是已经罢工了。翻阅存档可知，这里曾经是北航的公开课平台。哈哈。
 
 
