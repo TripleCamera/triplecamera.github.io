@@ -1,7 +1,7 @@
 ---
 title: 追本溯源：北航 MOS 操作系统的历史
 date: 2025-05-01
-updated: 2025-08-20
+updated: 2025-08-26
 tags:
 ---
 
@@ -222,4 +222,159 @@ Jos-mips 的 `lib/kclock.c` 中也有这段注释，而且和 2006 版一样，�
 
 ——说起来，北航似乎也曾经有过一个公开课平台。我们知道，智学北航的网址是 [spoc.buaa.edu.cn](https://spoc.buaa.edu.cn/)。我曾经查过 SPOC 这个缩写，它的意思是“小型私人在线课程”（Small Private Online Course），与 MOOC（Massive Open Online Course，大规模开放在线课程）互为反义词。于是我尝试了一下 [mooc.buaa.edu.cn](http://mooc.buaa.edu.cn/) 这个网址，没想到这个网站确实存在，但是已经罢工了。翻阅存档可知，这里曾经是北航的公开课平台。哈哈。
 
+好消息是：OCW Archive 里确实保存着 2003 年版的公开课；坏消息是：当我兴高采烈地把装着所有 Lab 代码的 ZIP 文件都下载下来以后，才发现它们都打不开。
+
+我一度以为是 [Ark 压缩文件管理工具](https://zh.wikipedia.org/wiki/Ark)的问题，后来换成 Windows 用 [7-Zip](https://zh.wikipedia.org/wiki/7-Zip) 试了一下，还是不行。
+
+幸好还有时光机！4 月 24 日，我从时光机下载到了 2003 年的存档，结果发现原始文件与 DSpace 上的存档并不一致。——这说明 DSpace 上的存档很有可能损坏了。但具体是哪里的问题呢？我用 `xxd` 将两个版本的 `lab1.zip` 转换为十六进制文本文件，但是由于我的注意力比较涣散（笑），并没能发现其中的不同。直到我将每行显示多个字节拆分为每行一个字节，注意力才变得集中起来——
+
+<figure>
+  <img src="/images/mos-ocw2003-kompare.png" alt="使用 Kompare 对比两个版本的 lab1.zip 的十六进制文本文件" style="max-height: 18em">
+  <figcaption>使用 Kompare 对比两个版本的 lab1.zip 的十六进制文本文件</figcaption>
+</figure>
+
+注意到所有十六进制大于等于 `80` 的字节全部被替换为 `EF BF BD`，也就是 `U+FFFD`。因此推测工作人员在归档过程中可能不小心以 UTF-8 格式保存了这些二进制文件。
+
+没想到 MIT 的员工也会犯这么低级的错误😕。
+
+## 真相大白
+进一步对比 OCW 2003 版和 2004 版以后，我几乎可以肯定，MOS 使用的就是 OCW 2003 版。学长们当年很有可能从 MIT OCW 下载了这门课的代码，然后将其移植到 MIPS。当然，最后还剩下一点小小的疑惑，就是为什么他们在 2007 年尝试 JOS 的时候选用的是 OCW 2003 版，而不是 OCW 2006 版。一种可能的解释是，2006 年的课程在 2007 年 3 月上线，在此之前 OCW 上放的是 2003 年课程。
+
+既然现在已经有了 MOS 当年参考的 JOS 源码，我们就能好好解答一下之前提出的那些问题了：
+
+<ol><li>
+
+**为什么 `KADDR` 不会对 `pa` 做类型转换？**我们可以在 `inc/mmu.h` 中找到 `KADDR` 的定义：
+
+```c
+// translates from physical address to kernel virtual address
+#define KADDR(pa)						\
+({								\
+	u_long ppn = PPN(pa);					\
+	if (ppn >= npage)					\
+		panic("KADDR called with invalid pa %08lx", (u_long)pa);\
+	(pa) + KERNBASE;					\
+})
+```
+
+很显然 JOS 也没有做类型转换。但他们在 2004 年版中加上了（此时这一定义移动到了 `kern/pmap.h`）。
+
+```c
+// translates from physical address to kernel virtual address
+#define KADDR(pa)						\
+({								\
+	u_long __m_pa = (pa); \
+	u_long __m_ppn = PPN(__m_pa);				\
+	if (__m_ppn >= npage)					\
+		panic("KADDR called with invalid pa %08lx", __m_pa);\
+	__m_pa + KERNBASE;					\
+})
+```
+
+这说明他们很可能是忘记了，后来经过同学提醒加上了。
+
+我觉得这个补丁完全可以 backport（向后移植）给 MOS。
+
+</li><li>
+
+**为什么 `va2pa()` 最后没有加上页偏移？**让我们看看 JOS 的写法（所属文件 `kern/pmap.c`）：
+
+```c
+//
+// Checks that the kernel part of virtual address space
+// has been setup roughly correctly(by i386_vm_init()).
+//
+// This function doesn't test every corner case,
+// in fact it doesn't test the permission bits at all,
+// but it is a pretty good sanity check. 
+//
+static u_long va2pa(Pde *pgdir, u_long va);
+```
+
+```c
+static u_long
+va2pa(Pde *pgdir, u_long va)
+{
+	Pte *p;
+
+	pgdir = &pgdir[PDX(va)];
+	if (!(*pgdir&PTE_P))
+		return ~0;
+	p = (Pte*)KADDR(PTE_ADDR(*pgdir));
+	if (!(p[PTX(va)]&PTE_P))
+		return ~0;
+	return PTE_ADDR(p[PTX(va)]);
+}
+```
+
+声明处的注释提到，这个函数是用来检查虚拟地址空间是否设置正确的。实际用例也证明了这一点：
+
+ -  JOS：`kern/pmap.c` 文件下的 `check_boot_pgdir()` 和 `page_check()` 函数。
+ -  MOS：`kern/pmap.c` 文件下的 `page_check()` 函数，`kern/env.c` 文件下的 `env_check()` 函数，以及 `lab2_2` 和 `lab2_3` 测试点。
+
+——全部为测试函数。
+
+另外，到了 2005 年，JOS 将这个函数重命名为 `check_va2pa()`，并增加了一些注释。可能是为了强调这个函数只能用于测试吧。
+
+```c
+//
+// Checks that the kernel part of virtual address space
+// has been setup roughly correctly(by i386_vm_init()).
+//
+// This function doesn't test every corner case,
+// in fact it doesn't test the permission bits at all,
+// but it is a pretty good sanity check. 
+//
+static physaddr_t check_va2pa(pde_t *pgdir, uintptr_t va);
+```
+```c
+// This function returns the physical address of the page containing 'va',
+// defined by the page directory 'pgdir'.  The hardware normally performs
+// this functionality for us!  We define our own version to help check
+// the check_boot_pgdir() function; it shouldn't be used elsewhere.
+
+static physaddr_t
+check_va2pa(pde_t *pgdir, uintptr_t va)
+{
+	pte_t *p;
+
+	pgdir = &pgdir[PDX(va)];
+	if (!(*pgdir & PTE_P))
+		return ~0;
+	p = (pte_t*) KADDR(PTE_ADDR(*pgdir));
+	if (!(p[PTX(va)] & PTE_P))
+		return ~0;
+	return PTE_ADDR(p[PTX(va)]);
+}
+```
+
+我觉得这个补丁 backport 不 backport 都行。
+
+</li>
+
+通过这两个示例可以看出，由于 2003 年是 JOS 被创造出来并用于教学的第二年，2003 年版的 JOS 难免有一些漏洞。
+
+## 展望未来
+通过考证历史，我们终于揭开了 MOS 身上的重重的谜团。然后呢？接下来该怎么做？这些工作有什么意义？下面我分享一下我个人的看法。
+
+首先，通过考证，加深了我们对 MOS 历史悠久这一点的认识。在此之前，我们一直以为 MOS 的历史从 2007 年开始；但这些工作将 MOS 的历史上溯到了 2003 年。许多同学都认为 MOS 已经过时了。诚然如此。从 2003 年到 2025 年，MIT 的操作系统课程一直在迭代，到现在已经发生了翻天覆地的变化。但 MOS 从 2009 年移植到 MIPS 架构以来，整体的课程设计并没有发生大的变化。虽然助教们做了许多移植方面的工作，比如将 MOS 从 GXemul 移植到了 QEMU，从 R3000 移植到 R4K，但这些变化始终没有触及到根本。
+
+同学们希望进行课程改革。比如这届就有助教希望推翻 MOS。但是大刀阔斧的改革必然需要消耗大量精力。这些年计院和软院一直拿不出足够的精力来改革，加上今年削减了助教名额和补贴，改革成了一件遥遥无期的事情。在此之前，我们还是得继续用 MOS。
+
+其次，在我“重新发现”JOS 以后，我们需要来一次“重新移植”。虽然大家都知道 MOS 移植自 JOS，但当年的助教们没有保存好关于 JOS 的资料，以至于 JOS 的源代码和资料都没有传下来。后来的助教们只能按照自己的想法，为 MOS 打上各种补丁。考虑到助教们的水平有限（S.T.A.R. 助教全部为本科生），代码质量劣化是在所难免的事。加上 2022 年以前 MOS 的代码没有使用 Git 管理，导致现在连打补丁的历史也几乎不存了。
+
+既然现在已经找到了当年移植所参考的 JOS 源码，那么我们就可以挑选出 JOS 中闪光的地方，“重新移植”到 MOS 已经腐烂的地方上。代码质量不能再劣化下去了，最好能从现在开始有所改观。
+
+最后，考虑到 2003 年版 JOS 漏洞较多，我们可以研究更新版本的 JOS，取其精华 <abbr title="向后移植">backport</abbr> 到 MOS，给 MOS 来一次“升级”。考虑到 2004 和 2005 年版不完整，我们可以将 OCW 2006 年版设置为下一个目标。MIT 的操作系统课用 JOS 一直用到了 2018 年，所以理论上来说可以一直“升级”到 2018 年版。当然实际操作起来大概率是到不了的。
+
+我的助教生涯已经结束了。希望下一届助教可以学习一下 MIT 6.828 2003，然后对 MOS 进行改进。
+
+## 感想
+写到这里，感想。
+
+操作系统课每年都要培养五百多名学生。这五百多人中，难道没有一人对 MOS 的历史产生过好奇吗？操作系统课每年都要招收约二十名助教。这二十人中，难道没有一人对 MOS 的代码质量产生过疑惑吗？
+
+二十年前的助教们学习 MIT JOS，并把它移植到 MIPS 平台上。十年前的助教们照着 MIT 的指导书编写北航自己的指导书，激昂文字，别管看不看得懂，反正激昂就对了。——那些历史已经离我们远去了。那些历史材料没有保存好，是学长的不对，我们也无法挽回了。
+
+着眼现在。我知道许多同学对 MOS 有所不满，对操作系统这门课程有所不满，乃至对计院、软院的培养方案也有所不满。这并没有什么问题，考虑到这些年的内卷情况逐渐加重。另一方面，上一轮课程改革已是十年以前。但是作为助教，大家不仅仅是完成任务，拿到保研加分。
 
