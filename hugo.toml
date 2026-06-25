@@ -2,3 +2,8 @@ baseURL = 'https://example.org/'
 locale = 'en-us'
 title = 'My New Hugo Project'
 theme = 'blowfish'
+
+# https://gohugo.io/host-and-deploy/host-on-github-pages/
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
