@@ -1,6 +1,6 @@
-baseURL = 'https://example.org/'
-locale = 'en-us'
-title = 'My New Hugo Project'
+baseURL = 'https://triplecamera.github.io/'
+locale = 'zh-Hans-CN'
+title = 'TripleCamera 的博客'
 theme = 'blowfish'
 
 # https://gohugo.io/host-and-deploy/host-on-github-pages/
