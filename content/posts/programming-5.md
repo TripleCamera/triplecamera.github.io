@@ -1,8 +1,7 @@
 ---
 title: 编程随笔（五）
 date: 2025-04-01
-updated: 2025-04-03
-tags:
+lastmod: 2025-04-03
 categories:
 - 编程随笔
 ---

@@ -3,6 +3,15 @@ locale = 'zh-Hans-CN'
 title = 'TripleCamera 的博客'
 theme = 'blowfish'
 
+[params.homepage]
+  showRecent = true
+
+[params.article]
+  showDateUpdated = true
+
+[markup]
+  _merge = 'deep'
+
 # https://gohugo.io/host-and-deploy/host-on-github-pages/
 [caches]
   [caches.images]

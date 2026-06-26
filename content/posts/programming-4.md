@@ -1,7 +1,7 @@
 ---
 title: 编程随笔（四）
 date: 2025-03-19
-updated: 2025-04-05
+lastmod: 2025-04-05
 categories:
 - 编程随笔
 ---

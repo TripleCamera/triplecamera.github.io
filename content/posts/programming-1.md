@@ -1,7 +1,7 @@
 ---
 title: 编程随笔（一）
 date: 2023-02-25
-updated: 2023-06-10
+lastmod: 2023-06-10
 categories:
 - 编程随笔
 ---

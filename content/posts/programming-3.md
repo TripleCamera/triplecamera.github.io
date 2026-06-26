@@ -1,7 +1,7 @@
 ---
 title: 编程随笔（三）
 date: 2023-11-26
-updated: 2023-11-30
+lastmod: 2023-11-30
 categories:
 - 编程随笔
 ---

@@ -1,7 +1,6 @@
 ---
 title: Arch Linux 如何检查上次更新包大小变化
 date: 2026-04-13
-tags:
 ---
 
 ![pacman 提示净更新大小为 -3710.18 MiB，十分反常](/images/archlinux-pkgsizediff/intro.png)

@@ -1,8 +1,7 @@
 ---
 title: Arch Linux 害了他
 date: 2024-02-06
-updated: 2025-01-21
-tags:
+lastmod: 2025-01-21
 ---
 > 既然选择了 Arch，便只顾风雨兼程。——周国平没说过这句话
 

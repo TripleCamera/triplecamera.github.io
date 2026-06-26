@@ -1,8 +1,7 @@
 ---
 title: 笸篮花
 date: 2023-10-07
-updated: 2023-10-11
-tags:
+lastmod: 2023-10-11
 ---
 <style>
 cite {
