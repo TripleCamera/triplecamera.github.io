@@ -22,7 +22,7 @@ categories:
  -  Mozilla Firefox 70.0.1
 
 <figure>
-  <img src="/images/programming-5-background.png" alt="Google Chrome 和 Mozilla Firefox 的关于页面" style="max-height: 20em">
+  <img src="programming-5-background.png" alt="Google Chrome 和 Mozilla Firefox 的关于页面" style="max-height: 20em">
   <figcaption>Google Chrome 和 Mozilla Firefox 的关于页面</figcaption>
 </figure>
 
@@ -40,7 +40,7 @@ SyntaxError: invalid regular expression flag s
 我根据旁边提供的代码行列坐标定位到了出错的语句，然后复制到控制台重新运行了一遍，确认是这条语句导致的错误。
 
 <figure>
-  <img src="/images/programming-5-debug.png" alt="使用控制台定位和运行出错的语句" style="max-height: 20em">
+  <img src="programming-5-debug.png" alt="使用控制台定位和运行出错的语句" style="max-height: 20em">
   <figcaption>使用控制台定位和运行出错的语句</figcaption>
 </figure>
 

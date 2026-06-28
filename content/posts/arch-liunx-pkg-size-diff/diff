@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# grep 'upgraded' update-log | sed -E 's/.*upgraded ([^ ]*) \(([^ ]*) -> ([^ ]*)\)/\1 \2 \3/' > update-log2
+
+while read pkg old_ver new_ver
+do
+    # old_size=$(stat -c %s /var/cache/pacman/pkg/$pkg-$old_ver-*.pkg.tar.zst)
+    old_size=$(tar -xO --zstd -f /var/cache/pacman/pkg/$pkg-$old_ver-*.pkg.tar.zst .PKGINFO | grep size | awk '{ print $3 }')
+    # new_size=$(stat -c %s /var/cache/pacman/pkg/$pkg-$new_ver-*.pkg.tar.zst)
+    new_size=$(tar -xO --zstd -f /var/cache/pacman/pkg/$pkg-$new_ver-*.pkg.tar.zst .PKGINFO | grep size | awk '{ print $3 }')
+    diff_size=$(( new_size - old_size ))
+    # echo $old_size $new_size $diff_size $pkg
+    echo $diff_size $pkg
+done < update-log2

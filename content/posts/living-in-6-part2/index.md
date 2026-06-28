@@ -23,7 +23,7 @@ lastmod: 2024-06-28
 <p style="text-align: right;">4 月 7 日（日）定稿</p>
 
 ## 下水道
-<img src="/images/buaa4-sewer.jpg" alt="师傅赠送的铁丝挂在下水道上方的水龙头上" style="float: right; max-height: 12em; margin: 20px;">
+<img src="buaa4-sewer.jpg" alt="师傅赠送的铁丝挂在下水道上方的水龙头上" style="float: right; max-height: 12em; margin: 20px;">
 
 下水道堵了。
 
@@ -93,7 +93,7 @@ lastmod: 2024-06-28
 
 <p style="text-align: right;">5 月 6 日（一）定稿</p>
 
-![劳动节学习用时统计](/images/buaa4-laborday.svg)
+![劳动节学习用时统计](buaa4-laborday.svg)
 
 ## 重拾游泳
 时隔近一年，我再次走进了游泳馆。

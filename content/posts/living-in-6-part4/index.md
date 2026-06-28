@@ -11,7 +11,7 @@ lastmod: 2025-01-21
 早上九点，我不情愿地起了床。走到食堂，看着琳琅满目的食物，不知道该吃什么。突然灵机一动：就吃泡面吧！
 
 <figure>
-  <img src="/images/buaa5-paomian.jpg" alt="泡面！" style="max-height: 15em;">
+  <img src="buaa5-paomian.jpg" alt="泡面！" style="max-height: 15em;">
   <figcaption>泡面！</figcaption>
 </figure>
 
@@ -22,7 +22,7 @@ lastmod: 2025-01-21
 晚上六点我去食堂吃饭，七点要开组会。到了食堂又不知道该吃什么，突然灵光一现，想吃地下一层的肉酱面，但那里的队很长。我以为组会七点半到八点就能结束，于是打算开完会再去吃饭。结果没想到我们一边开会，一边闲聊，一直拖到九点才开完。我本来已经对食堂不抱希望了，结果过去一看，大部分窗口都打烊了，卖面的窗口却还开着。最后我如愿以偿吃到了肉酱面。
 
 <figure>
-  <img src="/images/buaa5-roujiangmian.jpg" alt="肉酱面！" style="max-height: 15em;">
+  <img src="buaa5-roujiangmian.jpg" alt="肉酱面！" style="max-height: 15em;">
   <figcaption>肉酱面！</figcaption>
 </figure>
 

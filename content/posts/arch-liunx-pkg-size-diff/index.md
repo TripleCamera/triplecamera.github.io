@@ -3,7 +3,7 @@ title: Arch Linux 如何检查上次更新包大小变化
 date: 2026-04-13
 ---
 
-![pacman 提示净更新大小为 -3710.18 MiB，十分反常](/images/archlinux-pkgsizediff/intro.png)
+![pacman 提示净更新大小为 -3710.18 MiB，十分反常](intro.png)
 
 昨天晚上，我在滚系统的时候遇到了一个问题：如何得知哪些包的体积显著变小了？
 
@@ -56,6 +56,6 @@ $ sort -n update-diff
 
 最后附上我自己的情况作为测试样例（点击下载）：
 
- -  [`update-log`](../images/archlinux-pkgsizediff/update-log)
- -  [`update-log2`](../images/archlinux-pkgsizediff/update-log2)
- -  [`update-diff`](../images/archlinux-pkgsizediff/update-diff)
+ -  [`update-log`](update-log)
+ -  [`update-log2`](update-log2)
+ -  [`update-diff`](update-diff)

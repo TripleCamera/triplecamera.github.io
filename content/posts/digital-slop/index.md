@@ -74,7 +74,7 @@ lastmod: 2026-03-09
 通过调整搜索结果的时间范围，我很快就找到了这个词的来源：半月谈于 2026 年 1 月 12 日发布的文章《[警惕“数字泔水”在未成年人中扩散](http://www.banyuetan.org/pl/detail/20260112/1000200033136001768187272861920528_1.html)》。同日[新华社](https://app.xinhuanet.com/news/article.html?articleId=02e42053f6b333edae23e34dd46adab0)也对这篇文章进行了转发。事实上，百度百科“数字泔水”词条的前三条参考资料分别为新华社、上观新闻、百家号对这篇文章的转发。（[存档](https://web.archive.org/web/20260227043856/https://baike.baidu.com/item/%E6%95%B0%E5%AD%97%E6%B3%94%E6%B0%B4/67210205)）
 
 <figure>
-  <img src="/images/digital-slop-baidubaikeref.png" alt="百度百科“数字泔水”词条的参考资料列表">
+  <img src="digital-slop-baidubaikeref.png" alt="百度百科“数字泔水”词条的参考资料列表">
   <figcaption>百度百科“数字泔水”词条的参考资料列表</figcaption>
 </figure>
 
@@ -92,8 +92,8 @@ lastmod: 2026-03-09
 
 <figure>
   <div style="display: flex">
-    <img src="/images/digital-slop-meme1.jpg" alt="关于数字泔水的表情（1）" style="width: 40%">
-    <img src="/images/digital-slop-meme2.jpg" alt="关于数字泔水的表情（2）" style="width: 40%">
+    <img src="digital-slop-meme1.jpg" alt="关于数字泔水的表情（1）" style="width: 40%">
+    <img src="digital-slop-meme2.jpg" alt="关于数字泔水的表情（2）" style="width: 40%">
   </div>
   <figcaption>关于数字泔水的表情</figcaption>
 </figure>

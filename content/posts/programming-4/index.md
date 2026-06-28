@@ -18,7 +18,7 @@ categories:
 值得注意的是，最初的版本不长这个样子。在最初的版本中，“课程助教”选项卡是用 `<v-btn>` 实现的，点击展开菜单，再次点击菜单项即可跳转——和官方文档里的[溢出到菜单](https://vuetifyjs.com/zh-Hans/components/tabs/#section-6ea251fa523083dc5355)示例几乎一模一样。但是每个 `<v-tab>` 下方都有一个横条（文档中叫 slider），用来指示当前选中的选项卡。而 `<v-btn>` 下方没有 slider，这就导致路由切换到“课程助教”页面时，slider 并不会自动更新，还位于其他选项卡下方：
 
 <figure>
-  <img src="/images/programming-4.png" alt="路由切换到“课程助教”页面时，slider 还位于“教师团队”选项卡下方" style="max-height: 12em">
+  <img src="programming-4.png" alt="路由切换到“课程助教”页面时，slider 还位于“教师团队”选项卡下方" style="max-height: 12em">
   <figcaption>路由切换到“课程助教”页面时，slider 还位于“教师团队”选项卡下方</figcaption>
 </figure>
 
