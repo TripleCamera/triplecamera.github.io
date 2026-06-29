@@ -9,7 +9,19 @@ theme = 'blowfish'
 [params.article]
   showDateUpdated = true
 
+[imaging]
+  _merge = 'deep'
 [markup]
+  _merge = 'deep'
+[outputs]
+  _merge = 'deep'
+[pagination]
+  _merge = 'deep'
+[related]
+  _merge = 'deep'
+[sitemap]
+  _merge = 'deep'
+[taxonomies]
   _merge = 'deep'
 
 # https://gohugo.io/host-and-deploy/host-on-github-pages/
