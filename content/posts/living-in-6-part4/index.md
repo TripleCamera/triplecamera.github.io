@@ -2,6 +2,8 @@
 title: 计科生活笔记（四）
 date: 2024-09-02
 lastmod: 2025-01-21
+aliases:
+- /2024/09/01/living-in-6-part4/
 ---
 {{< katex >}}
 

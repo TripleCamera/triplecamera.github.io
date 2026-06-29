@@ -2,6 +2,8 @@
 title: 计科生活笔记（三）
 date: 2024-07-07
 lastmod: 2024-07-29
+aliases:
+- /2024/07/06/living-in-6-part3/
 ---
 ## 夏季学期的前夕
 TODO

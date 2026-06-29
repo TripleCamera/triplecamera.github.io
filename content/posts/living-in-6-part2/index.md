@@ -2,6 +2,8 @@
 title: 计科生活笔记（二）
 date: 2024-03-20
 lastmod: 2024-06-28
+aliases:
+- /2024/03/19/living-in-6-part2/
 ---
 ## 感冒
 我感冒了。

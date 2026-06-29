@@ -4,6 +4,8 @@ date: 2023-11-26
 lastmod: 2023-11-30
 categories:
 - 编程随笔
+aliases:
+- /2023/11/25/programming-3/
 ---
 Verilog 是一门非常宽松的语言。但这并不是件好事。
 

@@ -2,6 +2,8 @@
 title: 数字泔水
 date: 2026-02-19
 lastmod: 2026-03-09
+aliases:
+- /2026/02/18/digital-slop/
 ---
 2 月 12 日夜里，有位同学在我们学院的水群里转发了一则新闻：《[着力整治“数字泔水”等垃圾信息，网信办启动春节专项行动](https://mp.weixin.qq.com/s/Ty2yyeBkUOZY7vbV2Jo_2A)》。其中的“数字泔水”一词引起了我的注意。
 

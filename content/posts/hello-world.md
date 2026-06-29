@@ -2,6 +2,8 @@
 title: Hello World
 date: 2023-02-19
 lastmod: 2023-06-10
+aliases:
+- /2023/02/18/hello-world/
 ---
 今天，我的博客搭建完成了。
 

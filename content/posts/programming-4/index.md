@@ -4,6 +4,8 @@ date: 2025-03-19
 lastmod: 2025-04-05
 categories:
 - 编程随笔
+aliases:
+- /2025/03/18/programming-4/
 ---
 
 不得不说我对 Vue 的理解还是太浅薄了。

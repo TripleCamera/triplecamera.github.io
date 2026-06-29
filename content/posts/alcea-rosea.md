@@ -2,6 +2,8 @@
 title: 笸篮花
 date: 2023-10-07
 lastmod: 2023-10-11
+aliases:
+- /2023/10/06/alcea-rosea/
 ---
 <style>
 cite {

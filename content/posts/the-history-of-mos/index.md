@@ -2,6 +2,8 @@
 title: 追本溯源：探寻北航 MOS 操作系统的历史
 date: 2025-05-01
 lastmod: 2026-02-17
+aliases:
+- /2025/04/30/the-history-of-mos/
 ---
 
 我们都知道，北航的 MOS 操作系统是从 MIT JOS 移植过来的。（如果你还不知道这一点，说明你既没有认真读过[指导书](https://os.buaa.edu.cn/public/guide-book.pdf)、[宣发页](https://os.buaa.edu.cn/team/)等官方资料，也没有认真看过[知乎](https://www.zhihu.com/question/322261810)等非官方资料；甚至没有认真参与水群，因为水群里会有学长提到这一点。）

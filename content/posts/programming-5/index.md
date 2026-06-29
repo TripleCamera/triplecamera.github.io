@@ -4,6 +4,8 @@ date: 2025-04-01
 lastmod: 2025-04-03
 categories:
 - 编程随笔
+aliases:
+- /2025/03/31/programming-5/
 ---
 
 最近我们为 OSome 做了一次兼容性更新，使其能够兼容新主楼机房的 Firefox 70。
